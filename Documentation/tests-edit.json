@@ -1,0 +1,205 @@
+{
+  "mode": "EditMode",
+  "summary": {
+    "total": 48,
+    "passed": 48,
+    "failed": 0,
+    "skipped": 0,
+    "inconclusive": 0
+  },
+  "durationSeconds": 1.24,
+  "tests": [
+    {
+      "name": "NGame.Core.Tests.AppPreferencesTests.FreshPreferencesLeaveAudioAndReducedMotionDisabledWithoutWriting",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.AppPreferencesTests.MissingPreferenceStoreIsRejected",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.AppPreferencesTests.SavedChoicesAreReadAndEachChangeIsPersistedBeforeNotifying",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.AppPreferencesTests.SettingTheCurrentChoiceDoesNotWriteOrNotify",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.PartyComposerTests.CompositionClearlyRemainsAnUntestedBalanceProposal",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.PartyComposerTests.ProposedCountsFitEverySupportedParty(6,1,1,4)",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.PartyComposerTests.ProposedCountsFitEverySupportedParty(7,2,1,4)",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.PartyComposerTests.ProposedCountsFitEverySupportedParty(8,2,1,5)",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.PartyComposerTests.ProposedCountsFitEverySupportedParty(9,2,1,6)",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.PartyComposerTests.ProposedCountsFitEverySupportedParty(10,2,1,7)",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.PartyComposerTests.ProposedCountsFitEverySupportedParty(11,3,1,7)",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.PartyComposerTests.ProposedCountsFitEverySupportedParty(12,3,1,8)",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.PartyComposerTests.RoleEntriesAreReadOnlyAndContainCountsWithoutPlayerAssignments",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.PartyComposerTests.UnsupportedSizesAreRejectedRatherThanSilentlyClamped(0)",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.PartyComposerTests.UnsupportedSizesAreRejectedRatherThanSilentlyClamped(5)",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.PartyComposerTests.UnsupportedSizesAreRejectedRatherThanSilentlyClamped(13)",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.PartyComposerTests.UnsupportedSizesAreRejectedRatherThanSilentlyClamped(int.MaxValue)",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.RoleCatalogTests.ApprovedCatalogueHasUniqueIdsAndACompleteIllustrationMapping",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.RoleCatalogTests.EveryCardHasPublicCopyWithoutClaimingAWorkingRuleEngine",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.RoleCatalogTests.KnownLookupReturnsTheSameImmutableCatalogueEntry",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.RoleCatalogTests.PetiteFillePreservesThePhysicalProtocolAndRequiresARemoteAdaptation",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.RoleCatalogTests.SpatialAndBuildingDependenciesAreNotPresentedAsAutomaticRemoteRules",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.RoleCatalogTests.UnknownIdsDoNotFallBackToAnotherRole(null)",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.RoleCatalogTests.UnknownIdsDoNotFallBackToAnotherRole(\"\")",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.RoleCatalogTests.UnknownIdsDoNotFallBackToAnotherRole(\"missing\")",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.RoleCatalogTests.UnknownIdsDoNotFallBackToAnotherRole(\"WEREWOLF\")",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.RoleCatalogTests.UnknownIdsDoNotFallBackToAnotherRole(\" werewolf \")",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.AConfirmedChoiceCannotBeChangedByNavigatingPhases",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.ConfirmationCannotBeFabricatedByDirectPhaseNavigation",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.ConfirmationRequiresASelectionAndConsumesIt",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.EventsObserveCompleteChangesAndNoOpsDoNotNotify",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.IndependentSessionsCannotShareARevealOrAChoice",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.MovingPhaseMasksAndConcealingAgainNeverRestoresTheRole",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.NewSessionStartsAtNightWithoutExposingTheLocalRole",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.NonNightPhasesCannotRevealTheLocalRole(Dawn)",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.NonNightPhasesCannotRevealTheLocalRole(Vote)",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.PhaseNavigationDiscardsAPendingSelection",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.PlayerChoicesAreTheSixImmutableDecorativeParticipants",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.ReenteringNightStillConcealsAnExposedRole",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.ReenteringVoteAlsoDiscardsAPendingSelection",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.ResetMasksTheRoleAndStartsAFreshSelectableRound",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.RevealExposesOnlyTheLocalDemoRoleAndConcealMasksSynchronously",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.SelectionAndConfirmationAreUnavailableOutsideVoting",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.UnknownPhaseIsRejectedWithoutCorruptingTheSession",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.UnknownPlayerCannotReplaceAValidSelection(null)",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.UnknownPlayerCannotReplaceAValidSelection(\"\")",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.UnknownPlayerCannotReplaceAValidSelection(\"missing\")",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Core.Tests.VillageSessionTests.UnknownPlayerCannotReplaceAValidSelection(\"LEA\")",
+      "status": "Passed"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "status": "completed",
+  "result": "Succeeded",
+  "platform": "StandaloneOSX",
+  "totalSizeBytes": 165282403,
+  "buildTimeMs": 17009,
+  "buildStartedAt": "2026-10-17T20:13:47.5668030Z",
+  "buildEndedAt": "2026-10-17T20:14:04.5765570Z",
+  "totalWarnings": 346,
+  "totalErrors": 0,
+  "outputPath": "Builds/NGame.app",
+  "warningSummary": "Warnings from the unused Unity AI Inference package shaders; no application build errors."
+}

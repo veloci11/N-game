@@ -1,0 +1,247 @@
+{
+  "generator": "Built-in image_gen.imagegen",
+  "date": "2026-10-17",
+  "reference": "../reference-approved.png",
+  "assets": [
+    {
+      "file": "village-night.png",
+      "width": 1024,
+      "height": 1536,
+      "alpha": false,
+      "references": [
+        "approved-reference"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: actual game environment background, portrait 1024x1536, full bleed illustration. Input reference: supplied triptych, ONLY the middle Loup-Garou phone screen is the visual style reference. Generate the clean environment scene from that screen with all interface removed and NO wolf. Scene: premium handcrafted folded and cut paper miniature French fairy-tale village at night. Indigo navy sky, large textured amber full moon in upper right, distant layered mountains and pine forest; quaint narrow houses, warm glowing amber windows, tall church steeple on the right, stone arched bridge and winding river reflecting lantern light in bottom third; overlapping large folded paper pine trees framing the left edge, dark soft-focus paper foliage at near foreground corners. The village fills lower two thirds, leave dark clear sky space at upper center for an app heading overlay. Preserve the reference's exceptionally detailed tactile fibrous paper, sharp origami facets, photographed diorama depth and magical chiaroscuro, adult premium storybook style, sophisticated muted navy/teal and amber, not childish cartoon. Dense enchanting composition with river visible at lower center. Constraints: no wolf, no animals, no card, no lock, no phone, no borders, no UI, no text, no letters, no watermark. Output one single portrait environment.",
+      "visuallyInspected": true
+    },
+    {
+      "file": "village-dawn.png",
+      "width": 1024,
+      "height": 1536,
+      "alpha": false,
+      "references": [
+        "village-night.png"
+      ],
+      "prompt": "Use case: lighting-weather. Asset type: matching daytime game environment state, portrait 1024x1536. Edit target is the supplied village-night environment. CHANGE ONLY TIME OF DAY AND LIGHTING to magical early dawn, pale warm peach light on the horizon, muted dusty blue teal sky, subtle morning mist, small warm sunrise in the same position as the former moon. Turn all illuminated windows/lanterns off or dim. Keep rich deep teal shadows and gold rim light. CRITICAL INVARIANTS: exact same camera, composition, house count/shapes/positions, bridges, trees, river, stones and paper materials, identical geometry at all image coordinates so the two images can crossfade without objects moving. No new objects. Same detailed premium photographic handmade folded paper diorama. No wolf, no animals, no people, no card, no phone, no UI, no text, no watermark.",
+      "visuallyInspected": true
+    },
+    {
+      "file": "wolf.png",
+      "width": 1159,
+      "height": 1356,
+      "alpha": true,
+      "references": [
+        "approved-reference"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: single transparent game character sprite with real alpha, portrait. Input reference: supplied app triptych ONLY the middle phone, specifically the folded paper wolf on the left. Generate a clean standalone premium handmade origami dark slate-blue wolf, head and shoulders / upper body, alert tall triangular ears, long narrow angular snout, fierce but magical glowing amber eyes, folded geometric paper fur and visible fibrous paper texture, dark navy and gray layered paper facets with restrained warm gold edge lighting matching a nighttime fairy tale village. Three-quarter view looking slightly toward viewer's right. Elegant mysterious adult storybook miniature, not cute and not horror. Centered whole silhouette fully within frame, generous transparent margin at all edges, wolf reaches lower third with cut paper shoulders tapering naturally. Real transparent background only, no scenery, no trees, no moon, no text, no card, no border, no stand, no cast floor shadow, no white backdrop, no checkerboard pattern. One wolf only.",
+      "visuallyInspected": true
+    },
+    {
+      "file": "role-back.png",
+      "width": 1024,
+      "height": 1536,
+      "alpha": false,
+      "references": [
+        "approved-reference"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: actual game role card back texture, portrait 1024x1536 2:3 rectangle. Input reference: supplied app triptych ONLY the role card within the middle Loup-Garou phone screen. Create a premium dark navy handmade paper card back as a flat orthographic front view, full-bleed card occupying exactly entire image, no external background, no perspective. Visible subtle fibrous midnight-blue paper. Elegant thin muted antique gold double line border with small botanical branches/fern leaves growing along the sides and corners, restrained tiny gold stars, a single delicate crescent moon emblem high in the top center. Symmetrical enchanting French fairy-tale design, refined adult storybook not cartoon. Center should be dark open space reserved for a programmatically rendered lock; generous open central 50%. Gold linework lightly imperfect letterpress foil stamping. Match the tactile materials and navy/gold tones in the reference. Constraints: no text, no letters, no numbers, no lock, no wolf, no animal, no hands, no phone, no interface, no drop shadow outside card, no watermark.",
+      "visuallyInspected": true
+    },
+    {
+      "file": "role-front.png",
+      "width": 1024,
+      "height": 1536,
+      "alpha": false,
+      "references": [
+        "role-back.png",
+        "wolf.png"
+      ],
+      "prompt": "Use case: compositing. Asset type: actual secret role card face, portrait 1024x1536. Input image 1 is the card back to preserve its exact navy paper, golden botanical frame, border, crescent, all decorative geometry. Input image 2 is the wolf character to insert. Add a large majestic portrait of that same folded dark slate paper wolf in the central opening of the card, head and upper neck, amber eyes, photoreal tactile folded paper facets, subtle soft gold rim light. Center the wolf from about 29% to 75% of card height, fit comfortably inside botanical frame. Preserve all card frame elements and leave bottom central 16% empty navy for application title overlay. Same front-facing orthographic card crop. All else unchanged. No text, no letters, no numbers, no watermark, no lock, no phone, no hand.",
+      "visuallyInspected": true
+    },
+    {
+      "file": "foreground.png",
+      "width": 1024,
+      "height": 1536,
+      "alpha": true,
+      "references": [
+        "village-night.png"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: actual transparent foreground parallax layer for a portrait 1024x1536 mobile game environment. Input image is STYLE AND COMPOSITION REFERENCE only. Create ONLY the very near dark handmade folded/cut-paper tree, foliage and rocky riverbank framing. Place one large angular dark navy-gray tree trunk along the LEFT edge, branches with layered dark teal paper leaves in TOP LEFT, several near-foreground folded paper leaves and low stones reaching inward from BOTTOM LEFT and BOTTOM RIGHT corners. Keep the entire central 70% and upper right completely genuinely transparent. Most image area is transparent empty space; no continuous floor, no background panel, no sky, no village, no bridge, no river, no mountains, no moon, no wolf. Restrained amber edge light on left tree and leaves, identical fibrous paper texture and sharp folded diorama material as reference, soft atmospheric depth on extreme foreground edges but clean alpha. Composition must work over the supplied village background, with only a thin left perimeter reaching 15%-20% width, bottom corner foliage reaching at most 20% height, avoiding bottom center. Real transparent alpha background, NOT black, NOT white, NOT checkerboard. No text, no phone, no borders, no UI. One sprite full portrait canvas.",
+      "visuallyInspected": true,
+      "alphaValidation": {
+        "mode": "RGBA",
+        "range": [
+          0,
+          254
+        ],
+        "center": 0,
+        "upperRight": 0
+      },
+      "purpose": "Independent near foreground tree and corner foliage parallax layer"
+    },
+    {
+      "file": "avatars.png",
+      "width": 1536,
+      "height": 1024,
+      "alpha": false,
+      "references": [
+        "village-night.png"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: actual sprite sheet for six neutral player avatars in a mobile fairy-tale board game. One landscape 1536x1024 PNG, EXACT 3 columns x 2 rows, cells 512x512, no grid lines. Solid uniform warm cream paper background across entire sheet (#EFE2CB). Each cell contains ONE distinct friendly dignified folded/cut-paper animal head and upper shoulders, centered perfectly at the same scale with 12% blank padding all sides, fully within its own cell; frontal portrait, neutral pleasant expression. Top row left-to-right: fox, owl, bear. Bottom row left-to-right: rabbit, stag with compact antlers, small robin bird. Six animals total. Match the reference image's premium tactile fibrous paper, sharp origami facets, photographed handmade diorama, muted navy, slate, forest teal and warm tan/terracotta accents with soft warm amber side-light. Give each animal species natural distinguishing shapes and understated color; consistent sophistication. These are public player avatars, NOT secret roles: no wolf, no glowing demonic eyes, no capes, no crowns, no wizard hats, no powers or game role symbols. Uniform soft studio lighting and portrait framing. Flat solid cream negative space, no decorative frame/circle, no scene/background scenery, no text or labels, no phones, no UI, no watermark. Make each of six portraits clearly isolated for automatic grid slicing; nothing crosses cell boundaries.",
+      "visuallyInspected": true,
+      "grid": {
+        "columns": 3,
+        "rows": 2,
+        "cellWidth": 512,
+        "cellHeight": 512,
+        "topRow": [
+          "fox",
+          "owl",
+          "bear"
+        ],
+        "bottomRow": [
+          "rabbit",
+          "stag",
+          "robin"
+        ],
+        "origin": "Unity bottom-left"
+      },
+      "purpose": "Neutral public player avatars, independent of hidden game roles"
+    },
+    {
+      "file": "lantern.png",
+      "width": 1024,
+      "height": 1536,
+      "alpha": true,
+      "references": [
+        "../reference-approved.png"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: single actual transparent foreground lantern sprite for a premium folded-paper fairy-tale mobile game. The supplied image is the approved style reference; use ONLY the lanterns and material style from the middle Loup-Garou phone environment. Create ONE isolated hanging handcrafted angular lantern in a front three-quarter view. Full lantern completely in frame, centered with transparent margin, tall modest silhouette, dark midnight navy folded-paper/aged brass frame, simple polygonal pitched cap, tiny short hanger stem and small hanging ring at the top, warm amber paper-like translucent panes, small delicate candle flame inside. Rich tactile fibrous paper folds and clean faceted construction like a miniature crafted diorama, believable storybook object, refined restrained gold edge highlights. Warm interior light but only very subtle tight translucent glow around the panes; no broad circular disk or huge halo. Keep the frame details dark, legible and distinct, with a calm dimmed amber flame state that the game engine can brighten and animate. No trees, no village, no scenery, no floor, no wall, no sky, no moon, no phone, no lettering, no UI, no watermark, no second lantern, no loose particles. Genuine transparent alpha background, no black/white/colored backdrop or checkerboard pattern. Portrait 1024x1536 requested, whole object including ring uncropped.",
+      "visuallyInspected": true,
+      "generator": "Built-in image_gen.imagegen",
+      "alphaValidation": {
+        "mode": "RGBA",
+        "range": [
+          0,
+          254
+        ],
+        "topLeft": 1
+      },
+      "purpose": "Standalone lantern sprite for runtime sway and independently animated light/flame overlays",
+      "suggestedAnchors": {
+        "normalizedOrigin": "bottom-left",
+        "hangingPivot": [
+          0.5,
+          0.94
+        ],
+        "flameCenter": [
+          0.516,
+          0.37
+        ]
+      }
+    },
+    {
+      "file": "village-night-sky.png",
+      "width": 1024,
+      "height": 1536,
+      "alpha": false,
+      "references": [
+        "village-night.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: clean background plate for independent moon animation. Edit the supplied portrait 1024x1536 paper village night image. Perform ONLY ONE CHANGE: completely remove the large round amber moon in the upper right (roughly x710..915 y85..295) and reconstruct the uninterrupted dark indigo textured night sky that was behind it. Keep the dark paper clouds that overlap the lower right edge of the former moon EXACTLY where they are. The cleared region must be continuous navy night sky with subtle paper grain and possibly a few tiny stars; no residual yellow circle, glow, sun, halo or moon outline. CRITICAL: preserve camera, exact composition, tree silhouette on left, all other stars and clouds, mountains, forest, church, every house, windows, bridges, river reflection, foreground plants and lanterns, shapes and colors outside the former moon area, as pixel-stable as possible. This is a minimal object removal, not a repaint or redesign. No new objects, no text/UI/phone. Full bleed portrait same dimensions as input.",
+      "visuallyInspected": true,
+      "purpose": "Background plate with former moon removed so celestial object can move independently",
+      "notes": [
+        "Generated minimal edit; geometry visually aligned, pixel identity outside the edit is not guaranteed."
+      ],
+      "generator": "Built-in image_gen.imagegen"
+    },
+    {
+      "file": "moon.png",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "references": [
+        "village-night.png"
+      ],
+      "prompt": "Use case: background-extraction. Asset type: actual standalone moon sprite with true transparent alpha. The input image is a reference of the exact moon required: the large round textured AMBER FULL MOON in the upper right of the supplied paper village. Reproduce ONLY that one amber full moon, isolated and complete, as a centered near-perfect circular cut-paper celestial disk. Preserve its warm yellow-gold palette, visible fibrous creases, layered irregular ochre crater patches and faceted handcrafted paper surface, subtle dimensional thickness. No face, no crescent, no rays, no sun icon. The disk fills 78% of a square 1024x1024 canvas with uniform transparent margin on all four sides; full circle visible, remove the cloud that occludes it in the reference and reconstruct the hidden lower rim. True alpha transparency OUTSIDE the circular disk. No backdrop, no navy square, no black square, no huge halo or cast shadow, no stars, no cloud, no village, no trees, no text, no border or watermark. Exactly one single amber full moon matching the original approved art.",
+      "visuallyInspected": true,
+      "alphaValidation": {
+        "mode": "RGBA",
+        "range": [
+          0,
+          255
+        ],
+        "cornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "purpose": "Standalone circular amber paper full moon",
+      "generator": "Built-in image_gen.imagegen"
+    },
+    {
+      "file": "clouds.png",
+      "width": 2172,
+      "height": 724,
+      "alpha": true,
+      "references": [
+        "village-night.png"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: actual transparent sprite sheet of three separate cloud groups for a fairy-tale paper village mobile game. The supplied image is STYLE REFERENCE: match exactly its nocturnal dark indigo blue cut-paper clouds near the moon, tactile fibrous matte paper with layered scalloped silhouettes, folded facets, restrained warm amber edge highlights and low contrast moonlight shading. Output a single LANDSCAPE 1536x512 transparent PNG, three equal horizontal cells 512x512. Each cell contains ONE isolated low, wide cluster of paper clouds centered inside it, with generous truly transparent margin around all sides and gaps between clusters. Left cluster gently rounded and long; middle cluster compact scallops; right cluster slightly taller layered scallops. Same material/color/light as the original clouds. These are independent opaque layered paper objects moving slowly in front of the moon, not realistic smoke or fog. Keep each cluster entirely inside its own 512px cell, nothing touching canvas edges or crossing cell boundaries. No moon, no star, no village, no scenery, no full sky background, no phone, no lettering, no watermark, no frame, no divider lines. Genuine alpha transparency outside the three groups, no navy/black/white rectangle or checkerboard pattern. Exactly THREE cloud groups.",
+      "visuallyInspected": true,
+      "alphaValidation": {
+        "mode": "RGBA",
+        "range": [
+          0,
+          255
+        ],
+        "cornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "purpose": "Three isolated layered dark blue paper cloud groups",
+      "spriteRects": {
+        "coordinateSystem": "Unity pixels origin bottom-left",
+        "regions": [
+          {
+            "id": "cloud-long",
+            "x": 16,
+            "y": 233,
+            "width": 742,
+            "height": 250
+          },
+          {
+            "id": "cloud-compact",
+            "x": 772,
+            "y": 217,
+            "width": 645,
+            "height": 271
+          },
+          {
+            "id": "cloud-tall",
+            "x": 1438,
+            "y": 207,
+            "width": 722,
+            "height": 331
+          }
+        ]
+      },
+      "notes": [
+        "Actual generated dimensions differ from requested dimensions; groups require these individual rects rather than equal-width grid cells."
+      ],
+      "generator": "Built-in image_gen.imagegen"
+    }
+  ],
+  "notes": [
+    "Night/dawn are generated raster lighting states with closely aligned geometry; subtle differences may remain.",
+    "Wolf preserves native generated alpha. No CLI/API fallback used."
+  ],
+  "currentProjectReference": "../reference-approved.png"
+}

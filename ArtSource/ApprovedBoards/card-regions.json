@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "coordinateSystem": "Unity Rect pixels; origin bottom-left; x/y inclusive, x+width/y+height exclusive",
+  "sourceImages": {
+    "roles-core.png": {
+      "width": 1536,
+      "height": 1024
+    },
+    "roles-extended.png": {
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  "notes": [
+    "Approved original artwork remains unchanged; no raster editing or generated replacement.",
+    "Crops include the complete external golden frame, raised navy edge where present, and a narrow shadow margin without neighboring cards.",
+    "Native card widths on roles-core vary; use preserveAspect rather than stretching all cards."
+  ],
+  "cards": [
+    {
+      "id": "werewolf",
+      "index": 0,
+      "board": "roles-core.png",
+      "rect": {
+        "x": 56,
+        "y": 526,
+        "width": 354,
+        "height": 490
+      },
+      "topLeftForInspection": {
+        "x": 56,
+        "y": 8
+      },
+      "preserveAspect": true
+    },
+    {
+      "id": "villager",
+      "index": 1,
+      "board": "roles-core.png",
+      "rect": {
+        "x": 433,
+        "y": 526,
+        "width": 326,
+        "height": 490
+      },
+      "topLeftForInspection": {
+        "x": 433,
+        "y": 8
+      },
+      "preserveAspect": true
+    },
+    {
+      "id": "seer",
+      "index": 2,
+      "board": "roles-core.png",
+      "rect": {
+        "x": 778,
+        "y": 526,
+        "width": 327,
+        "height": 490
+      },
+      "topLeftForInspection": {
+        "x": 778,
+        "y": 8
+      },
+      "preserveAspect": true
+    },
+    {
+      "id": "witch",
+      "index": 3,
+      "board": "roles-core.png",
+      "rect": {
+        "x": 1127,
+        "y": 526,
+        "width": 353,
+        "height": 490
+      },
+      "topLeftForInspection": {
+        "x": 1127,
+        "y": 8
+      },
+      "preserveAspect": true
+    },
+    {
+      "id": "hunter",
+      "index": 4,
+      "board": "roles-core.png",
+      "rect": {
+        "x": 56,
+        "y": 31,
+        "width": 354,
+        "height": 485
+      },
+      "topLeftForInspection": {
+        "x": 56,
+        "y": 508
+      },
+      "preserveAspect": true
+    },
+    {
+      "id": "cupid",
+      "index": 5,
+      "board": "roles-core.png",
+      "rect": {
+        "x": 433,
+        "y": 31,
+        "width": 326,
+        "height": 485
+      },
+      "topLeftForInspection": {
+        "x": 433,
+        "y": 508
+      },
+      "preserveAspect": true
+    },
+    {
+      "id": "guard",
+      "index": 6,
+      "board": "roles-core.png",
+      "rect": {
+        "x": 778,
+        "y": 31,
+        "width": 327,
+        "height": 485
+      },
+      "topLeftForInspection": {
+        "x": 778,
+        "y": 508
+      },
+      "preserveAspect": true
+    },
+    {
+      "id": "little-girl",
+      "index": 7,
+      "board": "roles-core.png",
+      "rect": {
+        "x": 1127,
+        "y": 31,
+        "width": 353,
+        "height": 485
+      },
+      "topLeftForInspection": {
+        "x": 1127,
+        "y": 508
+      },
+      "preserveAspect": true
+    },
+    {
+      "id": "white-wolf",
+      "index": 8,
+      "board": "roles-extended.png",
+      "rect": {
+        "x": 52,
+        "y": 522,
+        "width": 348,
+        "height": 484
+      },
+      "topLeftForInspection": {
+        "x": 52,
+        "y": 18
+      },
+      "preserveAspect": true
+    },
+    {
+      "id": "thief",
+      "index": 9,
+      "board": "roles-extended.png",
+      "rect": {
+        "x": 413,
+        "y": 522,
+        "width": 348,
+        "height": 484
+      },
+      "topLeftForInspection": {
+        "x": 413,
+        "y": 18
+      },
+      "preserveAspect": true
+    },
+    {
+      "id": "elder",
+      "index": 10,
+      "board": "roles-extended.png",
+      "rect": {
+        "x": 776,
+        "y": 522,
+        "width": 348,
+        "height": 484
+      },
+      "topLeftForInspection": {
+        "x": 776,
+        "y": 18
+      },
+      "preserveAspect": true
+    },
+    {
+      "id": "raven",
+      "index": 11,
+      "board": "roles-extended.png",
+      "rect": {
+        "x": 1138,
+        "y": 522,
+        "width": 348,
+        "height": 484
+      },
+      "topLeftForInspection": {
+        "x": 1138,
+        "y": 18
+      },
+      "preserveAspect": true
+    },
+    {
+      "id": "wild-child",
+      "index": 12,
+      "board": "roles-extended.png",
+      "rect": {
+        "x": 52,
+        "y": 34,
+        "width": 348,
+        "height": 484
+      },
+      "topLeftForInspection": {
+        "x": 52,
+        "y": 506
+      },
+      "preserveAspect": true
+    },
+    {
+      "id": "piper",
+      "index": 13,
+      "board": "roles-extended.png",
+      "rect": {
+        "x": 413,
+        "y": 34,
+        "width": 348,
+        "height": 484
+      },
+      "topLeftForInspection": {
+        "x": 413,
+        "y": 506
+      },
+      "preserveAspect": true
+    },
+    {
+      "id": "fox",
+      "index": 14,
+      "board": "roles-extended.png",
+      "rect": {
+        "x": 776,
+        "y": 34,
+        "width": 348,
+        "height": 484
+      },
+      "topLeftForInspection": {
+        "x": 776,
+        "y": 506
+      },
+      "preserveAspect": true
+    },
+    {
+      "id": "scapegoat",
+      "index": 15,
+      "board": "roles-extended.png",
+      "rect": {
+        "x": 1138,
+        "y": 34,
+        "width": 348,
+        "height": 484
+      },
+      "topLeftForInspection": {
+        "x": 1138,
+        "y": 506
+      },
+      "preserveAspect": true
+    }
+  ]
+}

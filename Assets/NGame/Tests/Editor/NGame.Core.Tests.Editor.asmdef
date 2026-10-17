@@ -1,0 +1,15 @@
+{
+  "name": "NGame.Core.Tests.Editor",
+  "rootNamespace": "NGame.Core.Tests",
+  "references": ["NGame.Core"],
+  "includePlatforms": ["Editor"],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"],
+  "versionDefines": [],
+  "noEngineReferences": true,
+  "optionalUnityReferences": ["TestAssemblies"]
+}

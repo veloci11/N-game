@@ -1,0 +1,77 @@
+{
+  "mode": "PlayMode",
+  "summary": {
+    "total": 16,
+    "passed": 16,
+    "failed": 0,
+    "skipped": 0,
+    "inconclusive": 0
+  },
+  "durationSeconds": 11.0,
+  "tests": [
+    {
+      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.ActualProceduralUiSpritesHaveAnOpaqueCenterAndTransparentCorners(\"Panel\")",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.ActualProceduralUiSpritesHaveAnOpaqueCenterAndTransparentCorners(\"Disc\")",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.ARealUnscaledHoldRevealsAndMaskingHidesTheActualGraphicsImmediately",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.ArticulatedWolfAndIndependentSkyMoveThenRestWithReducedMotion",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.ASecondPointerCannotTakeOverThePrimaryHold",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.BackgroundingAnUnfinishedHoldCannotRevealAfterResuming",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.CancellingDuringTheCardFlipHidesThePrivateFaceInTheSameFrame",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.FocusLossMasksAVisibleRoleWithoutResumingTheOldHold",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.FullDaylightExtinguishesTheVillageLamps",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.HomeAndPreparationKeepTheCardHiddenAndBoundThePartySize",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.LeavingReducedMotionDoesNotRestartTheEntranceOfAlreadyVisibleCards",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.OpeningThePublicRoleLibraryCancelsThePrivateHoldAndSupportsAllFourPages",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.PhaseAndRouteChangesCancelPendingRevealAndVillageEntryResetsOnlyTheRound",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.ReducedMotionFreezesAmbientClockWaterFlickerAndLanternThenCanResume",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.SettingsCancelTheHoldAndClosingDoesNotRestartIt",
+      "status": "Passed"
+    },
+    {
+      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.VillageShadersDoNotReportCompilationErrors",
+      "status": "Passed"
+    }
+  ]
+}
