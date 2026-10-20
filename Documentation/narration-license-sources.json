@@ -1,0 +1,25 @@
+{
+  "verified_on": "2026-10-20",
+  "files": [
+    {
+      "file": "Kokoro-ONNX-MIT.txt",
+      "url": "https://raw.githubusercontent.com/thewh1teagle/kokoro-onnx/main/LICENSE",
+      "sha256": "f61fdd0217de9ece8fa699912848d91187d84879fc2e689f0906d0c1299e955e"
+    },
+    {
+      "file": "Kokoro-82M-Apache-2.0.txt",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "file": "SIWIS-CC-BY-4.0.txt",
+      "url": "https://datashare.ed.ac.uk/server/api/core/bitstreams/d7204860-2dc9-48e6-bb9a-604a3a49d9ce/content",
+      "sha256": "b34e17103bfb246f2549fc82a279e6ba28834e0cb42f76a92efc14b72e3a3723"
+    },
+    {
+      "file": "SIWIS-README.txt",
+      "url": "https://datashare.ed.ac.uk/server/api/core/bitstreams/a15e775d-abd6-496f-815b-68d3a9229e90/content",
+      "sha256": "783ab4373fb531d892802779de45c1a50ed956d50ce141210d05afccc6959f2b"
+    }
+  ]
+}

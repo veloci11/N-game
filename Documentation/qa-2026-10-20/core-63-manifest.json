@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-20",
+  "kind": "isolated-dotnet-nunit-reflection-runner-not-unity",
+  "passed": 63,
+  "failed": 0,
+  "reported_by": "rules_engine",
+  "command": "/Applications/Unity/Hub/Editor/6000.6.6f1-arm64/Unity.app/Contents/Resources/Scripting/DotNetSdk/dotnet run --project /tmp/ngame-core-validation-20261020/CoreValidation.csproj --no-launch-profile",
+  "archived_log": "core-63-results.log",
+  "archival_source_sha256": {
+    "Assets/NGame/Core/Multiplayer/RoomContracts.cs": "d2d887b7acc719a33a29caa9c9ef3a5d69a68bcf145d7b2152f67410a15e7a2b",
+    "Assets/NGame/Core/Multiplayer/WerewolfRoom.cs": "5ab2958bae2e513e0e619d014521351158607b0cdcde388137a4ddfb4f28eb20",
+    "Assets/NGame/Tests/Editor/WerewolfRoomTests.cs": "1deff73e94c159f1aa360f1917d54cc23abaca12df404b61f32b8f4c20a1257c"
+  },
+  "limitation": "Source hashes recorded when archiving the agent result, after the run. Not a Unity Editor or device result."
+}

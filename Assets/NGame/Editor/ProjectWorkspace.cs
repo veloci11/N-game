@@ -54,8 +54,13 @@ namespace NGame.EditorTools
             PlayerSettings.defaultIsNativeResolution = false;
             PlayerSettings.resizableWindow = true;
             PlayerSettings.fullScreenMode = FullScreenMode.Windowed;
-            PlayerSettings.bundleVersion = "0.1.0";
-            PlayerSettings.SetApplicationIdentifier(UnityEditor.Build.NamedBuildTarget.Standalone, "com.ngame.storybook");
+            PlayerSettings.bundleVersion = "0.3.0";
+            PlayerSettings.iOS.microphoneUsageDescription = "Le micro permet de parler aux autres joueurs pendant le vote de jour à distance, seulement quand vous l’activez.";
+            PlayerSettings.SetApplicationIdentifier(UnityEditor.Build.NamedBuildTarget.Android, "com.ngame.storybook");
+            PlayerSettings.SetApplicationIdentifier(UnityEditor.Build.NamedBuildTarget.iOS, "com.ngame.storybook");
+            // Local prototype rooms are served over HTTP on the Mac or the same Wi-Fi.
+            PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
+            PlayerSettings.SetApplicationIdentifier(UnityEditor.Build.NamedBuildTarget.Standalone, "com.ngame.storybook.desktop");
             EditorSettings.serializationMode = SerializationMode.ForceText;
             var current = EditorSceneManager.GetActiveScene();
             if (current.isDirty) throw new InvalidOperationException("Save the current scene first.");

@@ -1,0 +1,29 @@
+services:
+  ngame:
+    build:
+      context: ../..
+      dockerfile: Server/NGame.Server/Dockerfile
+    image: ngame-server:local
+    restart: unless-stopped
+    init: true
+    environment:
+      ASPNETCORE_URLS: http://0.0.0.0:8080
+      NGAME_DATA_DIRECTORY: /var/lib/ngame
+      NGAME_ROOM_TTL_SECONDS: ${NGAME_ROOM_TTL_SECONDS:-7200}
+      NGAME_CONNECTED_GRACE_SECONDS: ${NGAME_CONNECTED_GRACE_SECONDS:-15}
+      NGAME_ALLOWED_ORIGINS: ${NGAME_ALLOWED_ORIGINS:-}
+    ports:
+      - 127.0.0.1:8080:8080
+    volumes:
+      - ngame-state:/var/lib/ngame
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    stop_grace_period: 20s
+
+volumes:
+  ngame-state:

@@ -38,7 +38,7 @@ namespace NGame.Presentation
 
         public static Sprite Art(string name)
         {
-            if (Illustrations.TryGetValue(name, out var result)) return result;
+            if (Illustrations.TryGetValue(name, out var result) && result != null) return result;
             result = Resources.Load<Sprite>("Werewolf/" + name);
             if (result == null)
             {
@@ -52,7 +52,7 @@ namespace NGame.Presentation
         public static Sprite Portrait(int index)
         {
             if (index < 0 || index > 5) return null;
-            if (portraits == null)
+            if (portraits == null || portraits[index] == null)
             {
                 var image = Art("avatars");
                 if (image == null) return null;

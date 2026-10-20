@@ -1,0 +1,13 @@
+{
+  "provenance": "Agent services: deterministic frame .NET harness, Unity lifecycle stubs; actual practice/core/chat source. Not a Unity Editor campaign. Log copied after execution by coordination; hashes below describe files at archival time, not a guaranteed run-time fingerprint.",
+  "passed": 80,
+  "failed": 0,
+  "cases": 4,
+  "seedsPerCase": 20,
+  "log": "practice-guidance-harness.log",
+  "logSha256": "1402c13adb52696edb6ca4c210e85e610123a98a76bdf8f6fd84884d94307ff1",
+  "sourceHashesAtArchival": {
+    "Assets/NGame/Presentation/Game/PracticeRoomClient.cs": "7f59dba8fce3fa7b09431e78573e1c0a72ff7f21c8b0035b54254e11dcb2cf19",
+    "Assets/NGame/Tests/PlayMode/PracticeGuidanceTests.cs": "e48f31865d2894292b880204ed012e966d638f0f5b4c3a4f261d2e40329852b1"
+  }
+}

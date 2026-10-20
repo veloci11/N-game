@@ -2,6 +2,8 @@
 
 Date : 17 octobre 2026. Statut : proposition de travail à valider par étapes.
 
+**Mise à jour de référence :** le [plan d’exécution](PLAN-EXECUTION.md), les [vues et communications](COMMUNICATIONS-ET-VUES.md) et la [recette du joueur](RECETTE-JOUEUR.md) précisent les dernières demandes. Le présent document conserve le cadrage initial ; son ancien état de départ ne décrit pas l’ensemble du prototype local actuel. Huit rôles disposent maintenant d’un moteur local. Ce cadrage a été rédigé pendant l’étape de planification du 17 octobre. Mathis a explicitement demandé la reprise du développement en équipe le 20 octobre ; consulter [SUIVI-PRODUCTION.md](SUIVI-PRODUCTION.md) pour l’état courant des sources et des preuves.
+
 N’GAME permet à un groupe d’amis de lancer des jeux de soirée sans cartes ni matériel. L’application fournit ce qui manque : règles, rôles secrets, cartes, chronomètres et scores. Les joueurs continuent à discuter et à se regarder dans la pièce.
 
 La première production est le Loup-Garou dans l’univers de conte en papier choisi par Mathis. Le Président attend sa propre validation artistique. Les choix d’architecture et de lancement ci-dessous sont des recommandations ; ils ne constituent pas des fonctionnalités déjà développées.
@@ -17,6 +19,8 @@ La première production est le Loup-Garou dans l’univers de conte en papier ch
 | DA du Président | À retravailler plus tard |
 | Même pièce et distance, priorité aux soirées ensemble | Choix confirmé par Mathis |
 | DA des cartes de rôles présentées | Validée par Mathis ; règles à développer |
+| Chat écrit et vocal distant uniquement pendant le vote de jour | Demandés ; à développer, selon le document de communication |
+| Recette en se plaçant dans la peau du joueur | Demandée ; parcours et critères définis, essais à exécuter à la reprise |
 | Application entière sous Unity | Recommandation pour la production |
 | Loup-Garou connecté, chacun son téléphone | Direction retenue ; serveur et protocoles de meneur à développer |
 | Français, portrait, pseudonyme invité | Valeurs de départ proposées |
@@ -36,7 +40,7 @@ Chaque joueur conserve ses cartes, son rôle et ses actions privées. Un code ou
 
 **Mathis a confirmé les deux configurations : même pièce et distance, avec priorité aux soirées ensemble.** En présence, la discussion reste dans la pièce. Un protocole de nuit avec yeux fermés et narration ou meneur permet les rôles d’observation physique, notamment la Petite Fille. Un mode où tous restent éveillés sur leur écran doit afficher ses différences de règles.
 
-À distance, la conversation vocale est un besoin distinct, à préciser entre un canal externe et une fonction future de l’application. Les rôles fondés sur les voisins, regards ou gestes nécessitent une convention déclarée ou une variante. L’ordre d’arrivée dans le salon ne remplace jamais silencieusement les places autour d’une table. Le mode distant doit compléter l’expérience de soirée, sans imposer ses compromis à la version en présence.
+À distance, Mathis demande désormais du vocal intégré **uniquement pendant le vote de jour**, second tour compris. Il reste fermé pendant la phase Discussion et la nuit. Le chat écrit sert aux échanges autorisés ; ces deux fonctions ne sont pas encore implémentées. Les [vues et communications](COMMUNICATIONS-ET-VUES.md) remplacent l’ancienne proposition de canal vocal externe. Les rôles fondés sur les voisins, regards ou gestes nécessitent une convention déclarée ou une variante. L’ordre d’arrivée dans le salon ne remplace jamais silencieusement les places autour d’une table. Le mode distant doit compléter l’expérience de soirée, sans imposer ses compromis à la version en présence.
 
 ## 3. Parcours principal
 
@@ -69,7 +73,7 @@ Le créateur du salon organise la soirée. Il ne reçoit pas automatiquement les
 | Réglages | Son, narration, vibrations, texte et mouvements réduits |
 | Aide et interruption | Règles, retour de connexion, abandon et reprise |
 
-Un compte pourra ensuite synchroniser préférences et achats éventuels. Il ne doit pas bloquer le premier jeu entre amis. Les amis, messages et profils sociaux élaborés attendront un besoin démontré.
+Un compte pourra ensuite synchroniser préférences et achats éventuels. Il ne doit pas bloquer le premier jeu entre amis. Le chat de partie est demandé et prévu ; listes d’amis, messages directs et profils sociaux élaborés attendront un besoin démontré.
 
 ## 5. Système artistique
 
@@ -114,7 +118,7 @@ Exemple de composition à tester à huit : deux loups, une Voyante et cinq Villa
 1. **Distribution et préparation.** Attribution aléatoire côté serveur. Chaque joueur reçoit uniquement ses secrets autorisés ; les loups identifient les partenaires prévus par les règles, sans forcément connaître leur spécialité. Les choix initiaux, comme Voleur, Cupidon et reconnaissance des amoureux, ont leurs fenêtres dédiées avant les actions normales.
 2. **Nuit.** Le serveur construit l’ordre à partir des rôles présents. Dans le noyau classique : Voyante, loups, puis Sorcière si elle est en jeu. Les protections et autres pouvoirs s’insèrent selon leur module. La Voyante consulte la carte de rôle de la cible ; « camp seulement » est une variante explicite, pas la règle classique. La Sorcière reçoit son information après la décision correspondante des loups. Les écrans peuvent conserver une même ambiance de nuit sans exécuter tous les pouvoirs simultanément. Le consensus des loups, les échéances et leurs règles d’absence sont fixés avant la partie ; en mode Petite Fille à table, ils doivent pouvoir réagir à une observation remarquée.
 3. **Aube et réactions.** Le village change de lumière. Le moteur résout les effets, les décès et les fenêtres de réaction, dont Chasseur, amoureux et succession éventuelle. Le dévoilement d’une carte attend les pouvoirs qui doivent agir avant lui. Le serveur vérifie les victoires après les réactions pertinentes.
-4. **Discussion.** Échanges entre amis, durée de départ proposée de 90 secondes, prolongeable selon les droits annoncés. Aucun chat n’est nécessaire à cet usage.
+4. **Discussion.** Échanges entre amis et chat écrit autorisé selon les droits de la phase ; le vocal intégré reste fermé. La durée de départ de 90 secondes reste une proposition à essayer, distincte de la fenêtre vocale du vote. Voir [COMMUNICATIONS-ET-VUES.md](COMMUNICATIONS-ET-VUES.md).
 5. **Vote.** Sélection privée jusqu’à clôture, puis publication simultanée des choix pour conserver l’information sociale d’un vote observable à table. Un scrutin durablement anonyme, l’abstention et un verrouillage définitif après confirmation sont des options N’GAME à nommer et tester. Le serveur valide les votants, les cibles et les poids de voix.
 6. **Résolution.** Le module de règles traite la cible arrivée en tête, les égalités et les pouvoirs publics. Avec le Capitaine, tenir compte de sa double voix et du départage prévu. Sans pouvoir prioritaire, prévoir le nouveau vote entre ex æquo puis l’absence d’élimination en cas de nouvelle égalité. Bouc Émissaire, Idiot, Juge Bègue et autres rôles modifient ce chemin ; les décès déclenchent à nouveau les réactions autorisées.
 7. **Victoire.** Référence classique : le village élimine le dernier loup, les loups le dernier Villageois. Le couple mixte et les rôles solitaires ajoutent leurs propres conditions. L’arrêt automatique à parité est une variante qui ne doit pas couper une réaction ou une possibilité de victoire encore active. Le jeu de règles versionné décide de la résolution, pas une condition générique sur le nombre de joueurs.

@@ -53,8 +53,13 @@ Shader "NGame/Storybook River"
                     * (1.0 - smoothstep(0.31, 0.37, uv.y));
                 float swell = sin(uv.y * 112.0 - _Clock * 1.7 + sin(uv.x * 21.0) * 1.8);
                 float ripple = sin(uv.y * 193.0 + uv.x * 43.0 - _Clock * 2.9);
-                float2 distortion = float2(swell * 0.0018 + ripple * 0.0005, ripple * 0.00045);
-                half4 paper = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + distortion * mask * _Motion);
+                float2 distortion = float2(swell * 0.006 + ripple * 0.0012, ripple * 0.0013);
+                // The upper-left branches breathe in the breeze; the skyline and architecture stay still.
+                float leaves = (1.0 - smoothstep(0.27, 0.45, uv.x)) * smoothstep(0.69, 0.87, uv.y);
+                float breeze = sin(_Clock * 0.57 + uv.y * 13.0) * 0.0035
+                    + sin(_Clock * 1.13 + uv.y * 29.0) * 0.0008;
+                float2 offset = distortion * mask + float2(breeze, breeze * 0.28) * leaves;
+                half4 paper = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + offset * _Motion);
                 float light = pow(saturate(0.5 + 0.5 * sin(uv.y * 157.0 - _Clock * 2.1 + uv.x * 27.0)), 9.0);
                 paper.rgb += half3(0.9, 0.52, 0.18) * light * mask * 0.035 * _Motion * _Reflection;
                 return paper * input.color;

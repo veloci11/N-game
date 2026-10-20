@@ -1,0 +1,840 @@
+{
+  "success": true,
+  "command": "command test_status",
+  "data": {
+    "command": "test_status",
+    "parameters": {},
+    "result": {
+      "status": "completed",
+      "duration": 0.97,
+      "summary": {
+        "total": 116,
+        "passed": 116,
+        "failed": 0,
+        "skipped": 0,
+        "inconclusive": 0
+      },
+      "results": [
+        {
+          "FullName": "NGame.Core.Tests.AppPreferencesTests.FreshPreferencesLeaveAudioAndReducedMotionDisabledWithoutWriting",
+          "Status": "Passed",
+          "Duration": 0.0072595,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.AppPreferencesTests.MissingPreferenceStoreIsRejected",
+          "Status": "Passed",
+          "Duration": 0.0014489,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.AppPreferencesTests.SavedChoicesAreReadAndEachChangeIsPersistedBeforeNotifying",
+          "Status": "Passed",
+          "Duration": 0.0020752,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.AppPreferencesTests.SettingTheCurrentChoiceDoesNotWriteOrNotify",
+          "Status": "Passed",
+          "Duration": 0.0001447,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.AppPreferencesTests.TableNarrationCanBeDisabledAndRestoredWithoutEnablingAmbientSound",
+          "Status": "Passed",
+          "Duration": 0.0002401,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.PartyComposerTests.CompositionClearlyRemainsAnUntestedBalanceProposal",
+          "Status": "Passed",
+          "Duration": 0.0021266,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.PartyComposerTests.ProposedCountsFitEverySupportedParty(6,1,1,4)",
+          "Status": "Passed",
+          "Duration": 0.0002162,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.PartyComposerTests.ProposedCountsFitEverySupportedParty(7,2,1,4)",
+          "Status": "Passed",
+          "Duration": 0.000045,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.PartyComposerTests.ProposedCountsFitEverySupportedParty(8,2,1,5)",
+          "Status": "Passed",
+          "Duration": 0.0000425,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.PartyComposerTests.ProposedCountsFitEverySupportedParty(9,2,1,6)",
+          "Status": "Passed",
+          "Duration": 0.0000447,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.PartyComposerTests.ProposedCountsFitEverySupportedParty(10,2,1,7)",
+          "Status": "Passed",
+          "Duration": 0.0000418,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.PartyComposerTests.ProposedCountsFitEverySupportedParty(11,3,1,7)",
+          "Status": "Passed",
+          "Duration": 0.0000417,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.PartyComposerTests.ProposedCountsFitEverySupportedParty(12,3,1,8)",
+          "Status": "Passed",
+          "Duration": 0.0000415,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.PartyComposerTests.RoleEntriesAreReadOnlyAndContainCountsWithoutPlayerAssignments",
+          "Status": "Passed",
+          "Duration": 0.0006141,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.PartyComposerTests.UnsupportedSizesAreRejectedRatherThanSilentlyClamped(0)",
+          "Status": "Passed",
+          "Duration": 0.0003121,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.PartyComposerTests.UnsupportedSizesAreRejectedRatherThanSilentlyClamped(5)",
+          "Status": "Passed",
+          "Duration": 0.0000364,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.PartyComposerTests.UnsupportedSizesAreRejectedRatherThanSilentlyClamped(13)",
+          "Status": "Passed",
+          "Duration": 0.0000339,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.PartyComposerTests.UnsupportedSizesAreRejectedRatherThanSilentlyClamped(int.MaxValue)",
+          "Status": "Passed",
+          "Duration": 0.000033,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.RoleCatalogTests.ApprovedCatalogueHasUniqueIdsAndACompleteIllustrationMapping",
+          "Status": "Passed",
+          "Duration": 0.0009426,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.RoleCatalogTests.EveryCardHasPublicCopyAndVersionedEngineSupportIsLimitedToEightRoles",
+          "Status": "Passed",
+          "Duration": 0.0009458,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.RoleCatalogTests.KnownLookupReturnsTheSameImmutableCatalogueEntry",
+          "Status": "Passed",
+          "Duration": 0.0003474,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.RoleCatalogTests.PetiteFillePreservesThePhysicalProtocolAndRequiresARemoteAdaptation",
+          "Status": "Passed",
+          "Duration": 0.00017,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.RoleCatalogTests.SpatialAndBuildingDependenciesAreNotPresentedAsAutomaticRemoteRules",
+          "Status": "Passed",
+          "Duration": 0.0000981,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.RoleCatalogTests.UnknownIdsDoNotFallBackToAnotherRole(null)",
+          "Status": "Passed",
+          "Duration": 0.0003063,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.RoleCatalogTests.UnknownIdsDoNotFallBackToAnotherRole(\"\")",
+          "Status": "Passed",
+          "Duration": 0.0000291,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.RoleCatalogTests.UnknownIdsDoNotFallBackToAnotherRole(\"missing\")",
+          "Status": "Passed",
+          "Duration": 0.0000269,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.RoleCatalogTests.UnknownIdsDoNotFallBackToAnotherRole(\"WEREWOLF\")",
+          "Status": "Passed",
+          "Duration": 0.0000274,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.RoleCatalogTests.UnknownIdsDoNotFallBackToAnotherRole(\" werewolf \")",
+          "Status": "Passed",
+          "Duration": 0.0000246,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.AConfirmedChoiceCannotBeChangedByNavigatingPhases",
+          "Status": "Passed",
+          "Duration": 0.0018841,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.ConfirmationCannotBeFabricatedByDirectPhaseNavigation",
+          "Status": "Passed",
+          "Duration": 0.0006569,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.ConfirmationRequiresASelectionAndConsumesIt",
+          "Status": "Passed",
+          "Duration": 0.0004015,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.EventsObserveCompleteChangesAndNoOpsDoNotNotify",
+          "Status": "Passed",
+          "Duration": 0.0006716,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.IndependentSessionsCannotShareARevealOrAChoice",
+          "Status": "Passed",
+          "Duration": 0.000254,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.MovingPhaseMasksAndConcealingAgainNeverRestoresTheRole",
+          "Status": "Passed",
+          "Duration": 0.0002029,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.NewSessionStartsAtNightWithoutExposingTheLocalRole",
+          "Status": "Passed",
+          "Duration": 0.0002865,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.NonNightPhasesCannotRevealTheLocalRole(Dawn)",
+          "Status": "Passed",
+          "Duration": 0.0006077,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.NonNightPhasesCannotRevealTheLocalRole(Vote)",
+          "Status": "Passed",
+          "Duration": 0.0000807,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.PhaseNavigationDiscardsAPendingSelection",
+          "Status": "Passed",
+          "Duration": 0.0001453,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.PlayerChoicesAreTheSixImmutableDecorativeParticipants",
+          "Status": "Passed",
+          "Duration": 0.0010167,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.ReenteringNightStillConcealsAnExposedRole",
+          "Status": "Passed",
+          "Duration": 0.0001018,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.ReenteringVoteAlsoDiscardsAPendingSelection",
+          "Status": "Passed",
+          "Duration": 0.0000904,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.ResetMasksTheRoleAndStartsAFreshSelectableRound",
+          "Status": "Passed",
+          "Duration": 0.0002197,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.RevealExposesOnlyTheLocalDemoRoleAndConcealMasksSynchronously",
+          "Status": "Passed",
+          "Duration": 0.0001533,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.SelectionAndConfirmationAreUnavailableOutsideVoting",
+          "Status": "Passed",
+          "Duration": 0.000117,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.UnknownPhaseIsRejectedWithoutCorruptingTheSession",
+          "Status": "Passed",
+          "Duration": 0.0001362,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.UnknownPlayerCannotReplaceAValidSelection(null)",
+          "Status": "Passed",
+          "Duration": 0.0001101,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.UnknownPlayerCannotReplaceAValidSelection(\"\")",
+          "Status": "Passed",
+          "Duration": 0.0000302,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.UnknownPlayerCannotReplaceAValidSelection(\"missing\")",
+          "Status": "Passed",
+          "Duration": 0.0000285,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.VillageSessionTests.UnknownPlayerCannotReplaceAValidSelection(\"LEA\")",
+          "Status": "Passed",
+          "Duration": 0.0000263,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.ACompleteVillageVictoryRevealsCardsAndResetRemovesAllOldSecrets",
+          "Status": "Passed",
+          "Duration": 0.021599,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.ADeadHunterCanReverseTheOutcomeBeforeVictoryIsEvaluated",
+          "Status": "Passed",
+          "Duration": 0.0012141,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.ADisagreementInTheMeuteDoesNotInventATieBreakerVictim",
+          "Status": "Passed",
+          "Duration": 0.0009137,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.ARunoffCanResolveTheTieAndCannotBeReplayedWithTheOldTurn",
+          "Status": "Passed",
+          "Duration": 0.0017159,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.CommandsAreIdempotentButPayloadChangesAndStaleTurnsAreRejected",
+          "Status": "Passed",
+          "Duration": 0.000804,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.ConfirmedActionAndPotionReservesAreStructuredAndDetached",
+          "Status": "Passed",
+          "Duration": 0.0009521,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.CupidPassingStillProducesTheSamePublicRecognitionWindowAndHostMayCloseAfterThreeSeconds",
+          "Status": "Passed",
+          "Duration": 0.0011432,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.DefaultCompositionProducesExactlyOneSupportedCardPerReadyPlayer(6)",
+          "Status": "Passed",
+          "Duration": 0.0011536,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.DefaultCompositionProducesExactlyOneSupportedCardPerReadyPlayer(7)",
+          "Status": "Passed",
+          "Duration": 0.0003395,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.DefaultCompositionProducesExactlyOneSupportedCardPerReadyPlayer(12)",
+          "Status": "Passed",
+          "Duration": 0.0005727,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.DefaultCompositionProducesExactlyOneSupportedCardPerReadyPlayer(24)",
+          "Status": "Passed",
+          "Duration": 0.0011448,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.DistributionTimeoutExplainsAbsenceAndStartsOnlyTheFirstNightWindow",
+          "Status": "Passed",
+          "Duration": 0.0008681,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.DistributionWaitsForEveryPersonalAcknowledgementWithoutStartingPowerClocks",
+          "Status": "Passed",
+          "Duration": 0.0012015,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.GuardDoesNotBlockPoisonAndTheWitchCannotSpendHealingOnABlockedAttack",
+          "Status": "Passed",
+          "Duration": 0.0011952,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.GuardProtectionBlocksWolvesButTheSameTargetCannotBeProtectedNextNight",
+          "Status": "Passed",
+          "Duration": 0.0022635,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.HiddenDeadRolesRetainTheirPublicCallWithoutOfferingThemAnAction",
+          "Status": "Passed",
+          "Duration": 0.0019307,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.HostAndReadinessAreEnforcedAndNewConfigurationNeedsFreshConsent",
+          "Status": "Passed",
+          "Duration": 0.0012871,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.HostCanRemoveAnAbsentLobbyPlaceAndItsReceiptsWithoutKeepingFalseReadiness",
+          "Status": "Passed",
+          "Duration": 0.0048317,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.HunterTimeoutPassesAndDoesNotFabricateAShot",
+          "Status": "Passed",
+          "Duration": 0.0009765,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.IllustratedRolesWithoutAnEngineAreRejectedRatherThanSilentlyActivated(\"white-wolf\")",
+          "Status": "Passed",
+          "Duration": 0.0003869,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.IllustratedRolesWithoutAnEngineAreRejectedRatherThanSilentlyActivated(\"thief\")",
+          "Status": "Passed",
+          "Duration": 0.0001201,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.IllustratedRolesWithoutAnEngineAreRejectedRatherThanSilentlyActivated(\"elder\")",
+          "Status": "Passed",
+          "Duration": 0.0001059,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.IllustratedRolesWithoutAnEngineAreRejectedRatherThanSilentlyActivated(\"raven\")",
+          "Status": "Passed",
+          "Duration": 0.0001141,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.IllustratedRolesWithoutAnEngineAreRejectedRatherThanSilentlyActivated(\"wild-child\")",
+          "Status": "Passed",
+          "Duration": 0.0001137,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.IllustratedRolesWithoutAnEngineAreRejectedRatherThanSilentlyActivated(\"piper\")",
+          "Status": "Passed",
+          "Duration": 0.0001116,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.IllustratedRolesWithoutAnEngineAreRejectedRatherThanSilentlyActivated(\"fox\")",
+          "Status": "Passed",
+          "Duration": 0.000112,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.IllustratedRolesWithoutAnEngineAreRejectedRatherThanSilentlyActivated(\"scapegoat\")",
+          "Status": "Passed",
+          "Duration": 0.0001081,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.InGameDeparturePreservesItsSecretAndResumeDoesNotStealBackHosting",
+          "Status": "Passed",
+          "Duration": 0.0008239,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.InvalidMembershipAndNamesNeverBecomePlayers",
+          "Status": "Passed",
+          "Duration": 0.000276,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.LeavingTheFinishedRosterDoesNotReplaceTheVictoryExplanation",
+          "Status": "Passed",
+          "Duration": 0.0013749,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.LobbyDepartureRemovesThePlaceResetsConsentAndTransfersTheHost",
+          "Status": "Passed",
+          "Duration": 0.0003834,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.LoverDeathTriggersTheHuntersReactionAndOnlyLoversLearnTheirLink",
+          "Status": "Passed",
+          "Duration": 0.0051155,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.LoversReceiveAnEightSecondRecognitionCallWithoutPubliclyIdentifyingTheirPair",
+          "Status": "Passed",
+          "Duration": 0.001709,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.MissingPetiteFilleAndWolfActionsExpireWithoutInventingAnAttack",
+          "Status": "Passed",
+          "Duration": 0.0005481,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.MixedLoversDyingTogetherCannotWinTheirOriginalTeamsAndHunterStillActs",
+          "Status": "Passed",
+          "Duration": 0.0015201,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.MixedLoversWinOnlyWhenTheyAreTheFinalTwoSurvivors",
+          "Status": "Passed",
+          "Duration": 0.0030465,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.NightKeepsItsMinimumWindowAndAnOutageDoesNotInventAWholeGame",
+          "Status": "Passed",
+          "Duration": 0.0010126,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.NightNarrationCallsTheRoleWithoutIdentifyingItsPlayer",
+          "Status": "Passed",
+          "Duration": 0.0040174,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.PetiteFilleHasNoDigitalIdentitiesAndWolvesCanChangeTheirChoiceDuringHerWindow",
+          "Status": "Passed",
+          "Duration": 0.0081272,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.PhysicalPetiteFilleRemainsVulnerableEvenWhenTheGuardChoosesHer",
+          "Status": "Passed",
+          "Duration": 0.0009995,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.PoisonStillKillsAPlayerWhoseWolfAttackWasHealedTheSameNight",
+          "Status": "Passed",
+          "Duration": 0.0010099,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.RemotePetiteFilleAndIncorrectDeckSizesCannotStart",
+          "Status": "Passed",
+          "Duration": 0.0003186,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.RemoteVoteKeepsItsSpeechWindowAndRequiresHostOrDeadlineToClose",
+          "Status": "Passed",
+          "Duration": 0.0015282,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.RemovingAPlaceKeepsAnExplicitDeckAndExplainsItsMismatchOrTheMinimumPlayerCount",
+          "Status": "Passed",
+          "Duration": 0.0004619,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.RemovingAPlaceRequiresTheHostAndOneOtherCurrentMember",
+          "Status": "Passed",
+          "Duration": 0.0011618,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.RestoredFinishedGameShufflesTheSameFutureDeckAndResetChangesTheMatch",
+          "Status": "Passed",
+          "Duration": 0.0032017,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.RoleSecretsWolfAlliesAndDetachedSnapshotsHaveSeparateRecipients",
+          "Status": "Passed",
+          "Duration": 0.0011236,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.SeerLearnsTheExactCardAndOnlyTheRecipientGetsThatFact",
+          "Status": "Passed",
+          "Duration": 0.0009609,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.SnapshotPreservesSecretsReceiptsAndClockWithoutSharingMutableArrays",
+          "Status": "Passed",
+          "Duration": 0.0012743,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.SnapshotRestoresEveryCriticalPhaseWithTheSameRecipientRights(\"lobby\")",
+          "Status": "Passed",
+          "Duration": 0.0024626,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.SnapshotRestoresEveryCriticalPhaseWithTheSameRecipientRights(\"distribution\")",
+          "Status": "Passed",
+          "Duration": 0.0022791,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.SnapshotRestoresEveryCriticalPhaseWithTheSameRecipientRights(\"night\")",
+          "Status": "Passed",
+          "Duration": 0.00204,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.SnapshotRestoresEveryCriticalPhaseWithTheSameRecipientRights(\"dawn\")",
+          "Status": "Passed",
+          "Duration": 0.0020056,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.SnapshotRestoresEveryCriticalPhaseWithTheSameRecipientRights(\"discussion\")",
+          "Status": "Passed",
+          "Duration": 0.0021737,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.SnapshotRestoresEveryCriticalPhaseWithTheSameRecipientRights(\"vote\")",
+          "Status": "Passed",
+          "Duration": 0.002297,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.SnapshotRestoresEveryCriticalPhaseWithTheSameRecipientRights(\"verdict\")",
+          "Status": "Passed",
+          "Duration": 0.0023411,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.SnapshotRestoresEveryCriticalPhaseWithTheSameRecipientRights(\"reaction\")",
+          "Status": "Passed",
+          "Duration": 0.0020913,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.SnapshotRestoresEveryCriticalPhaseWithTheSameRecipientRights(\"finished\")",
+          "Status": "Passed",
+          "Duration": 0.0020322,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.StartBlockedReasonMatchesTheActualStartRefusalAndARejectedConfigurationNeverReplacesIt",
+          "Status": "Passed",
+          "Duration": 0.0009949,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.TheLastHunterAndWolfCanBothDieBeforeTheDrawIsDecided",
+          "Status": "Passed",
+          "Duration": 0.0021973,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.TiedVotesHaveOneRestrictedRunoffThenNoEliminationAndVotesStaySecretUntilClosure",
+          "Status": "Passed",
+          "Duration": 0.0018965,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.VoteChoicesArePersonalUntilVerdictAndTheVerdictDoesNotStartAHunterClockEarly",
+          "Status": "Passed",
+          "Duration": 0.0016351,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.VoteDeadlineRecordsOnlyAbstentionsWhenNobodyResponds",
+          "Status": "Passed",
+          "Duration": 0.000951,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.WitchCanUseBothPotionsInOneNightButNeverAgainAfterTheyAreSpent",
+          "Status": "Passed",
+          "Duration": 0.0017708,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.WitchKeepsTheUnusedPoisonAndCannotHealASecondTime",
+          "Status": "Passed",
+          "Duration": 0.0017338,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.WitchMayHealHerselfWithoutSelectingAPoisonTarget",
+          "Status": "Passed",
+          "Duration": 0.0010134,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Core.Tests.WerewolfRoomTests.WolvesDoNotWinAtParityAndMustEliminateTheFinalNonWolf",
+          "Status": "Passed",
+          "Duration": 0.0021723,
+          "Message": null,
+          "StackTrace": null
+        }
+      ]
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "/Users/mathis/Code/N-game"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

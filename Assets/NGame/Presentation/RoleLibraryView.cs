@@ -28,6 +28,7 @@ namespace NGame.Presentation
         private TextMeshProUGUI distance;
         private TextMeshProUGUI presenceLabel;
         private TextMeshProUGUI distanceLabel;
+        private TextMeshProUGUI ruleStatus;
         private RectTransform detailRule;
         private UnityEngine.UI.Image detailArt;
         private RoleCardMotion detailMotion;
@@ -58,7 +59,7 @@ namespace NGame.Presentation
             UITheme.Position((RectTransform)next.transform, UITheme.Bottom, 119, 61, 48, 44);
             pageLabel = Text("Role page number", transform, "", 20, UITheme.Parchment,
                 UITheme.Bottom, 0, 61, 150, 39);
-            Text("Catalogue scope", transform, "CATALOGUE VISUEL · RÈGLES À DÉVELOPPER", 8,
+            Text("Catalogue scope", transform, "8 RÔLES JOUABLES · 16 CARTES ILLUSTRÉES", 8,
                 UITheme.Opacity(UITheme.Parchment, .65f), UITheme.Bottom, 0, 23, 390, 24, false).characterSpacing = 1.1f;
             BuildDetail();
             OpenPage(0);
@@ -125,7 +126,7 @@ namespace NGame.Presentation
             distanceLabel.characterSpacing = 1.2f;
             distance = Text("Distance mode design", detail.transform, "", 17, UITheme.Parchment,
                 UITheme.Top, 72, -692, 190, 43);
-            Text("Role rules status", detail.transform, "Une carte du catalogue.\nCe rôle ne lance aucune partie et ses règles restent à développer.",
+            ruleStatus = Text("Role rules status", detail.transform, "",
                 10, UITheme.Quiet, UITheme.Bottom, 0, 133, 340, 52, false);
             var back = UITheme.Action("Close role detail", detail.transform, "Retour aux cartes", BackToGrid, false);
             UITheme.Position((RectTransform)back.transform, UITheme.Bottom, 0, 62, 340, 47);
@@ -144,6 +145,7 @@ namespace NGame.Presentation
                 if (index >= RoleCatalog.All.Count) continue;
                 var role = RoleCatalog.All[index];
                 art[i].sprite = UITheme.RoleCard(role.RoleArtIndex);
+                motions[i].SetRole(role.Id);
                 names[i].text = role.DisplayName;
                 motions[i].RestartEntrance(i);
             }
@@ -160,9 +162,13 @@ namespace NGame.Presentation
             SelectedRoleId = role.Id;
             detailTitle.text = role.DisplayName;
             detailArt.sprite = UITheme.RoleCard(role.RoleArtIndex);
+            detailMotion.SetRole(role.Id);
             summary.text = role.Summary;
             presence.text = ModeDescription(role.PresenceSupport);
             distance.text = ModeDescription(role.DistanceSupport);
+            ruleStatus.text = role.RulesImplemented
+                ? "Rôle disponible dans les compositions compatibles.\nLes règles choisies sont affichées avant la partie."
+                : "Illustration du catalogue.\nCe rôle n’est pas encore disponible en partie.";
             grid.gameObject.SetActive(false);
             overview.SetActive(false);
             previous.gameObject.SetActive(false);

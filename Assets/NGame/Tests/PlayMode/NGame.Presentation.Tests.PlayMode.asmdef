@@ -1,7 +1,7 @@
 {
   "name": "NGame.Presentation.Tests.PlayMode",
   "rootNamespace": "NGame.Presentation.Tests",
-  "references": ["NGame.Core", "NGame.Presentation", "UnityEngine.UI"],
+  "references": ["NGame.Core", "NGame.Presentation", "UnityEngine.UI", "Unity.TextMeshPro"],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,

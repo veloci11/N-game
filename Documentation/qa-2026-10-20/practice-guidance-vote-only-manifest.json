@@ -1,0 +1,8 @@
+{
+  "provenance": "Agent services .NET deterministic harness with Unity lifecycle stubs; not a Unity Editor run. Log archived after execution. Supersedes 80-case harness for the new vote-only chat integration.",
+  "passed": 100,
+  "failed": 0,
+  "cases": 5,
+  "seedsPerCase": 20,
+  "logSha256": "81fc2ee96d18234a24be8faddb7e4ea2f181bfc2a0753770745383fa741d2d2a"
+}

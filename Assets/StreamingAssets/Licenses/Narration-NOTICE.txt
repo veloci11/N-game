@@ -1,0 +1,28 @@
+N’GAME — Narration publique française (générée le 20 octobre 2026)
+
+Textes originaux de phase N’GAME ; aucune donnée de joueur ou identité privée.
+Synthèse locale Kokoro-82M v1.0, voix prédéfinie ff_siwis, langue fr-fr.
+Aucune voix personnelle fournie ou clonée par le projet. Les WAV sont des sorties synthétiques,
+pas des extraits d’un enregistrement original SIWIS. Transformations : vitesse TTS 1,05/1,15,
+normalisation du pic à -3 dBFS, fondus de bord 5 ms et conversion PCM16 mono 24 kHz.
+
+Kokoro-82M : poids annoncés sous Apache License 2.0 par hexgrad.
+https://huggingface.co/hexgrad/Kokoro-82M
+https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md
+Copie : Kokoro-82M-Apache-2.0.txt
+
+kokoro-onnx : MIT License ; Copyright (c) 2025 github.com/thewh1teagle.
+https://github.com/thewh1teagle/kokoro-onnx
+Copie : Kokoro-ONNX-MIT.txt. Le wrapper et les poids ne sont pas distribués dans le jeu.
+
+Attribution du corpus associé à ff_siwis, déclaré CC BY 4.0 par sa source :
+Yamagishi, Junichi; Honnet, Pierre-Edouard; Garner, Philip; Lazaridis, Alexandros. (2017).
+The SIWIS French Speech Synthesis Database, 2016 [dataset]. University of Edinburgh.
+School of Informatics. The Centre for Speech Technology Research.
+https://doi.org/10.7488/ds/1705
+https://datashare.ed.ac.uk/handle/10283/2353
+Licence : https://creativecommons.org/licenses/by/4.0/
+Copies : SIWIS-CC-BY-4.0.txt et SIWIS-README.txt.
+Les auteurs et institutions du corpus ne soutiennent ni ne valident N’GAME.
+Cette attribution conserve la provenance ; elle ne prétend pas que toute sortie TTS
+est automatiquement une adaptation juridique du corpus.

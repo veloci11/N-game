@@ -79,7 +79,7 @@ namespace NGame.Presentation
             halo.transform.localScale = Vector3.one * diameter * 1.8f;
             halo.color = new Color(1, .66f, .25f,
                 visibility * (reducedMotion ? .12f : .12f + Mathf.Sin(clock * .36f) * .025f));
-            CloudDisplacement = reducedMotion ? 0 : Mathf.Sin(clock * .095f) * .065f;
+            CloudDisplacement = reducedMotion ? 0 : Mathf.Sin(clock * .16f) * .09f;
             for (var i = 0; i < clouds.Count; i++)
             {
                 var cloud = clouds[i];
@@ -87,7 +87,8 @@ namespace NGame.Presentation
                 var v = .84f + i * .045f + Mathf.Sin(clock * .14f + i) * (reducedMotion ? 0 : .004f);
                 cloud.transform.position = Point(u, v);
                 cloud.transform.localScale = Vector3.one * (diameter * (1.25f + i * .12f)) / cloud.sprite.bounds.size.x;
-                cloud.color = new Color(1, 1, 1, visibility);
+                // Clouds continue drifting at dawn; only the moon and its halo disappear.
+                cloud.color = Color.Lerp(new Color(1, 1, 1, .88f), new Color(1.20f, 1.13f, 1.05f, .30f), daylight);
             }
         }
 

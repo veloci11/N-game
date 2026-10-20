@@ -13,9 +13,11 @@ namespace NGame.Core
     {
         public const string ReducedMotionKey = "ngame.settings.reduced-motion";
         public const string AmbientSoundKey = "ngame.settings.ambient-sound";
+        public const string PublicNarrationKey = "ngame.settings.public-narration";
         private readonly IPreferenceStore store;
         public bool ReducedMotion { get; private set; }
         public bool AmbientSound { get; private set; }
+        public bool PublicNarration { get; private set; }
         public event Action Changed;
 
         public AppPreferences(IPreferenceStore preferenceStore)
@@ -23,6 +25,7 @@ namespace NGame.Core
             store = preferenceStore ?? throw new ArgumentNullException(nameof(preferenceStore));
             ReducedMotion = store.ReadBool(ReducedMotionKey, false);
             AmbientSound = store.ReadBool(AmbientSoundKey, false);
+            PublicNarration = store.ReadBool(PublicNarrationKey, true);
         }
 
         public void SetReducedMotion(bool enabled)
@@ -37,6 +40,13 @@ namespace NGame.Core
             if (AmbientSound == enabled) return;
             AmbientSound = enabled;
             Persist(AmbientSoundKey, enabled);
+        }
+
+        public void SetPublicNarration(bool enabled)
+        {
+            if (PublicNarration == enabled) return;
+            PublicNarration = enabled;
+            Persist(PublicNarrationKey, enabled);
         }
 
         private void Persist(string key, bool enabled)

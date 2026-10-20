@@ -1,0 +1,152 @@
+{
+  "purpose": "Archive unique console problems before a deliberate clean retry. Historical errors are retained here rather than hidden. No duplicate exception flood is stored.",
+  "project": "/Users/mathis/Code/N-game",
+  "session": "831e77063edc41f79f93753e495d513b",
+  "lastArchivedCursor": 2509,
+  "archivedGroundTruth": {
+    "sampledUtc": "2026-10-20T20:31:32.463664Z",
+    "ageMs": 92,
+    "compilationFailed": false,
+    "compiling": false,
+    "consoleErrors": 0,
+    "consoleWarnings": 1,
+    "consoleLogs": 0,
+    "seeded": true
+  },
+  "cleanCompileObservedBeforeRuntime": {
+    "sampledUtc": "2026-10-20T20:27:18.207155Z",
+    "compilationFailed": false,
+    "compiling": false,
+    "consoleErrors": 0,
+    "consoleWarnings": 0
+  },
+  "coverageLimit": "Pipeline retains 2000 entries. Initial 15 entries were read before eviction. One additional warning between that initial read and the runtime flood was evicted before its message could be recovered. Do not claim a complete reconstruction of all warnings. UTC timestamps are tool evidence, not local display times.",
+  "unrecoveredEvictedWarningCount": 1,
+  "issues": [
+    {
+      "kind": "compile",
+      "message": "CS0103 PhaseTitle missing",
+      "capturedCountBeforeRingEviction": 2,
+      "firstObservedUtc": "2026-10-20T20:17:18.728454Z",
+      "lastObservedUtc": "2026-10-20T20:18:30.898435Z",
+      "file": "Assets/NGame/Core/Multiplayer/WerewolfRoom.cs",
+      "line": 113,
+      "status": "resolved in sources; fresh verification pending"
+    },
+    {
+      "kind": "compile",
+      "message": "CS0103 CopyVerdict missing",
+      "capturedCountBeforeRingEviction": 2,
+      "firstObservedUtc": "2026-10-20T20:17:18.729131Z",
+      "lastObservedUtc": "2026-10-20T20:18:30.898734Z",
+      "file": "Assets/NGame/Core/Multiplayer/WerewolfRoom.cs",
+      "line": 122,
+      "status": "resolved in sources; fresh verification pending"
+    },
+    {
+      "kind": "editor",
+      "message": "All compiler errors have to be fixed before you can enter playmode!",
+      "capturedCountBeforeRingEviction": 1,
+      "firstObservedUtc": "2026-10-20T20:17:20.840158Z",
+      "lastObservedUtc": "2026-10-20T20:17:20.840158Z",
+      "file": null,
+      "line": null,
+      "status": "consequence of intermediate compilation; later compilation passed"
+    },
+    {
+      "kind": "shader",
+      "message": "Metal unexpected token point",
+      "capturedCountBeforeRingEviction": 1,
+      "firstObservedUtc": "2026-10-20T20:25:23.466078Z",
+      "lastObservedUtc": "2026-10-20T20:25:23.466078Z",
+      "file": "Assets/Resources/Werewolf/Shader/UICard.shader",
+      "line": 53,
+      "status": "resolved in sources; fresh verification pending"
+    },
+    {
+      "kind": "shader",
+      "message": "Metal unexpected token point",
+      "capturedCountBeforeRingEviction": 1,
+      "firstObservedUtc": "2026-10-20T20:25:23.466665Z",
+      "lastObservedUtc": "2026-10-20T20:25:23.466665Z",
+      "file": "Assets/Resources/Werewolf/Shader/UICard.shader",
+      "line": 55,
+      "status": "resolved in sources; fresh verification pending"
+    },
+    {
+      "kind": "shader",
+      "message": "Metal undeclared identifier radius",
+      "capturedCountBeforeRingEviction": 1,
+      "firstObservedUtc": "2026-10-20T20:25:23.466702Z",
+      "lastObservedUtc": "2026-10-20T20:25:23.466702Z",
+      "file": "Assets/Resources/Werewolf/Shader/UICard.shader",
+      "line": 55,
+      "status": "resolved in sources; fresh verification pending"
+    },
+    {
+      "kind": "compile",
+      "message": "CS1061 RectTransform.activeSelf",
+      "capturedCountBeforeRingEviction": 1,
+      "firstObservedUtc": "2026-10-20T20:25:27.330601Z",
+      "lastObservedUtc": "2026-10-20T20:25:27.330601Z",
+      "file": "Assets/NGame/Presentation/Game/RoomFlowChat.cs",
+      "line": 11,
+      "status": "resolved in sources; fresh verification pending"
+    },
+    {
+      "kind": "compile",
+      "message": "CS0246 TMPro namespace; PlayMode asmdef missing Unity.TextMeshPro",
+      "capturedCountBeforeRingEviction": 1,
+      "firstObservedUtc": "2026-10-20T20:26:23.607258Z",
+      "lastObservedUtc": "2026-10-20T20:26:23.607258Z",
+      "file": "Assets/NGame/Tests/PlayMode/PlayerCommunicationTests.cs",
+      "line": 9,
+      "status": "resolved in sources; fresh verification pending"
+    },
+    {
+      "kind": "warning",
+      "message": "CS0414 afterVerdict assigned but not used during intermediate editing",
+      "capturedCountBeforeRingEviction": 1,
+      "firstObservedUtc": "2026-10-20T20:17:18.729144Z",
+      "lastObservedUtc": "2026-10-20T20:17:18.729144Z",
+      "file": "Assets/NGame/Core/Multiplayer/WerewolfRoom.cs",
+      "line": 57,
+      "status": "resolved in sources; fresh verification pending"
+    },
+    {
+      "kind": "import-warning",
+      "message": "Worker asset source modification time changed during live editing",
+      "capturedCountBeforeRingEviction": 3,
+      "firstObservedUtc": "2026-10-20T20:19:07.417203Z",
+      "lastObservedUtc": "2026-10-20T20:19:08.966627Z",
+      "file": "Assets/NGame/Core/Multiplayer/WerewolfRoom.cs",
+      "line": null,
+      "status": "editing/import race; compile later passed"
+    },
+    {
+      "kind": "runtime-exception",
+      "message": "NullReferenceException: Object reference not set to an instance of an object",
+      "stackTrace": "NGame.Presentation.VillageStage.LateUpdate () (at Assets/NGame/Presentation/VillageStage.cs:253)\nUnityEngine.StackTraceUtility:ExtractStringFromExceptionInternal(Object, String&, String&) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:50)\n",
+      "file": "Assets/NGame/Presentation/VillageStage.cs",
+      "line": 253,
+      "retainedOccurrences": 1998,
+      "editorConsoleErrorCountAt2026_10_20T20_30_15Z": 2491,
+      "earliestRetainedOccurrenceUtc": "2026-10-20T20:28:18.407095Z",
+      "lastObservedUtc": "2026-10-20T20:28:51.689102Z",
+      "lastSequence": 2508,
+      "status": "Stopped at 20:28:51Z. Root identified hot-reload-cleared private layer references, added guard, and planned fresh Play verification. Do not treat archived errors as a passing runtime test."
+    },
+    {
+      "kind": "external-package-warning",
+      "message": "Account API did not become accessible within 30 seconds. This may be due to network issues or editor focus.",
+      "stackTrace": "UnityEngine.Debug:LogWarning (object)\nUnity.AI.Toolkit.Accounts.Services.States.ApiAccessibleState/<WaitForCloudProjectSettings>d__4:MoveNext () (at ./Library/PackageCache/com.unity.ai.assistant@1b11b9bfd84a/Modules/Unity.AI.Toolkit.Accounts/Services/States/ApiAccessibleState.cs:46)\nSystem.Threading.Tasks.TaskCompletionSource`1<bool>:TrySetResult (bool)\nUnity.AI.Toolkit.EditorTask/<>c__DisplayClass22_0:<WaitForCondition>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@1b11b9bfd84a/Modules/Unity.AI.Toolkit.Async/EditorTask.cs:420)\nUnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:412)\n",
+      "retainedOccurrences": 2,
+      "additionalEarlierObservedOccurrences": 1,
+      "earlierObservedUtc": "2026-10-20T20:17:28.632082Z",
+      "earliestRetainedOccurrenceUtc": "2026-10-20T20:28:36.031366Z",
+      "lastObservedUtc": "2026-10-20T20:30:59.719236Z",
+      "status": "Unity AI account-access timeout; not an NGame gameplay exception. May recur without Unity cloud account connectivity."
+    }
+  ],
+  "retryStatus": "Fresh Play and workflow tests to be performed by root; this archive itself does not demonstrate a fix."
+}

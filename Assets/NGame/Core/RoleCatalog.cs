@@ -21,11 +21,16 @@ namespace NGame.Core
         public RoleModeSupport PresenceSupport { get; }
         public RoleModeSupport DistanceSupport { get; }
 
-        // The current application displays role art and descriptions; it has no connected rule engine.
-        public bool RulesImplemented => false;
+        /// <summary>Versioned N'GAME engine support; this does not claim every published variant is implemented.</summary>
+        public string ImplementedRuleset { get; }
+        public bool RulesImplemented => ImplementedRuleset != null;
+
+        public bool SupportsRuleset(string ruleset, string mode)
+            => RulesImplemented && string.Equals(ruleset, ImplementedRuleset, StringComparison.Ordinal)
+                && (mode == "in-person" || (mode == "remote" && DistanceSupport == RoleModeSupport.FaithfulPossible));
 
         internal RoleDefinition(string id, string displayName, string summary, int roleArtIndex,
-            RoleModeSupport presenceSupport, RoleModeSupport distanceSupport)
+            RoleModeSupport presenceSupport, RoleModeSupport distanceSupport, bool rulesImplemented)
         {
             Id = id;
             DisplayName = displayName;
@@ -33,6 +38,7 @@ namespace NGame.Core
             RoleArtIndex = roleArtIndex;
             PresenceSupport = presenceSupport;
             DistanceSupport = distanceSupport;
+            ImplementedRuleset = rulesImplemented ? "ngame-classic-v1" : null;
         }
     }
 
@@ -41,15 +47,15 @@ namespace NGame.Core
         // The order is the approved illustration order, independent from night action order.
         public static IReadOnlyList<RoleDefinition> All { get; } = Array.AsReadOnly(new[]
         {
-            Define("werewolf", "Loup-Garou", "Se réunit avec la meute pour choisir sa victime nocturne.", 0),
-            Define("villager", "Villageois", "Observe, débat et vote pour démasquer les loups.", 1),
-            Define("seer", "Voyante", "Découvre secrètement le rôle d’un joueur pendant la nuit.", 2),
-            Define("witch", "Sorcière", "Dispose d’une potion de soin et d’une potion de poison.", 3),
-            Define("hunter", "Chasseur", "Désigne une dernière cible lorsqu’il est éliminé.", 4),
-            Define("cupid", "Cupidon", "Lie deux amoureux dont les destins deviennent inséparables.", 5),
-            Define("guard", "Garde", "Protège un joueur contre les loups, sous les restrictions du Salvateur.", 6),
+            Define("werewolf", "Loup-Garou", "Se réunit avec la meute pour choisir sa victime nocturne.", 0, implemented: true),
+            Define("villager", "Villageois", "Observe, débat et vote pour démasquer les loups.", 1, implemented: true),
+            Define("seer", "Voyante", "Découvre secrètement le rôle d’un joueur pendant la nuit.", 2, implemented: true),
+            Define("witch", "Sorcière", "Dispose d’une potion de soin et d’une potion de poison.", 3, implemented: true),
+            Define("hunter", "Chasseur", "Désigne une dernière cible lorsqu’il est éliminé.", 4, implemented: true),
+            Define("cupid", "Cupidon", "Lie deux amoureux dont les destins deviennent inséparables.", 5, implemented: true),
+            Define("guard", "Garde", "Protège un joueur contre les loups, sous les restrictions du Salvateur.", 6, implemented: true),
             Define("little-girl", "Petite Fille", "Observe discrètement les loups éveillés, au risque d’être surprise.", 7,
-                RoleModeSupport.TableProtocolRequired, RoleModeSupport.AdaptationRequired),
+                RoleModeSupport.TableProtocolRequired, RoleModeSupport.AdaptationRequired, implemented: true),
             Define("white-wolf", "Loup Blanc", "Se cache dans la meute et cherche à survivre seul.", 8),
             Define("thief", "Voleur", "Peut échanger son rôle au début avec une carte de réserve.", 9),
             Define("elder", "Ancien", "Résiste à une première attaque des loups ; sa mort a des conséquences.", 10),
@@ -73,9 +79,9 @@ namespace NGame.Core
 
         private static RoleDefinition Define(string id, string name, string summary, int artIndex,
             RoleModeSupport presence = RoleModeSupport.FaithfulPossible,
-            RoleModeSupport distance = RoleModeSupport.FaithfulPossible)
+            RoleModeSupport distance = RoleModeSupport.FaithfulPossible, bool implemented = false)
         {
-            return new RoleDefinition(id, name, summary, artIndex, presence, distance);
+            return new RoleDefinition(id, name, summary, artIndex, presence, distance, implemented);
         }
     }
 }

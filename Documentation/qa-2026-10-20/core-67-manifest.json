@@ -1,0 +1,19 @@
+{
+  "recordedUtc": "2026-10-20T20:46:42.042668+00:00",
+  "runner": "Reflection runner invoking NUnit test methods and TestCase arguments with the Unity-bundled nunit.framework; not Unity Test Runner evidence.",
+  "command": "/Applications/Unity/Hub/Editor/6000.6.6f1-arm64/Unity.app/Contents/Resources/Scripting/DotNetSdk/dotnet run --project /tmp/ngame-core-validation-20261020/CoreValidation.csproj --no-launch-profile",
+  "report": "core-67-results.log",
+  "passed": 67,
+  "failed": 0,
+  "changesSince63": "Four new moderation/start-blockage cases; existing guard case now checks private previous-target reminder.",
+  "sha256": {
+    "Assets/NGame/Core/Multiplayer/RoomContracts.cs": "95c8dbefa1c932c5030f02cd8601d5991726614b9e70a6adb5b01312ed9ad044",
+    "Assets/NGame/Core/Multiplayer/WerewolfRoom.cs": "25cad7f89c4164304953f605265182ff8a06691b2a56d4df3c98cf88018885b0",
+    "Assets/NGame/Tests/Editor/WerewolfRoomTests.cs": "c0e8e6c1db4688eb14b2d685b64daf00349117866e4fbd0f1799d8abbdf1d3f3"
+  },
+  "limits": [
+    "No new Unity Editor test run performed by this agent.",
+    "HTTP token cleanup and restart belong to services tests.",
+    "No real-phone or novice-player usability conclusion."
+  ]
+}

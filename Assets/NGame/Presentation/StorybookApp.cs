@@ -1,4 +1,6 @@
 using NGame.Core;
+using NGame.Core.Multiplayer;
+using NGame.Presentation.Game;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,7 +8,7 @@ using UnityEngine.InputSystem.UI;
 
 namespace NGame.Presentation
 {
-    public enum AppRoute { Home, Preparation, Village, RoleLibrary }
+    public enum AppRoute { Home, Preparation, Village, RoleLibrary, Play, GameHome }
 
     /// <summary>Application navigation and presentation only. All local preview state belongs to VillageSession.</summary>
     public sealed class StorybookApp : MonoBehaviour
@@ -16,6 +18,9 @@ namespace NGame.Presentation
         public AppPreferences Preferences { get; private set; }
         public SecretCardView SecretCard { get; private set; }
         public RoleLibraryView RoleLibrary { get; private set; }
+        public UnityRoomClient NetworkClient { get; private set; }
+        public RoomFlowView Game { get; private set; }
+        public GameHubView Hub { get; private set; }
         public int PreparationPlayerCount { get; private set; } = 8;
         public bool IsModalOpen => dialog != null;
         private RectTransform viewport;
@@ -27,6 +32,10 @@ namespace NGame.Presentation
         private GameObject confirmationView;
         private GameObject dialog;
         private TextMeshProUGUI header;
+        private TextMeshProUGUI gatheringCaption;
+        private UnityEngine.UI.Button navigation;
+        private UnityEngine.UI.Button contextualHelp;
+        private readonly GameObject[] burgerBars = new GameObject[3];
         private TextMeshProUGUI chapter;
         private TextMeshProUGUI villageTitle;
         private TextMeshProUGUI phaseCaption;
@@ -38,10 +47,13 @@ namespace NGame.Presentation
         private TextMeshProUGUI chosenName;
         private TextMeshProUGUI audioSetting;
         private TextMeshProUGUI motionSetting;
+        private TextMeshProUGUI narrationSetting;
         private UnityEngine.UI.Image chosenPortrait;
         private UnityEngine.UI.Button confirmationButton;
         private readonly UnityEngine.UI.Image[] playerTiles = new UnityEngine.UI.Image[6];
         private VillageStage stage;
+        public HubBackdrop HubBackground { get; private set; }
+        private GameObject readingVeil;
         private VillagePhase previousPhase;
         private float dawnElapsed;
         private AudioSource sound;
@@ -69,6 +81,21 @@ namespace NGame.Presentation
             var libraryRoot = UITheme.Box("The public role catalogue", viewport, true);
             RoleLibrary = libraryRoot.gameObject.AddComponent<RoleLibraryView>();
             RoleLibrary.Initialize(Preferences);
+            var connection = new GameObject("Room connection");
+            connection.transform.SetParent(transform, false);
+            NetworkClient = connection.AddComponent<UnityRoomClient>();
+            var playRoot = UITheme.Box("Connected or practice game", viewport, true);
+            Game = playRoot.gameObject.AddComponent<RoomFlowView>();
+            Game.Initialize(Preferences, NetworkClient, stage.TransitionToDaylight, () => stage.DaylightAmount);
+            gameObject.AddComponent<PublicNarrator>().Initialize(Preferences, () => Game.Client, () => Route == AppRoute.Play);
+            Game.RequestedHome += OpenHome;
+            var hubRoot = UITheme.Box("N’GAME game catalogue", viewport, true);
+            Hub = hubRoot.gameObject.AddComponent<GameHubView>();
+            Hub.Initialize(Preferences, id =>
+            {
+                if (id != GameHubView.WerewolfGameId) return;
+                if (Hub.WantsToCreate) OpenPlay(); else OpenGameHome();
+            }, OpenPlay, ShowSettings, OpenPlay);
             InitializeSound();
             Session.Changed += ModelChanged;
             Preferences.Changed += ApplyPreferences;
@@ -94,12 +121,15 @@ namespace NGame.Presentation
                 input.transform.SetParent(transform, false);
                 input.GetComponent<InputSystemUIInputModule>().AssignDefaultActions();
             }
+            var hubAmbience = UITheme.Box("N’GAME universal background", root, true);
+            HubBackground = hubAmbience.gameObject.AddComponent<HubBackdrop>();
+            HubBackground.Initialize(Preferences);
             AddReadingVeil(root);
             viewport = UITheme.Box("Safe portrait content", root, true);
             viewport.gameObject.AddComponent<SafeViewport>();
         }
 
-        private static void AddReadingVeil(Transform parent)
+        private void AddReadingVeil(Transform parent)
         {
             var texture = new Texture2D(1, 128, TextureFormat.RGBA32, false) { wrapMode = TextureWrapMode.Clamp };
             var pixels = new Color[128];
@@ -113,7 +143,7 @@ namespace NGame.Presentation
             texture.SetPixels(pixels);
             texture.Apply(false, true);
             var sprite = Sprite.Create(texture, new Rect(0, 0, 1, 128), UITheme.Center);
-            UITheme.Surface("Gentle ink wash", parent, Color.white, sprite, true);
+            readingVeil = UITheme.Surface("Gentle ink wash", parent, Color.white, sprite, true).gameObject;
         }
 
         private TextMeshProUGUI Label(string name, Transform parent, string value, float size, Color color,
@@ -134,35 +164,49 @@ namespace NGame.Presentation
 
         private void BuildHeader()
         {
-            Button("Return to storybook", viewport, "‹", OpenHome, new Vector2(0, 1), 40, -40, 42, 42, false);
+            navigation = Button("Safe application navigation", viewport, "‹", () =>
+            {
+                if (Route == AppRoute.Play && Game?.Client?.HasSession == true) Game.OpenMenu();
+                else if (Route == AppRoute.GameHome) OpenHome();
+                else OpenGameHome();
+            }, new Vector2(0, 1), 40, -40, 42, 42, false);
+            for (var i = 0; i < burgerBars.Length; i++)
+            {
+                var bar = UITheme.Surface("Safe burger line " + i, navigation.transform, UITheme.Parchment);
+                UITheme.Position(bar.rectTransform, UITheme.Center, 0, (i - 1) * 6, 18, 1.6f);
+                burgerBars[i] = bar.gameObject; bar.gameObject.SetActive(false);
+            }
             header = Label("Current chapter heading", viewport, "N’GAME", 27, UITheme.Parchment,
                 new Vector2(0, 1), 162, -40, 183, 43);
             header.alignment = TextAlignmentOptions.MidlineLeft;
-            Button("Open quiet settings", viewport, "···", ShowSettings, new Vector2(1, 1), -40, -40, 42, 42, false);
+            contextualHelp = Button("Open contextual help", viewport, "?", () =>
+            {
+                if (Route == AppRoute.Play) Game.OpenRoomHelp(); else ShowSettings();
+            }, new Vector2(1, 1), -40, -40, 42, 42, false);
         }
 
         private void BuildHome()
         {
             homeView = UITheme.Box("Storybook home", viewport, true).gameObject;
-            var eyebrow = Label("Home overline", homeView.transform, "LES CONTES DE N’GAME", 10, UITheme.Brass,
-                UITheme.Top, 0, -136, 350, 27, false);
-            eyebrow.characterSpacing = 3.4f;
-            Label("Home title", homeView.transform, "Le village\nde papier.", 59, UITheme.Parchment,
+            Label("Home title", homeView.transform, "Loup-Garou", 59, UITheme.Parchment,
                 UITheme.Top, 0, -232, 382, 172);
-            Label("Home invitation", homeView.transform, "Une nuit. Des secrets.\nEt toute une histoire à partager.", 22,
+            Label("Home invitation", homeView.transform, "Crée une soirée ou rejoins tes amis.", 22,
                 UITheme.Parchment, UITheme.Top, 0, -349, 350, 74);
-            UITheme.Separator(homeView.transform, UITheme.Bottom, 231);
-            Label("Home preview notice", homeView.transform, "LE PREMIER CHAPITRE", 9, UITheme.Brass,
-                UITheme.Bottom, 0, 205, 350, 24, false).characterSpacing = 2.5f;
-            Button("Enter the village", homeView.transform, "Entrer dans le village", EnterVillage,
-                UITheme.Bottom, 0, 155, 370, 58);
-            Button("Prepare a gathering", homeView.transform, "Préparer une partie", OpenPreparation,
-                UITheme.Bottom, 0, 87, 370, 54, false);
+            UITheme.Separator(homeView.transform, UITheme.Bottom, 294);
+            var gathering = Button("Open real gatherings", homeView.transform, "Créer ou rejoindre", OpenPlay,
+                UITheme.Bottom, 0, 124, 382, 56);
+            gatheringCaption = gathering.GetComponentInChildren<TextMeshProUGUI>();
+            Button("Start individual practice", homeView.transform, "S’entraîner seul", StartTraining,
+                UITheme.Bottom, 0, 62, 382, 48, false);
+            Label("Training scope", homeView.transform, "Avec des villageois simulés", 10, UITheme.Quiet,
+                UITheme.Bottom, 0, 21, 350, 22, false);
+            // The earlier illustration/composition previews stay available to Editor tools and tests,
+            // but must not masquerade as additional playable paths in the player's home screen.
             var roles = Button("Discover the illustrated roles", homeView.transform, "Les rôles", OpenRoleLibrary,
-                UITheme.Bottom, -94, 37, 174, 40, false);
+                UITheme.Bottom, -94, 212, 174, 40, false);
             roles.GetComponent<UnityEngine.UI.Image>().color = Color.clear;
             var how = Button("Learn the game", homeView.transform, "Comment jouer", ShowRules,
-                UITheme.Bottom, 94, 37, 174, 40, false);
+                UITheme.Bottom, 94, 212, 174, 40, false);
             how.GetComponent<UnityEngine.UI.Image>().color = Color.clear;
         }
 
@@ -171,7 +215,7 @@ namespace NGame.Presentation
             preparationView = UITheme.Box("Gathering composition helper", viewport, true).gameObject;
             Label("Preparation title", preparationView.transform, "Préparer une partie", 38, UITheme.Parchment,
                 UITheme.Top, 0, -138, 390, 65);
-            Label("Preparation introduction", preparationView.transform, "Un petit guide pour réunir le village.", 19,
+            Label("Preparation introduction", preparationView.transform, "Choisis le nombre de joueurs.", 19,
                 UITheme.Parchment, UITheme.Top, 0, -190, 360, 40);
             var panel = UITheme.Surface("Composition paper", preparationView.transform,
                 UITheme.Opacity(UITheme.Midnight, .94f), UITheme.Panel);
@@ -195,7 +239,7 @@ namespace NGame.Presentation
             Label("Preparation honesty", preparationView.transform,
                 "Cette préparation ne crée pas de partie connectée.", 11, UITheme.Quiet,
                 UITheme.Bottom, 0, 126, 370, 34, false);
-            Button("Explore local illustration", preparationView.transform, "Explorer le village", EnterVillage,
+            Button("Explore local illustration", preparationView.transform, "Ouvrir l’aperçu local", EnterVillage,
                 UITheme.Bottom, 0, 72, 370, 55);
             UpdateComposition();
         }
@@ -203,16 +247,16 @@ namespace NGame.Presentation
         private void BuildVillage()
         {
             villageView = UITheme.Box("Village chapter", viewport, true).gameObject;
-            chapter = Label("Chapter overline", villageView.transform, "CHAPITRE I", 10, UITheme.Brass,
+            chapter = Label("Chapter overline", villageView.transform, "APERÇU LOCAL", 10, UITheme.Brass,
                 UITheme.Top, 0, -125, 360, 25, false);
             chapter.characterSpacing = 3.5f;
-            villageTitle = Label("Village narration", villageView.transform, "Le village s’endort.", 38, UITheme.Parchment,
+            villageTitle = Label("Village narration", villageView.transform, "Découvrir son rôle", 38, UITheme.Parchment,
                 UITheme.Top, 0, -176, 400, 75);
             UITheme.Separator(villageView.transform, UITheme.Top, -222, 90);
             phaseCaption = Label("Village time", villageView.transform, "Nuit 1", 21, UITheme.Parchment,
                 UITheme.Top, 0, -250, 320, 35);
             nightView = UITheme.Box("Secret discovery", villageView.transform, true).gameObject;
-            Label("Privacy invitation", nightView.transform, "À l’abri des regards.", 17, UITheme.Parchment,
+            Label("Privacy invitation", nightView.transform, "Cache ton écran aux autres joueurs.", 17, UITheme.Parchment,
                 UITheme.Bottom, 0, 156, 350, 29);
             var hold = Button("Hold role reveal", nightView.transform, "", null,
                 UITheme.Bottom, 0, 109, 370, 58, false);
@@ -221,7 +265,7 @@ namespace NGame.Presentation
             var dawnButton = Button("Discover sunrise", nightView.transform, "Voir le lever du jour  →", AdvanceToDawn,
                 UITheme.Bottom, 0, 55, 350, 42, false);
             dawnButton.GetComponent<UnityEngine.UI.Image>().color = Color.clear;
-            dawnCaption = Label("Sunrise whisper", villageView.transform, "Les premières lueurs…", 25,
+            dawnCaption = Label("Sunrise whisper", villageView.transform, "Passage au jour", 25,
                 UITheme.Parchment, UITheme.Bottom, 0, 124, 360, 70);
             BuildVoting();
             BuildConfirmation();
@@ -238,7 +282,7 @@ namespace NGame.Presentation
             UITheme.Edge(panel, UITheme.Opacity(UITheme.Brass, .55f));
             Label("Vote question", panel.transform, "Qui vous semble suspect ?", 27, UITheme.Parchment,
                 UITheme.Top, 0, -34, 348, 45);
-            Label("Vote scope", panel.transform, "Six personnages pour découvrir le geste du vote.", 10,
+            Label("Vote scope", panel.transform, "Sélectionne un personnage, puis confirme.", 10,
                 UITheme.Quiet, UITheme.Top, 0, -68, 348, 25, false);
             for (var i = 0; i < Session.Players.Count; i++)
             {
@@ -254,7 +298,7 @@ namespace NGame.Presentation
             }
             confirmationButton = Button("Confirm local choice", panel.transform, "Confirmer mon choix",
                 () => Session.ConfirmSelection(), UITheme.Bottom, 0, 44, 336, 53);
-            var night = Button("Return to midnight", voteView.transform, "←  Retrouver la nuit",
+            var night = Button("Return to midnight", voteView.transform, "←  Revenir à la nuit",
                 () => Session.MoveTo(VillagePhase.Night), UITheme.Bottom, 0, 55, 340, 42, false);
             night.GetComponent<UnityEngine.UI.Image>().color = Color.clear;
         }
@@ -289,7 +333,61 @@ namespace NGame.Presentation
             CloseDialog();
             SecretCard.MaskImmediately();
             Route = AppRoute.Home;
+            Hub.ShowCatalogue();
+            Hub.SetHasSavedRoom(NetworkClient.HasSession);
             RenderRoute();
+        }
+
+        public void OpenGameHome()
+        {
+            if (!initialized) return;
+            CloseDialog();
+            SecretCard.MaskImmediately();
+            Route = AppRoute.GameHome;
+            RenderRoute();
+        }
+
+        public void OpenPlay() => OpenClient(NetworkClient);
+
+        public void OpenClient(IRoomClient client)
+        {
+            if (!initialized || client == null) return;
+            CloseDialog();
+            SecretCard.MaskImmediately();
+            if (!ReferenceEquals(Game.Client, client)) Game.BindClient(client);
+            Route = AppRoute.Play;
+            RenderRoute();
+        }
+
+        public void StartTraining()
+        {
+            if (!initialized) return;
+            if (NetworkClient.HasSession || NetworkClient.IsBusy)
+            {
+                var pendingConnection = NetworkClient.IsBusy && !NetworkClient.HasSession;
+                var panel = Dialog(pendingConnection ? "CONNEXION" : "PARTIE ENREGISTRÉE",
+                    pendingConnection ? "Connexion en cours" : "Une partie est en cours", 360);
+                Label("Saved party training explanation", panel,
+                    pendingConnection ? "Attends la fin de la connexion avant de lancer un entraînement."
+                        : "Reprends ta soirée ou quitte-la depuis son menu avant de lancer un entraînement.",
+                    18, UITheme.Parchment, UITheme.Top, 0, -170, 316, 88);
+                Button("Resume party before practice", panel, pendingConnection ? "Voir la connexion" : "Reprendre ma partie", OpenPlay,
+                    UITheme.Bottom, 0, 106, 322, 53);
+                Button("Return without replacing party", panel, "Retour", CloseDialog,
+                    UITheme.Bottom, 0, 45, 322, 48, false);
+                return;
+            }
+            var practice = GetComponentInChildren<PracticeRoomClient>(true);
+            if (practice == null)
+            {
+                var practiceObject = new GameObject("Individual practice engine");
+                practiceObject.transform.SetParent(transform, false);
+                practice = practiceObject.AddComponent<PracticeRoomClient>();
+            }
+            var name = Game.DisplayNameInput != null ? Game.DisplayNameInput.text : "Moi";
+            Game.BindClient(practice);
+            practice.CreateRoom(name, 0, new RoomSettings());
+            OpenClient(practice);
         }
 
         public void OpenPreparation()
@@ -349,14 +447,23 @@ namespace NGame.Presentation
 
         private void RenderRoute()
         {
-            homeView.SetActive(Route == AppRoute.Home);
+            if (navigation != null) navigation.gameObject.SetActive(Route != AppRoute.Home);
+            HubBackground.SetVisible(Route == AppRoute.Home);
+            readingVeil.SetActive(Route != AppRoute.Home);
+            header.color = Route == AppRoute.Home ? UITheme.Midnight : UITheme.Parchment;
+            homeView.SetActive(Route == AppRoute.GameHome);
+            Hub.gameObject.SetActive(Route == AppRoute.Home);
+            contextualHelp.gameObject.SetActive(Route != AppRoute.Home);
+            contextualHelp.GetComponentInChildren<TMP_Text>().text = Route == AppRoute.Play ? "?" : "…";
             preparationView.SetActive(Route == AppRoute.Preparation);
             villageView.SetActive(Route == AppRoute.Village);
             RoleLibrary.gameObject.SetActive(Route == AppRoute.RoleLibrary);
-            header.text = Route == AppRoute.Home ? "N’GAME" : Route == AppRoute.Preparation ? "La veillée"
+            Game.gameObject.SetActive(Route == AppRoute.Play);
+            Game.SetRouteActive(Route == AppRoute.Play);
+            header.text = Route == AppRoute.Home ? "N’GAME" : Route == AppRoute.Preparation ? "Préparation"
                 : Route == AppRoute.RoleLibrary ? "Les rôles" : "Loup-Garou";
-            stage.SetHomeComposition(Route != AppRoute.Village);
-            if (Route != AppRoute.Village) stage.SetDaylight(0);
+            stage.SetHomeComposition(Route != AppRoute.Village && Route != AppRoute.Play);
+            if (Route != AppRoute.Village && Route != AppRoute.Play) stage.SetDaylight(0);
         }
 
         private void ModelChanged()
@@ -369,10 +476,9 @@ namespace NGame.Presentation
             voteView.SetActive(phase == VillagePhase.Vote);
             confirmationView.SetActive(phase == VillagePhase.VoteConfirmed);
             dawnCaption.gameObject.SetActive(phase == VillagePhase.Dawn);
-            chapter.text = phase == VillagePhase.Night ? "CHAPITRE I" : phase == VillagePhase.Dawn ? "ENTRE DEUX MONDES"
-                : phase == VillagePhase.Vote ? "LES PREMIERS SOUPÇONS" : "UN MURMURE AU VILLAGE";
-            villageTitle.text = phase == VillagePhase.Night ? "Le village s’endort." : phase == VillagePhase.Dawn ? "La nuit s’efface."
-                : phase == VillagePhase.Vote ? "Le village se réveille." : "Le choix est fait.";
+            chapter.text = "APERÇU LOCAL";
+            villageTitle.text = phase == VillagePhase.Night ? "Découvrir son rôle" : phase == VillagePhase.Dawn ? "Passage au jour"
+                : phase == VillagePhase.Vote ? "Choisir une cible" : "Choix confirmé";
             villageTitle.fontSize = phase == VillagePhase.Vote ? 36 : 38;
             phaseCaption.text = phase == VillagePhase.Night ? "Nuit 1" : phase == VillagePhase.Dawn ? "L’aube" : "Jour 1";
             if (phase != VillagePhase.Dawn) SetDaylight(phase == VillagePhase.Night ? 0 : 1);
@@ -407,6 +513,16 @@ namespace NGame.Presentation
 
         private void LateUpdate()
         {
+            if (initialized && gatheringCaption != null)
+                gatheringCaption.text = NetworkClient != null && NetworkClient.HasSession ? "Reprendre ma soirée" : "Créer ou rejoindre";
+            if (initialized && Hub != null && Route == AppRoute.Home)
+                Hub.SetHasSavedRoom(NetworkClient != null && NetworkClient.HasSession);
+            if (initialized && navigation != null)
+            {
+                var room = Route == AppRoute.Play && Game?.Client?.HasSession == true;
+                navigation.GetComponentInChildren<TMP_Text>().enabled = !room;
+                foreach (var bar in burgerBars) if (bar != null) bar.SetActive(room);
+            }
             if (!initialized || preparationPaper == null || Route != AppRoute.Preparation) return;
             var scale = Mathf.Clamp((viewport.rect.height - 400) / 426, .73f, 1);
             preparationPaper.localScale = Vector3.one * scale;
@@ -418,6 +534,7 @@ namespace NGame.Presentation
             CloseDialog();
             SecretCard.MaskImmediately();
             SecretCard.enabled = false;
+            Game?.SetExternalBlock(true);
             dialog = UITheme.Box("Storybook dialog", viewport, true).gameObject;
             var shade = UITheme.Surface("Quiet backdrop", dialog.transform, new Color(.01f, .025f, .045f, .86f), null, true);
             shade.raycastTarget = true;
@@ -435,7 +552,7 @@ namespace NGame.Presentation
         public void ShowSettings()
         {
             if (!initialized) return;
-            var panel = Dialog("LE CALME AVANT LA NUIT", "Les petits réglages", 402);
+            var panel = Dialog("PRÉFÉRENCES", "Réglages", 480);
             var audio = Button("Ambient sound setting", panel, "", () => Preferences.SetAmbientSound(!Preferences.AmbientSound),
                 UITheme.Top, 0, -159, 322, 55, false);
             audioSetting = audio.GetComponentInChildren<TextMeshProUGUI>();
@@ -444,9 +561,13 @@ namespace NGame.Presentation
                 UITheme.Top, 0, -226, 322, 55, false);
             motionSetting = motion.GetComponentInChildren<TextMeshProUGUI>();
             motionSetting.fontSize = 19;
-            Label("Reduced motion explanation", panel, "Une scène plus calme,\navec des transitions plus courtes.", 16,
-                UITheme.Quiet, UITheme.Top, 0, -288, 322, 57);
-            Button("Close preferences", panel, "Retrouver le conte", CloseDialog,
+            var narration = Button("Public phase narration setting", panel, "", () => Preferences.SetPublicNarration(!Preferences.PublicNarration),
+                UITheme.Top, 0, -293, 322, 55, false);
+            narrationSetting = narration.GetComponentInChildren<TextMeshProUGUI>();
+            narrationSetting.fontSize = 19;
+            Label("Reduced motion explanation", panel, "Animations réduites : moins de mouvements\net des transitions plus courtes.", 16,
+                UITheme.Quiet, UITheme.Top, 0, -354, 322, 57);
+            Button("Close preferences", panel, "Fermer", CloseDialog,
                 UITheme.Bottom, 0, 45, 322, 53);
             ApplyPreferences();
         }
@@ -454,11 +575,11 @@ namespace NGame.Presentation
         public void ShowRules()
         {
             if (!initialized) return;
-            var panel = Dialog("LE JEU DES SOUPÇONS", "Quand vient la nuit…", 487);
+            var panel = Dialog("LOUP-GAROU", "Comment jouer", 487);
             Label("Game concept", panel,
-                "Les Loups-Garous se cachent\nparmi les habitants du village.\n\nLa nuit, les rôles secrets agissent.\nLe jour, on discute, on doute, on vote.\n\nL’aperçu te fait découvrir l’ambiance,\nla carte secrète et le geste du vote.", 21,
+                "6 à 24 joueurs, un appareil chacun.\nLoups contre village.\n\nLa nuit, suis ton rôle.\nLe jour, discute puis vote.\n\nMaintiens ta carte pour voir ton rôle.\nRelâche pour le cacher.", 21,
                 UITheme.Parchment, UITheme.Top, 0, -241, 323, 250);
-            Label("Rules preview disclosure", panel, "Une présentation locale.\nLa partie complète reste à construire.", 11,
+            Label("Rules prototype scope", panel, "Entre amis : chaque personne garde son appareil.\nEn solo : les autres habitants sont simulés.", 11,
                 UITheme.Quiet, UITheme.Bottom, 0, 113, 322, 49, false);
             Button("Return from rules", panel, "J’ai compris", CloseDialog, UITheme.Bottom, 0, 48, 322, 54);
         }
@@ -466,7 +587,8 @@ namespace NGame.Presentation
         public void CloseDialog()
         {
             if (dialog != null) { dialog.SetActive(false); Destroy(dialog); dialog = null; }
-            audioSetting = motionSetting = null;
+            audioSetting = motionSetting = narrationSetting = null;
+            Game?.SetExternalBlock(false);
             if (SecretCard == null) return;
             SecretCard.MaskImmediately();
             SecretCard.enabled = true;
@@ -483,6 +605,7 @@ namespace NGame.Presentation
             }
             if (audioSetting != null) audioSetting.text = Preferences.AmbientSound ? "Ambiance sonore  ·  Oui" : "Ambiance sonore  ·  Non";
             if (motionSetting != null) motionSetting.text = Preferences.ReducedMotion ? "Animations réduites  ·  Oui" : "Animations réduites  ·  Non";
+            if (narrationSetting != null) narrationSetting.text = Preferences.PublicNarration ? "Appels publics  ·  Oui" : "Appels publics  ·  Non";
         }
 
         private void InitializeSound()
@@ -508,10 +631,10 @@ namespace NGame.Presentation
             sound.clip = soundClip;
         }
 
-        private void OnApplicationPause(bool paused) { if (paused) SecretCard?.MaskImmediately(); }
-        private void OnApplicationFocus(bool focused) { if (!focused) SecretCard?.MaskImmediately(); }
-        private void OnDisable() { if (SecretCard != null) { SecretCard.MaskImmediately(); SecretCard.enabled = false; } }
-        private void OnEnable() { if (SecretCard != null) SecretCard.enabled = true; }
+        private void OnApplicationPause(bool paused) { if (paused) { SecretCard?.MaskImmediately(); Game?.ForceMaskSecrets(); } }
+        private void OnApplicationFocus(bool focused) { if (!focused) { SecretCard?.MaskImmediately(); Game?.ForceMaskSecrets(); } }
+        private void OnDisable() { if (SecretCard != null) { SecretCard.MaskImmediately(); SecretCard.enabled = false; } Game?.SetExternalBlock(true); }
+        private void OnEnable() { if (SecretCard != null) SecretCard.enabled = true; Game?.SetExternalBlock(false); }
         private void OnDestroy()
         {
             if (Session != null) { Session.ConcealSecret(); Session.Changed -= ModelChanged; }

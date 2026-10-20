@@ -1,0 +1,10 @@
+{
+  "observedAtUtc": "2026-10-20T21:24:54Z",
+  "session": "831e77063edc41f79f93753e495d513b",
+  "cursor": 9162,
+  "groundTruthConsoleErrors": 5843,
+  "compilationFailed": false,
+  "message": "NullReferenceException: Object reference not set to an instance of an object",
+  "stack": "NGame.Presentation.PublicNarrator.Update () (at Assets/NGame/Presentation/PublicNarrator.cs:46)",
+  "provenance": "Read-only Unity CLI console_status + console tail2; bounded extract transcribed from output. No full Editor.log, private state or token copied. Cause and recovery not yet verified."
+}

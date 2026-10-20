@@ -37,11 +37,9 @@ namespace NGame.Presentation
         private Material glowMaterial;
         private Sprite glowSprite;
         private Texture2D glowTexture;
-        private Sprite pivotedLanternSprite;
-        private Transform lanternPivot;
-        private SpriteRenderer lanternRenderer;
         private WolfPaperPuppet wolfPuppet;
         private LivingSky sky;
+        private VillageDetails details;
         private Layer night;
         private Layer dawn;
         private Layer wolf;
@@ -53,13 +51,17 @@ namespace NGame.Presentation
         private int lastWidth;
         private int lastHeight;
         private float firstLampIntensity;
+        private float lightFrom;
+        private float lightTarget;
+        private float lightElapsed;
+        private bool changingLight;
 
         public float AmbientClock => time;
+        public float DaylightAmount => daylight;
         public int ActiveLampCount => daylight < .99f ? lamps.Count : 0;
         public bool WaterAnimationEnabled => riverMaterial != null && !quiet;
         public bool LampFlickerEnabled => !quiet && daylight < .99f;
         public float FirstLampIntensity => firstLampIntensity;
-        public float LanternSwingDegrees { get; private set; }
         public bool WolfArticulated => wolfPuppet != null && wolfPuppet.IsReady;
         public int WolfMeshVertexCount => wolfPuppet != null ? wolfPuppet.VertexCount : 0;
         public float WolfHeadAngleDegrees => wolfPuppet != null ? wolfPuppet.HeadAngleDegrees : 0;
@@ -69,6 +71,7 @@ namespace NGame.Presentation
         public bool MoonIndependent => sky != null && sky.IsReady;
         public Vector3 MoonPosition => sky != null ? sky.MoonPosition : Vector3.zero;
         public float CloudDisplacement => sky != null ? sky.CloudDisplacement : 0;
+        public VillageDetails Details => details;
 
         public void Initialize()
         {
@@ -106,7 +109,8 @@ namespace NGame.Presentation
                 sky.Initialize(night.Renderer, paperMaterial, glowSprite, glowMaterial);
             }
             BuildWindowLights();
-            BuildHangingLantern();
+            details = gameObject.AddComponent<VillageDetails>();
+            details.Initialize(night.Renderer, paperMaterial, glowSprite, glowMaterial);
             wolf = AddLayer("Folded wolf", UITheme.Art("wolf"), 4, false, 2.9f, new Vector2(-.34f, -.02f), new Vector2(.012f, .008f));
             wolfPuppet = wolf.Renderer.gameObject.AddComponent<WolfPaperPuppet>();
             wolfPuppet.Initialize(wolf.Renderer);
@@ -146,14 +150,31 @@ namespace NGame.Presentation
 
         public void SetDaylight(float amount)
         {
+            changingLight = false;
+            ApplyDaylight(amount);
+        }
+
+        public void TransitionToDaylight(float amount)
+        {
+            var target = Mathf.Clamp01(amount);
+            if ((changingLight && Mathf.Approximately(lightTarget, target))
+                || (!changingLight && Mathf.Approximately(daylight, target))) return;
+            lightFrom = daylight;
+            lightTarget = target;
+            lightElapsed = 0;
+            changingLight = true;
+        }
+
+        private void ApplyDaylight(float amount)
+        {
             daylight = Mathf.Clamp01(amount);
             if (dawn != null) dawn.Renderer.color = new Color(1, 1, 1, daylight);
             if (wolf != null) wolf.Renderer.color = new Color(1, 1, 1, (1 - daylight) * (home ? 0 : 1));
             if (foreground != null) foreground.Renderer.color = Color.Lerp(Color.white, new Color(1.14f, 1.1f, 1.02f), daylight);
             if (riverMaterial != null) riverMaterial.SetFloat("_Reflection", Mathf.Lerp(1, .18f, daylight));
-            if (lanternRenderer != null) lanternRenderer.color = Color.Lerp(Color.white, new Color(.86f, .9f, .93f), daylight);
             if (wolfPuppet != null) wolfPuppet.Evaluate(time, quiet, wolf.Renderer.color);
             if (sky != null) sky.Evaluate(time, quiet, daylight);
+            if (details != null) details.Evaluate(time, quiet, daylight);
             AnimateLights();
         }
 
@@ -165,6 +186,7 @@ namespace NGame.Presentation
             if (enabled) Layout();
             if (wolfPuppet != null) wolfPuppet.Evaluate(time, enabled, wolf.Renderer.color);
             if (sky != null) sky.Evaluate(time, enabled, daylight);
+            if (details != null) details.Evaluate(time, enabled, daylight);
             AnimateLights();
         }
 
@@ -186,13 +208,6 @@ namespace NGame.Presentation
                 layer.RestScale = Vector3.one * scale;
                 layer.Renderer.transform.localPosition = new Vector3(layer.Anchor.x * width, layer.Anchor.y * height, 0);
             }
-            if (lanternPivot != null)
-                lanternPivot.localPosition = new Vector3(width * .36f, height * .19f, 0);
-            if (quiet && lanternPivot != null)
-            {
-                lanternPivot.localRotation = Quaternion.identity;
-                LanternSwingDegrees = 0;
-            }
             PositionLights();
             lastWidth = Screen.width;
             lastHeight = Screen.height;
@@ -200,9 +215,24 @@ namespace NGame.Presentation
 
         private void LateUpdate()
         {
-            if (stageCamera == null) return;
+            // Script reload can restore Unity object references before the runtime-only layer graph.
+            // A fresh Play session reconstructs the graph; never dereference a partially restored stage.
+            if (stageCamera == null || night?.Renderer == null || wolf?.Renderer == null) return;
             if (lastWidth != Screen.width || lastHeight != Screen.height) Layout();
-            if (quiet) { PositionLights(); if (sky != null) sky.Evaluate(time, true, daylight); return; }
+            if (changingLight)
+            {
+                lightElapsed += Time.unscaledDeltaTime;
+                var progress = Mathf.Clamp01(lightElapsed / (quiet ? .28f : 3.4f));
+                ApplyDaylight(Mathf.Lerp(lightFrom, lightTarget, Mathf.SmoothStep(0, 1, progress)));
+                if (progress >= 1) changingLight = false;
+            }
+            if (quiet)
+            {
+                PositionLights();
+                if (sky != null) sky.Evaluate(time, true, daylight);
+                if (details != null) details.Evaluate(time, true, daylight);
+                return;
+            }
             time += Time.unscaledDeltaTime;
             if (riverMaterial != null) riverMaterial.SetFloat("_Clock", time);
             var height = stageCamera.orthographicSize * 2;
@@ -224,11 +254,7 @@ namespace NGame.Presentation
             }
             if (WolfArticulated) wolfPuppet.Evaluate(time, false, wolf.Renderer.color);
             if (sky != null) sky.Evaluate(time, false, daylight);
-            if (lanternPivot != null)
-            {
-                LanternSwingDegrees = Mathf.Sin(time * .82f) * 3.4f + Mathf.Sin(time * 1.37f) * .5f;
-                lanternPivot.localEulerAngles = new Vector3(0, 0, LanternSwingDegrees);
-            }
+            if (details != null) details.Evaluate(time, false, daylight);
             for (var i = 0; i < fireflies.Count; i++) fireflies[i].color = UITheme.Opacity(UITheme.Brass,
                 (.24f + Mathf.Sin(time * .65f + i) * .13f) * (1 - daylight * .7f));
             AnimateLights();
@@ -267,26 +293,6 @@ namespace NGame.Presentation
             AddLamp("Right village arch", night.Renderer, new Vector2(.812f, .463f), .44f, .82f);
             AddLamp("Riverbank lantern", night.Renderer, new Vector2(.154f, .328f), .66f, 1.05f);
             AddLamp("Bridge light", night.Renderer, new Vector2(.802f, .352f), .57f, .95f);
-        }
-
-        private void BuildHangingLantern()
-        {
-            var illustration = UITheme.Art("lantern");
-            if (illustration == null) return;
-            var root = new GameObject("Hanging lantern - upper suspension");
-            root.transform.SetParent(transform, false);
-            lanternPivot = root.transform;
-            var paper = new GameObject("Independent paper lantern");
-            paper.transform.SetParent(lanternPivot, false);
-            lanternRenderer = paper.AddComponent<SpriteRenderer>();
-            pivotedLanternSprite = Sprite.Create(illustration.texture, illustration.rect,
-                new Vector2(.5f, .94f), illustration.pixelsPerUnit, 0, SpriteMeshType.FullRect);
-            lanternRenderer.sprite = pivotedLanternSprite;
-            lanternRenderer.sortingOrder = 10;
-            if (paperMaterial != null) lanternRenderer.sharedMaterial = paperMaterial;
-            var scale = 1.58f / pivotedLanternSprite.bounds.size.y;
-            paper.transform.localScale = Vector3.one * scale;
-            AddLamp("Living lantern flame", lanternRenderer, new Vector2(.516f, .37f), .77f, 1.22f, 11);
         }
 
         private void AddLamp(string name, SpriteRenderer anchor, Vector2 uv, float radius, float strength, int order = 3)
@@ -354,7 +360,6 @@ namespace NGame.Presentation
             if (glowMaterial != null) Destroy(glowMaterial);
             if (glowSprite != null) Destroy(glowSprite);
             if (glowTexture != null) Destroy(glowTexture);
-            if (pivotedLanternSprite != null) Destroy(pivotedLanternSprite);
         }
     }
 }

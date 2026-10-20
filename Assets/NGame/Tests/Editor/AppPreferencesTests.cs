@@ -22,6 +22,7 @@ namespace NGame.Core.Tests
             var preferences = new AppPreferences(store);
             Assert.That(preferences.AmbientSound, Is.False);
             Assert.That(preferences.ReducedMotion, Is.False);
+            Assert.That(preferences.PublicNarration, Is.True, "Table calls are enabled independently from optional ambience.");
             Assert.That(store.Saves, Is.Zero);
             Assert.That(store.Values, Is.Empty);
         }
@@ -65,6 +66,19 @@ namespace NGame.Core.Tests
         public void MissingPreferenceStoreIsRejected()
         {
             Assert.Throws<ArgumentNullException>(() => new AppPreferences(null));
+        }
+
+        [Test]
+        public void TableNarrationCanBeDisabledAndRestoredWithoutEnablingAmbientSound()
+        {
+            var store = new MemoryStore();
+            var preferences = new AppPreferences(store);
+            preferences.SetPublicNarration(false);
+            Assert.That(store.Values[AppPreferences.PublicNarrationKey], Is.False);
+            Assert.That(store.Saves, Is.EqualTo(1));
+            var restored = new AppPreferences(store);
+            Assert.That(restored.PublicNarration, Is.False);
+            Assert.That(restored.AmbientSound, Is.False);
         }
     }
 }

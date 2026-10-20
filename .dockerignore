@@ -1,0 +1,16 @@
+**
+!Server/
+!Server/NGame.Server/
+!Server/NGame.Server/**
+!Assets/
+!Assets/NGame/
+!Assets/NGame/Core/
+!Assets/NGame/Core/**
+**/bin/
+**/obj/
+**/__pycache__/
+**/.env
+**/.env.*
+**/*room-access*
+**/private-state/
+**/ServerState/

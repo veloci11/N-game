@@ -21,3 +21,13 @@
 *.suo
 .DS_Store
 TestResults/
+
+# Authoritative game server projects and local output
+!Server/**/*.csproj
+**/bin/
+
+# Local Unity capture and performance-test output
+Assets/NGameQA/
+Assets/NGameQA.meta
+Assets/Resources/PerformanceTestRunInfo.json*
+Assets/Resources/PerformanceTestRunSettings.json*

@@ -31,6 +31,8 @@ namespace NGame.Presentation
         private bool initialized;
         private bool forcedReducedMotion;
         private bool wasReducedMotion;
+        private int roleKind;
+        private bool immersive;
         public float PortraitClock => time;
         public float FlipAngle => flip;
 
@@ -65,9 +67,21 @@ namespace NGame.Presentation
             if (ReducedMotion && rect != null) rect.anchoredPosition = position;
         }
         public void RestartEntrance(int order) { entrance = 0; delay = Mathf.Max(0, order) * .08f; }
+        public void SetImmersive(bool value)
+        {
+            if (immersive == value) return;
+            immersive = value;
+            RestartEntrance(0);
+        }
         public void SetFlipAngle(float degrees) => flip = degrees;
         public void SetRevealGlow(float amount) => revealGlow = Mathf.Clamp01(amount);
         public void SetMotionReduced(bool value) { forcedReducedMotion = value; SettingsChanged(); }
+        /// <summary>Only illustrated fronts receive role effects. The common back never hints at its secret.</summary>
+        public void SetRole(string roleId)
+        {
+            var role = RoleCatalog.Find(roleId);
+            roleKind = role == null ? 0 : role.RoleArtIndex + 1;
+        }
         private bool ReducedMotion => forcedReducedMotion || (preferences != null && preferences.ReducedMotion);
 
         public void OnPointerEnter(PointerEventData eventData) { pointerInside = true; OnPointerMove(eventData); }
@@ -85,14 +99,14 @@ namespace NGame.Presentation
             if (!initialized) return;
             var reduced = ReducedMotion;
             if (!reduced) { time += Time.unscaledDeltaTime; entrance += Time.unscaledDeltaTime; }
-            var appear = reduced ? 1 : Mathf.SmoothStep(0, 1, Mathf.Clamp01((entrance - delay) / .42f));
+            var appear = reduced ? 1 : Mathf.SmoothStep(0, 1, Mathf.Clamp01((entrance - delay) / (immersive ? .65f : .42f)));
             hovered = reduced ? 0 : Mathf.MoveTowards(hovered, pointerInside ? 1 : 0, Time.unscaledDeltaTime * 6);
             var floatY = reduced ? 0 : Mathf.Sin(time * 1.05f + phase) * 3;
-            rect.anchoredPosition = restPosition + new Vector2(0, floatY + hovered * 8 - (1 - appear) * 13);
+            rect.anchoredPosition = restPosition + new Vector2(0, floatY + hovered * 8 - (1 - appear) * (immersive ? 64 : 13));
             var tilt = reduced ? Vector2.zero : pointer * hovered;
             rect.localRotation = Quaternion.Euler(restEuler.x - tilt.y * 12, restEuler.y + flip + tilt.x * 15,
                 restEuler.z + (reduced ? 0 : Mathf.Sin(time * .69f + phase) * .65f));
-            rect.localScale = Vector3.one * (reduced ? 1 : Mathf.Lerp(.94f, 1, appear) + hovered * .018f);
+            rect.localScale = Vector3.one * (reduced ? 1 : Mathf.Lerp(immersive ? .82f : .94f, 1, appear) + hovered * .018f);
             opacity.alpha = appear;
             foreach (var surface in surfaces) UpdateSurface(surface, reduced);
         }
@@ -105,12 +119,13 @@ namespace NGame.Presentation
             var source = sprite.rect;
             var uv = new Vector4(source.x / sprite.texture.width, source.y / sprite.texture.height,
                 source.width / sprite.texture.width, source.height / sprite.texture.height);
-            Apply(surface.Material, uv, reduced);
+            var front = sprite.name.StartsWith("Approved role card ", System.StringComparison.Ordinal);
+            Apply(surface.Material, uv, reduced, front ? roleKind : 0);
             var rendered = surface.Image.materialForRendering;
-            if (rendered != surface.Material) Apply(rendered, uv, reduced);
+            if (rendered != surface.Material) Apply(rendered, uv, reduced, front ? roleKind : 0);
         }
 
-        private void Apply(Material material, Vector4 uv, bool reduced)
+        private void Apply(Material material, Vector4 uv, bool reduced, int illustrationKind)
         {
             if (material == null) return;
             material.SetVector("_ArtRect", uv);
@@ -118,6 +133,7 @@ namespace NGame.Presentation
             material.SetFloat("_Motion", reduced ? 0 : 1);
             material.SetFloat("_Seed", phase);
             material.SetFloat("_RevealGlow", reduced ? 0 : revealGlow);
+            material.SetFloat("_RoleKind", illustrationKind);
         }
 
         private void SettingsChanged()

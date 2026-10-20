@@ -228,7 +228,7 @@ namespace NGame.Presentation.Tests
         }
 
         [UnityTest]
-        public IEnumerator ReducedMotionFreezesAmbientClockWaterFlickerAndLanternThenCanResume()
+        public IEnumerator ReducedMotionFreezesAmbientClockWaterAndWindowFlickerThenCanResume()
         {
             app.EnterVillage();
             var stage = owner.GetComponentInChildren<VillageStage>();
@@ -243,18 +243,17 @@ namespace NGame.Presentation.Tests
             Assert.That(stage.WaterAnimationEnabled, Is.True, "The actual river shader must be available and animated.");
             Assert.That(stage.LampFlickerEnabled, Is.True);
             Assert.That(Mathf.Abs(stage.FirstLampIntensity - activeIntensity), Is.GreaterThan(.0001f));
-            Assert.That(Mathf.Abs(stage.LanternSwingDegrees), Is.GreaterThan(.001f));
+            Assert.That(stage.ActiveLampCount, Is.EqualTo(10), "Only lights anchored to the village remain.");
+            Assert.That(GameObject.Find("Independent paper lantern"), Is.Null, "The unsupported floating lantern was removed.");
 
             app.Preferences.SetReducedMotion(true);
             var quietClock = stage.AmbientClock;
             var quietIntensity = stage.FirstLampIntensity;
             Assert.That(stage.WaterAnimationEnabled, Is.False);
             Assert.That(stage.LampFlickerEnabled, Is.False);
-            Assert.That(stage.LanternSwingDegrees, Is.Zero);
             yield return new WaitForSecondsRealtime(.2f);
             Assert.That(stage.AmbientClock, Is.EqualTo(quietClock));
             Assert.That(stage.FirstLampIntensity, Is.EqualTo(quietIntensity));
-            Assert.That(stage.LanternSwingDegrees, Is.Zero);
 
             app.Preferences.SetReducedMotion(false);
             yield return new WaitForSecondsRealtime(.15f);
@@ -279,6 +278,25 @@ namespace NGame.Presentation.Tests
         }
 
         [UnityTest]
+        public IEnumerator LivePhaseLightTransitionFinishesDespiteRepeatedRoomSnapshots()
+        {
+            var stage = owner.GetComponentInChildren<VillageStage>();
+            stage.SetDaylight(0);
+            stage.TransitionToDaylight(1);
+            yield return new WaitForSecondsRealtime(1.1f);
+            Assert.That(stage.DaylightAmount, Is.GreaterThan(.02f).And.LessThan(.9f));
+            stage.TransitionToDaylight(1); // Polling the same phase must not restart its animation.
+            yield return new WaitForSecondsRealtime(2.5f);
+            Assert.That(stage.DaylightAmount, Is.EqualTo(1).Within(.001f));
+            Assert.That(stage.ActiveLampCount, Is.Zero);
+            app.Preferences.SetReducedMotion(true);
+            stage.TransitionToDaylight(0);
+            yield return new WaitForSecondsRealtime(.35f);
+            Assert.That(stage.DaylightAmount, Is.Zero.Within(.001f));
+            Assert.That(stage.ActiveLampCount, Is.EqualTo(10));
+        }
+
+        [UnityTest]
         public IEnumerator ArticulatedWolfAndIndependentSkyMoveThenRestWithReducedMotion()
         {
             app.EnterVillage();
@@ -286,20 +304,32 @@ namespace NGame.Presentation.Tests
             Assert.That(stage.WolfArticulated, Is.True, "The wolf must use its real deformation mesh.");
             Assert.That(stage.WolfMeshVertexCount, Is.GreaterThan(1000));
             Assert.That(stage.MoonIndependent, Is.True, "The moving moon requires the separate sky assets.");
+            Assert.That(stage.Details, Is.Not.Null);
+            Assert.That(stage.Details.ChimneyPuffCount, Is.EqualTo(7));
+            Assert.That(stage.Details.TwinklingStarCount, Is.EqualTo(5));
             var head = stage.WolfHeadAngleDegrees;
             var moon = stage.MoonPosition;
+            var clouds = stage.CloudDisplacement;
+            var smoke = stage.Details.FirstSmokePosition;
+            var stars = stage.Details.FirstStarIntensity;
             yield return new WaitForSecondsRealtime(.25f);
             Assert.That(Mathf.Abs(stage.WolfHeadAngleDegrees - head), Is.GreaterThan(.001f));
             Assert.That(Vector3.Distance(stage.MoonPosition, moon), Is.GreaterThan(.0001f));
+            Assert.That(Mathf.Abs(stage.CloudDisplacement - clouds), Is.GreaterThan(.0001f),
+                "The separate paper clouds must travel across the sky.");
+            Assert.That(Vector3.Distance(stage.Details.FirstSmokePosition, smoke), Is.GreaterThan(.0001f));
+            Assert.That(Mathf.Abs(stage.Details.FirstStarIntensity - stars), Is.GreaterThan(.00001f));
             Assert.That(stage.WolfLeftEarAngleDegrees, Is.Not.EqualTo(stage.WolfRightEarAngleDegrees));
             app.Preferences.SetReducedMotion(true);
             var restingMoon = stage.MoonPosition;
+            var quietStars = stage.Details.FirstStarIntensity;
             Assert.That(stage.WolfHeadAngleDegrees, Is.Zero);
             Assert.That(stage.WolfLeftEarAngleDegrees, Is.Zero);
             Assert.That(stage.WolfRightEarAngleDegrees, Is.Zero);
             Assert.That(stage.CloudDisplacement, Is.Zero);
             yield return new WaitForSecondsRealtime(.2f);
             Assert.That(stage.MoonPosition, Is.EqualTo(restingMoon));
+            Assert.That(stage.Details.FirstStarIntensity, Is.EqualTo(quietStars));
         }
 
         [UnityTest]
@@ -374,5 +404,21 @@ namespace NGame.Presentation.Tests
             }
         }
 #endif
+
+        [UnityTest]
+        public IEnumerator PublicPortraitCacheRecoversAfterUnityDestroysRuntimeSprites()
+        {
+            var theme = typeof(StorybookApp).Assembly.GetType("NGame.Presentation.UITheme", true);
+            var portrait = theme.GetMethod("Portrait", BindingFlags.Static | BindingFlags.Public);
+            var first = (Sprite)portrait.Invoke(null, new object[] { 0 });
+            Assert.That(first != null, Is.True);
+            UnityEngine.Object.Destroy(first);
+            yield return null;
+            Assert.That(first == null, Is.True);
+            var restored = (Sprite)portrait.Invoke(null, new object[] { 0 });
+            Assert.That(restored != null, Is.True, "Re-entering Play must recreate an unloaded public portrait.");
+            Assert.That(restored.texture != null, Is.True);
+            for (var i = 0; i < 6; i++) Assert.That((Sprite)portrait.Invoke(null, new object[] { i }) != null, Is.True);
+        }
     }
 }

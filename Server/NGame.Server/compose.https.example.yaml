@@ -1,0 +1,24 @@
+# Combine with compose.example.yaml. DNS and domain ownership must already be configured.
+services:
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      NGAME_DOMAIN: ${NGAME_DOMAIN:?Définir NGAME_DOMAIN avec le domaine réel}
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      ngame:
+        condition: service_healthy
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  caddy-data:
+  caddy-config:

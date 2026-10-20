@@ -1,0 +1,4 @@
+bin/
+obj/
+*.user
+__pycache__/

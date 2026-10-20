@@ -1,77 +1,146 @@
 {
-  "mode": "PlayMode",
+  "status": "completed",
+  "duration": 17.97,
   "summary": {
-    "total": 16,
-    "passed": 16,
+    "total": 19,
+    "passed": 19,
     "failed": 0,
     "skipped": 0,
     "inconclusive": 0
   },
-  "durationSeconds": 11.0,
-  "tests": [
+  "results": [
     {
-      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.ActualProceduralUiSpritesHaveAnOpaqueCenterAndTransparentCorners(\"Panel\")",
-      "status": "Passed"
+      "FullName": "NGame.Presentation.Tests.RoomClientPrivacyTests.RealRoomCardMasksDuringFlipAndDoesNotResumeAfterPhaseOrFocusChange",
+      "Status": "Passed",
+      "Duration": 2.7942551,
+      "Message": null,
+      "StackTrace": null
     },
     {
-      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.ActualProceduralUiSpritesHaveAnOpaqueCenterAndTransparentCorners(\"Disc\")",
-      "status": "Passed"
+      "FullName": "NGame.Presentation.Tests.RoomClientPrivacyTests.TrainingStartsWithEightReadyPlayersAndOnlyTheLocalPrivateRole",
+      "Status": "Passed",
+      "Duration": 0.0030784,
+      "Message": null,
+      "StackTrace": null
     },
     {
-      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.ARealUnscaledHoldRevealsAndMaskingHidesTheActualGraphicsImmediately",
-      "status": "Passed"
+      "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ActualProceduralUiSpritesHaveAnOpaqueCenterAndTransparentCorners(\"Panel\")",
+      "Status": "Passed",
+      "Duration": 0.3978388,
+      "Message": null,
+      "StackTrace": null
     },
     {
-      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.ArticulatedWolfAndIndependentSkyMoveThenRestWithReducedMotion",
-      "status": "Passed"
+      "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ActualProceduralUiSpritesHaveAnOpaqueCenterAndTransparentCorners(\"Disc\")",
+      "Status": "Passed",
+      "Duration": 0.1020643,
+      "Message": null,
+      "StackTrace": null
     },
     {
-      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.ASecondPointerCannotTakeOverThePrimaryHold",
-      "status": "Passed"
+      "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ARealUnscaledHoldRevealsAndMaskingHidesTheActualGraphicsImmediately",
+      "Status": "Passed",
+      "Duration": 0.940788,
+      "Message": null,
+      "StackTrace": null
     },
     {
-      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.BackgroundingAnUnfinishedHoldCannotRevealAfterResuming",
-      "status": "Passed"
+      "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ArticulatedWolfAndIndependentSkyMoveThenRestWithReducedMotion",
+      "Status": "Passed",
+      "Duration": 0.602712,
+      "Message": null,
+      "StackTrace": null
     },
     {
-      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.CancellingDuringTheCardFlipHidesThePrivateFaceInTheSameFrame",
-      "status": "Passed"
+      "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ASecondPointerCannotTakeOverThePrimaryHold",
+      "Status": "Passed",
+      "Duration": 0.936714,
+      "Message": null,
+      "StackTrace": null
     },
     {
-      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.FocusLossMasksAVisibleRoleWithoutResumingTheOldHold",
-      "status": "Passed"
+      "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.BackgroundingAnUnfinishedHoldCannotRevealAfterResuming",
+      "Status": "Passed",
+      "Duration": 0.9521953,
+      "Message": null,
+      "StackTrace": null
     },
     {
-      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.FullDaylightExtinguishesTheVillageLamps",
-      "status": "Passed"
+      "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.CancellingDuringTheCardFlipHidesThePrivateFaceInTheSameFrame",
+      "Status": "Passed",
+      "Duration": 1.2188039,
+      "Message": null,
+      "StackTrace": null
     },
     {
-      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.HomeAndPreparationKeepTheCardHiddenAndBoundThePartySize",
-      "status": "Passed"
+      "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.FocusLossMasksAVisibleRoleWithoutResumingTheOldHold",
+      "Status": "Passed",
+      "Duration": 1.7371994,
+      "Message": null,
+      "StackTrace": null
     },
     {
-      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.LeavingReducedMotionDoesNotRestartTheEntranceOfAlreadyVisibleCards",
-      "status": "Passed"
+      "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.FullDaylightExtinguishesTheVillageLamps",
+      "Status": "Passed",
+      "Duration": 0.0859903,
+      "Message": null,
+      "StackTrace": null
     },
     {
-      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.OpeningThePublicRoleLibraryCancelsThePrivateHoldAndSupportsAllFourPages",
-      "status": "Passed"
+      "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.HomeAndPreparationKeepTheCardHiddenAndBoundThePartySize",
+      "Status": "Passed",
+      "Duration": 0.096047,
+      "Message": null,
+      "StackTrace": null
     },
     {
-      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.PhaseAndRouteChangesCancelPendingRevealAndVillageEntryResetsOnlyTheRound",
-      "status": "Passed"
+      "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.LeavingReducedMotionDoesNotRestartTheEntranceOfAlreadyVisibleCards",
+      "Status": "Passed",
+      "Duration": 0.1717988,
+      "Message": null,
+      "StackTrace": null
     },
     {
-      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.ReducedMotionFreezesAmbientClockWaterFlickerAndLanternThenCanResume",
-      "status": "Passed"
+      "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.LivePhaseLightTransitionFinishesDespiteRepeatedRoomSnapshots",
+      "Status": "Passed",
+      "Duration": 4.11842,
+      "Message": null,
+      "StackTrace": null
     },
     {
-      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.SettingsCancelTheHoldAndClosingDoesNotRestartIt",
-      "status": "Passed"
+      "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.OpeningThePublicRoleLibraryCancelsThePrivateHoldAndSupportsAllFourPages",
+      "Status": "Passed",
+      "Duration": 0.9620173,
+      "Message": null,
+      "StackTrace": null
     },
     {
-      "name": "NGame.Presentation.Tests.StorybookPrivacyTests.VillageShadersDoNotReportCompilationErrors",
-      "status": "Passed"
+      "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.PhaseAndRouteChangesCancelPendingRevealAndVillageEntryResetsOnlyTheRound",
+      "Status": "Passed",
+      "Duration": 0.9498393,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ReducedMotionFreezesAmbientClockWaterAndWindowFlickerThenCanResume",
+      "Status": "Passed",
+      "Duration": 0.73713,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.SettingsCancelTheHoldAndClosingDoesNotRestartIt",
+      "Status": "Passed",
+      "Duration": 0.9530671,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.VillageShadersDoNotReportCompilationErrors",
+      "Status": "Passed",
+      "Duration": 0.0894828,
+      "Message": null,
+      "StackTrace": null
     }
   ]
 }

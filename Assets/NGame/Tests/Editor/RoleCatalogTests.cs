@@ -28,13 +28,20 @@ namespace NGame.Core.Tests
         }
 
         [Test]
-        public void EveryCardHasPublicCopyWithoutClaimingAWorkingRuleEngine()
+        public void EveryCardHasPublicCopyAndVersionedEngineSupportIsLimitedToEightRoles()
         {
+            var implemented = new HashSet<string>(StringComparer.Ordinal)
+                { "werewolf", "villager", "seer", "witch", "hunter", "cupid", "guard", "little-girl" };
             foreach (var role in RoleCatalog.All)
             {
                 Assert.That(string.IsNullOrWhiteSpace(role.DisplayName), Is.False);
                 Assert.That(string.IsNullOrWhiteSpace(role.Summary), Is.False);
-                Assert.That(role.RulesImplemented, Is.False, "A visual catalogue must not advertise an implemented online role.");
+                Assert.That(role.RulesImplemented, Is.EqualTo(implemented.Contains(role.Id)));
+                Assert.That(role.ImplementedRuleset, Is.EqualTo(implemented.Contains(role.Id) ? "ngame-classic-v1" : null));
+                Assert.That(role.SupportsRuleset("ngame-classic-v1", "in-person"), Is.EqualTo(implemented.Contains(role.Id)));
+                Assert.That(role.SupportsRuleset("ngame-classic-v1", "remote"), Is.EqualTo(implemented.Contains(role.Id) && role.Id != "little-girl"));
+                Assert.That(role.SupportsRuleset("unversioned-classic", "in-person"), Is.False);
+                Assert.That(role.SupportsRuleset("ngame-classic-v1", "unknown-mode"), Is.False);
                 Assert.That(Enum.IsDefined(typeof(RoleModeSupport), role.PresenceSupport), Is.True);
                 Assert.That(Enum.IsDefined(typeof(RoleModeSupport), role.DistanceSupport), Is.True);
             }

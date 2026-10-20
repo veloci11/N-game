@@ -1,0 +1,340 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using NGame.Core;
+using NGame.Core.Multiplayer;
+using NGame.Presentation.Game;
+using NUnit.Framework;
+using TMPro;
+using UnityEngine;
+using UnityEngine.TestTools;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+namespace NGame.Presentation.Tests
+{
+    /// <summary>UI callback/lifecycle regressions; does not claim novice or real-device validation.</summary>
+    public sealed class PlayerCommunicationTests
+    {
+        private sealed class MemoryPreferences : IPreferenceStore
+        {
+            public bool ReadBool(string key, bool fallback) => fallback;
+            public void WriteBool(string key, bool value) { }
+            public void Save() { }
+        }
+        private sealed class FixtureClient : IRoomClient, IRoomCommunicationClient
+        {
+            public RoomView View { get; set; }
+            public string RoomCode => View?.code;
+            public bool HasSession => View != null;
+            public bool IsBusy => false;
+            public bool IsConnected => true;
+            public bool IsTraining => false;
+            public string StatusError => null;
+            public CommunicationView Communications { get; set; }
+            public ChatMessage[] Messages => Array.Empty<ChatMessage>();
+            public bool IsChatBusy => false;
+            public string ChatError => null;
+            public VoiceView Voice { get; set; }
+            public readonly List<RoomCommand> Commands = new List<RoomCommand>();
+            public readonly List<string> SentChats = new List<string>();
+            public event Action Changed;
+            public event Action SecretsMustHide;
+            public event Action CommunicationChanged;
+            public void CreateRoom(string name, int avatar, RoomSettings settings) { }
+            public void JoinRoom(string code, string name, int avatar) { }
+            public void Send(RoomCommand command) => Commands.Add(command);
+            public void Refresh() => Changed?.Invoke();
+            public void SetActive(bool active) { if (!active) SecretsMustHide?.Invoke(); }
+            public void ForgetRoom() { View = null; Changed?.Invoke(); }
+            public void RetryPending() { }
+            public void OpenChannel(string id) => CommunicationChanged?.Invoke();
+            public void CloseChannel() { }
+            public void SendChat(string channel, string text) => SentChats.Add(channel + ":" + text);
+            public void SetMicrophone(bool enabled) { Voice.microphoneActive = enabled; CommunicationChanged?.Invoke(); }
+            public void CommunicationsTick() => CommunicationChanged?.Invoke();
+        }
+        private GameObject owner, ownedEventSystem;
+        private readonly List<RaycastResult> pointerHits = new List<RaycastResult>();
+        private RoomFlowView flow;
+        private FixtureClient client;
+
+        [UnitySetUp]
+        public IEnumerator SetUp()
+        {
+            owner = new GameObject("Player communication UI fixture", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
+            owner.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay; owner.GetComponent<Canvas>().sortingOrder = 1000;
+            var scaler = owner.GetComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize; scaler.referenceResolution = new Vector2(430, 932); scaler.matchWidthOrHeight = 1;
+            if (EventSystem.current == null) ownedEventSystem = new GameObject("Communication fixture EventSystem", typeof(EventSystem));
+            owner.GetComponent<RectTransform>().sizeDelta = new Vector2(430, 932);
+            client = new FixtureClient
+            {
+                View = new RoomView
+                {
+                    code = "TESTUI", matchId = "first-match", selfPlayerId = "one", selfRoleId = "villager", selfRoleName = "Villageois",
+                    turn = 8, phase = "vote", mode = "remote", voteRound = 1, votesExpected = 2,
+                    players = new[] { new PlayerView { id = "one", displayName = "Léa", alive = true, connected = true }, new PlayerView { id = "two", displayName = "Max", alive = true, connected = true } },
+                    action = new ActionView { kind = "vote", title = "Un suspect", targetCount = 1, choices = new[] { "vote", "pass" }, allowedTargetIds = new[] { "two" } }
+                },
+                Communications = new CommunicationView
+                {
+                    matchId = "first-match", turn = 8,
+                    channels = new[] { new ChannelView { id = "village", name = "Village", canRead = true, canSend = true } }
+                },
+                Voice = new VoiceView { available = true, canListen = true, canTransmit = true }
+            };
+            flow = owner.AddComponent<RoomFlowView>();
+            flow.Initialize(new AppPreferences(new MemoryPreferences()), client, _ => { });
+            flow.SetRouteActive(true);
+            yield return null;
+        }
+        [UnityTearDown]
+        public IEnumerator CleanUp() { UnityEngine.Object.Destroy(owner); if (ownedEventSystem != null) UnityEngine.Object.Destroy(ownedEventSystem); ownedEventSystem = null; yield return null; }
+        private UnityEngine.UI.Button Button(string name)
+            => owner.GetComponentsInChildren<UnityEngine.UI.Button>(true).First(button => button.name == name && button.gameObject.activeInHierarchy);
+
+        private bool CanHit(UnityEngine.UI.Button button, out PointerEventData pointer)
+        {
+            Canvas.ForceUpdateCanvases();
+            var rect = (RectTransform)button.transform;
+            var position = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center));
+            pointer = new PointerEventData(EventSystem.current) { pointerId = 41, button = PointerEventData.InputButton.Left,
+                position = position, pressPosition = position, pointerPress = button.gameObject, rawPointerPress = button.gameObject };
+            pointerHits.Clear(); EventSystem.current.RaycastAll(pointer, pointerHits);
+            if (pointerHits.Count == 0) return false;
+            pointer.pointerCurrentRaycast = pointerHits[0]; pointer.pointerPressRaycast = pointerHits[0];
+            return ExecuteEvents.GetEventHandler<IPointerClickHandler>(pointerHits[0].gameObject) == button.gameObject;
+        }
+        private IEnumerator TapProduction(string name)
+        {
+            var button = Button(name);
+            Assert.That(button.interactable, Is.True, "Disabled control: " + name);
+            for (var attempt = 0; attempt < 24; attempt++)
+            {
+                if (CanHit(button, out var pointer))
+                {
+                    ExecuteEvents.Execute(button.gameObject, pointer, ExecuteEvents.pointerDownHandler);
+                    ExecuteEvents.Execute(button.gameObject, pointer, ExecuteEvents.pointerUpHandler);
+                    ExecuteEvents.Execute(button.gameObject, pointer, ExecuteEvents.pointerClickHandler);
+                    yield return null; yield break;
+                }
+                var scroll = button.GetComponentInParent<ScrollRect>();
+                Assert.That(scroll, Is.Not.Null, "Control covered outside scrolling content: " + name);
+                ExecuteEvents.Execute(scroll.gameObject, new PointerEventData(EventSystem.current) { scrollDelta = new Vector2(0, -4) }, ExecuteEvents.scrollHandler);
+                yield return null;
+            }
+            Assert.Fail("Control unreachable through actual raycasts: " + name);
+        }
+
+        [UnityTest]
+        public IEnumerator ChatCannotOpenOutsideVotingAndItsToggleIsAbsent()
+        {
+            foreach (var phase in new[] { "lobby", "distribution", "night", "dawn", "discussion", "verdict", "reaction", "finished" })
+            {
+                client.View.phase = phase; client.View.turn++; client.View.revision++; client.View.action = null;
+                // Stale readable ACL must not bypass the local phase guard.
+                client.Communications.channels = new[] { new ChannelView { id = "village", name = "Village", canRead = true, canSend = true } }; client.Refresh();
+                flow.OpenChatPanel(); yield return null;
+                Assert.That(flow.IsChatOpen, Is.False, "Chat must stay closed in " + phase);
+                var toggle = owner.GetComponentsInChildren<UnityEngine.UI.Button>(true).Single(item => item.name == "Open room chat");
+                Assert.That(toggle.gameObject.activeInHierarchy, Is.False, "No message entry outside vote: " + phase);
+                flow.SubmitChatMessage(); Assert.That(client.SentChats, Is.Empty);
+            }
+        }
+
+        [UnityTest]
+        public IEnumerator VotingMessagesUseABoundedTransparentBottomDock()
+        {
+            var primary = ((RectTransform)flow.PrimaryAction.transform).anchoredPosition;
+            var secondary = ((RectTransform)flow.SecondaryAction.transform).anchoredPosition;
+            yield return TapProduction("Open room chat");
+            Assert.That(flow.IsChatOpen, Is.True);
+            var panel = owner.GetComponentsInChildren<RectTransform>().Single(item => item.name == "Room conversation panel");
+            Assert.That(panel.rect.height, Is.LessThanOrEqualTo(230.1f));
+            Assert.That(panel.anchoredPosition.y - panel.rect.height * panel.pivot.y, Is.GreaterThanOrEqualTo(225));
+            Assert.That(panel.rect.width, Is.LessThanOrEqualTo(382.1f));
+            var backdrop = owner.GetComponentsInChildren<Image>().Single(item => item.name == "Conversation dock background");
+            Assert.That(backdrop.color.a, Is.InRange(.4f, .9f));
+            Assert.That(owner.GetComponentsInChildren<Transform>().Any(item => item.name == "Conversation private backdrop"), Is.False);
+            Assert.That(((RectTransform)flow.PrimaryAction.transform).anchoredPosition, Is.EqualTo(primary));
+            Assert.That(((RectTransform)flow.SecondaryAction.transform).anchoredPosition, Is.EqualTo(secondary));
+            yield return TapProduction("Open room chat");
+            Assert.That(flow.IsChatOpen, Is.False, "The same fixed bar collapses the history.");
+        }
+
+        [UnityTest]
+        public IEnumerator AnExpandedMessageDockStillAllowsARealVoteThenClosesAtPhaseChange()
+        {
+            yield return TapProduction("Open room chat");
+            Assert.That(flow.IsChatOpen, Is.True);
+            yield return TapProduction("Action target two");
+            yield return TapProduction("Player primary action");
+            Assert.That(client.Commands.Single().kind, Is.EqualTo("vote"));
+            Assert.That(client.Commands.Single().targetIds, Is.EqualTo(new[] { "two" }));
+            Assert.That(flow.IsChatOpen, Is.True, "A public vote does not dismiss the message dock.");
+            client.View.phase = "verdict"; client.View.turn++; client.View.revision++; client.View.action = null;
+            client.Communications.channels = Array.Empty<ChannelView>(); client.Refresh(); yield return null;
+            Assert.That(flow.IsChatOpen, Is.False);
+            Assert.That(flow.SecretsVisible, Is.False, "Leaving vote must not reveal or restore a private card.");
+            Assert.That(flow.ChatInput, Is.Null);
+        }
+
+        [UnityTest]
+        public IEnumerator CommunicationPollingDoesNotReplaceAVoteTargetBetweenPointerEvents()
+        {
+            var target = Button("Action target two");
+            var microphone = Button("Remote day vote microphone");
+            for (var i = 0; i < 4; i++) { client.CommunicationsTick(); yield return null; }
+            Assert.That(Button("Action target two"), Is.SameAs(target), "A network poll must not destroy an in-progress target interaction.");
+            client.View.revision++; client.View.votesReceived = 1; client.Refresh(); yield return null;
+            Assert.That(Button("Action target two"), Is.SameAs(target), "Someone else voting updates the counter without replacing my target buttons.");
+            Assert.That(Button("Remote day vote microphone"), Is.SameAs(microphone));
+            var microphonePosition = ((RectTransform)microphone.transform).anchoredPosition;
+            microphone.onClick.Invoke();
+            Assert.That(client.Voice.microphoneActive, Is.True);
+            microphone.onClick.Invoke();
+            Assert.That(client.Voice.microphoneActive, Is.False, "The click reads current microphone state rather than a captured old state.");
+            target.onClick.Invoke();
+            flow.PrimaryAction.onClick.Invoke();
+            Assert.That(client.Commands.Count, Is.EqualTo(1));
+            Assert.That(client.Commands[0].kind, Is.EqualTo("vote"));
+            Assert.That(client.Commands[0].targetIds, Is.EqualTo(new[] { "two" }));
+            client.View.action.submitted = true; client.View.revision++; client.Refresh(); yield return null;
+            Assert.That(Button("Remote day vote microphone"), Is.SameAs(microphone));
+            Assert.That(((RectTransform)microphone.transform).anchoredPosition, Is.EqualTo(microphonePosition),
+                "Submitting a vote must not move or replace the microphone control.");
+        }
+
+        [UnityTest]
+        public IEnumerator ARevokedPrivateChatDraftDoesNotBecomeAPublicMessage()
+        {
+            client.View.players[0].alive = false; client.View.action = null; client.View.revision++; client.Refresh();
+            client.Communications.channels = new[]
+            {
+                new ChannelView { id = "village", name = "Village", canRead = true, canSend = false },
+                new ChannelView { id = "observateurs", name = "Observateurs", canRead = true, canSend = true, isPrivate = true }
+            };
+            Button("Open room chat").onClick.Invoke();
+            Button("Conversation channel observateurs").onClick.Invoke();
+            flow.ChatInput.text = "Nous sommes dans le canal des éliminés.";
+            client.Communications.channels = new[] { new ChannelView { id = "village", name = "Village", canRead = true, canSend = false } };
+            client.CommunicationsTick();
+            yield return null;
+            Assert.That(flow.IsChatOpen, Is.False, "Losing the private audience closes its conversation immediately.");
+            Button("Open room chat").onClick.Invoke();
+            Assert.That(flow.ChatInput.text, Is.Empty, "A private draft must never migrate into Village.");
+            Assert.That(client.SentChats, Is.Empty);
+        }
+
+        [UnityTest]
+        public IEnumerator FocusLossRequiresReopeningThePrivateActionBeforeItCanSubmit()
+        {
+            client.View.phase = "night"; client.View.turn++; client.View.selfRoleId = "seer"; client.View.selfRoleName = "Voyante";
+            client.View.action = new ActionView { kind = "seer", title = "Ton enquête", targetCount = 1, choices = new[] { "inspect" }, allowedTargetIds = new[] { "two" } };
+            client.Refresh();
+            flow.PrimaryAction.onClick.Invoke();
+            Assert.That(flow.IsPrivateActionVisible, Is.True, "The action can be opened with one tap; holding a second finger is unnecessary.");
+            Button("Action target two").onClick.Invoke();
+            owner.SendMessage("OnApplicationFocus", false, SendMessageOptions.RequireReceiver);
+            Assert.That(flow.IsPrivateActionVisible, Is.False);
+            Assert.That(flow.PrimaryAction.GetComponentInChildren<TMP_Text>().text, Is.EqualTo("Ouvrir mon action privée"));
+            flow.PrimaryAction.onClick.Invoke();
+            Assert.That(flow.IsPrivateActionVisible, Is.True);
+            Assert.That(client.Commands, Is.Empty, "The first tap after masking reopens; it does not silently submit the old private choice.");
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator WitchMustExplicitlyChooseBeforeConfirming()
+        {
+            client.View.phase = "night"; client.View.turn++; client.View.selfRoleId = "witch";
+            client.View.action = new ActionView { kind = "witch", choices = new[] { "pass", "heal", "poison" }, allowedTargetIds = new[] { "two" }, healingAvailable = true, poisonAvailable = true };
+            client.Refresh();
+            flow.PrimaryAction.onClick.Invoke();
+            Assert.That(flow.IsPrivateActionVisible, Is.True);
+            Assert.That(flow.PrimaryAction.interactable, Is.False, "Opening a private power must not choose Pass automatically.");
+            flow.PrimaryAction.onClick.Invoke();
+            Assert.That(client.Commands, Is.Empty);
+            Button("Action choice pass").onClick.Invoke();
+            Assert.That(flow.PrimaryAction.interactable, Is.True);
+            flow.PrimaryAction.onClick.Invoke();
+            Assert.That(client.Commands.Single().choice, Is.EqualTo("pass"));
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator HostVoteClosureRequiresConfirmationAndCannotCloseAnotherTurn()
+        {
+            client.View.isHost = true; client.View.canAdvance = true; client.View.action.submitted = true;
+            client.Refresh();
+            flow.PrimaryAction.onClick.Invoke();
+            Assert.That(client.Commands, Is.Empty, "The primary button opens a safe confirmation.");
+            var confirm = Button("Confirm vote closure");
+            client.View.turn++; client.View.phase = "night";
+            confirm.onClick.Invoke();
+            Assert.That(client.Commands, Is.Empty, "A stale confirmation cannot advance the next phase.");
+            client.View.turn++; client.View.phase = "vote"; client.Refresh();
+            flow.ShowVoteClosureConfirmation();
+            Button("Confirm vote closure").onClick.Invoke();
+            Assert.That(client.Commands.Single().kind, Is.EqualTo("advance"));
+            Assert.That(client.Commands.Single().turn, Is.EqualTo(client.View.turn));
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator PublicChronicleContainsEveryPublicEventAndNoPrivateFact()
+        {
+            client.View.events = Enumerable.Range(1, 5).Select(i => new PublicEvent { sequence = i, text = "Public annonce " + i }).ToArray();
+            client.View.privateFacts = new[] { new PrivateFact { description = "CONFIDENTIAL VOYANTE" } };
+            flow.OpenPublicChronicle();
+            var text = string.Join("\n", owner.GetComponentsInChildren<TMP_Text>().Select(item => item.text));
+            Assert.That(text, Does.Contain("Public annonce 1").And.Contain("Public annonce 5"));
+            Assert.That(text, Does.Not.Contain("CONFIDENTIAL VOYANTE"));
+            Assert.That(client.Commands, Is.Empty);
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator RemovingASeatRequiresExplicitConfirmationAndKeepsHost()
+        {
+            client.View.phase = "lobby"; client.View.turn++; client.View.revision++; client.View.isHost = true; client.View.hostPlayerId = "one";
+            client.View.startBlockedReason = "Il faut au moins six joueurs.";
+            client.Refresh();
+            Assert.That(string.Join(" ", owner.GetComponentsInChildren<TMP_Text>().Select(item => item.text)), Does.Contain(client.View.startBlockedReason));
+            flow.OpenParticipantManagement();
+            Assert.That(owner.GetComponentsInChildren<UnityEngine.UI.Button>().Any(item => item.name == "Remove gathering player one"), Is.False);
+            Button("Remove gathering player two").onClick.Invoke();
+            Assert.That(client.Commands, Is.Empty);
+            Button("Confirm participant removal").onClick.Invoke();
+            Assert.That(client.Commands.Single().kind, Is.EqualTo("remove-player"));
+            Assert.That(client.Commands.Single().targetIds, Is.EqualTo(new[] { "two" }));
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator AnOpenPrivateDraftIsPurgedBeforeAnotherMatchCanReuseTheChannel()
+        {
+            client.View.phase = "vote"; client.View.turn++; client.View.revision++;
+            client.View.players[0].alive = false; client.View.action = null;
+            client.Communications.channels = new[] {
+                new ChannelView { id = "village", name = "Village", canRead = true, canSend = false },
+                new ChannelView { id = "observateurs", name = "Observateurs", canRead = true, canSend = true, isPrivate = true }
+            };
+            client.Refresh();
+            Button("Open room chat").onClick.Invoke();
+            Button("Conversation channel observateurs").onClick.Invoke();
+            flow.ChatInput.text = "Brouillon des anciens observateurs";
+            client.View.matchId = "second-match"; client.View.turn++; client.View.revision++;
+            client.Communications.matchId = "second-match";
+            client.Refresh();
+            Assert.That(flow.IsChatOpen, Is.False);
+            Button("Open room chat").onClick.Invoke();
+            Button("Conversation channel observateurs").onClick.Invoke();
+            Assert.That(flow.ChatInput.text, Is.Empty, "Closing an old field must not save it under the new match id.");
+            Assert.That(client.SentChats, Is.Empty);
+            yield return null;
+        }
+    }
+}
