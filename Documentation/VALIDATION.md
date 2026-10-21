@@ -2,7 +2,7 @@
 
 ## Nouvelle finition du 20 octobre 2026
 
-La déformation du visuel entier rejetée par Mathis est remplacée par des éléments générés séparément et animés par transformations rigides. La campagne complète actuelle **70/70 PlayMode** couvre ce nouveau rendu et les parcours UI. La réception visuelle humaine reste distincte de ces tests. Les rapports antérieurs ci-dessous restent historiques ; le build Mac courant compile et sa signature locale est vérifiée ; le push reste à confirmer.
+La déformation du visuel entier rejetée par Mathis est remplacée par des éléments générés séparément et animés par transformations rigides. La campagne complète actuelle **70/70 PlayMode** couvre ce nouveau rendu et les parcours UI. La réception visuelle humaine reste distincte de ces tests. Les rapports antérieurs ci-dessous restent historiques ; le build Mac courant compile et sa signature locale est vérifiée ; le snapshot `ddc74e9` est poussé et son SHA distant est vérifié.
 
 | Vérification | Preuve actuelle | Limite |
 | --- | --- | --- |
@@ -18,7 +18,7 @@ La déformation du visuel entier rejetée par Mathis est remplacée par des él�
 | Core / Server | 67/67 Core hors Editor, 553 HTTP partie complète,1016HTTP succession/reprise/voix — [audit indépendant](qa-2026-10-20/core-server-final-audit.md) | Polls inclus ; pas une réception multi-appareils ou acoustique |
 | Préparation LAN | 28 contrôles `--check` du lanceur — [log](qa-2026-10-20/lan-launcher-checks.log) | Script préparé seulement, aucun serveur démarré par ces contrôles, aucun téléphone testé |
 | Build Mac actuel | [Rapport](qa-2026-10-20/build-mac-cutouts.json) : Succeeded, **0 erreur**, 346 warnings AI, 19 281 ms, 212 989 857 octets ; plist lint et signature ad hoc `--deep --strict` vérifiés | Pas de Developer ID/notarisation, pas de recette de l’interface native ; preuve UI dans l’Editor |
-| Git | Dernier snapshot confirmé au début de cette passe : `71911ad` | Nouveau push encore à vérifier ; compilation locale ≠ dépôt distant |
+| Git | Snapshot `ddc74e9` poussé sur `codex/werewolf-playable`, SHA distant vérifié | Sources sauvegardées ; aucun déploiement public |
 | Déploiement / réception | Hébergement public explicitement reporté à plus tard par Mathis | Aucun déploiement prévu maintenant, aucun téléphone/novice/acoustique validé |
 
 Huit rôles de base jouables et huit extensions illustrées sans moteur ; Président/Mimes en préparation. Les anciens résultats 56 globaux et 10 ciblés ainsi que leurs captures restent historiques. Voir le [suivi](SUIVI-PRODUCTION.md) et la [recette joueur](RECETTE-JOUEUR.md).

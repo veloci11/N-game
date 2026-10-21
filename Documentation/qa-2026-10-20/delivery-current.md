@@ -40,6 +40,6 @@ Les passages [initial 65/66](playmode-private-initial.json) et [ciblé initial 1
 
 Les anciens builds Mac sont obsolètes pour cette livraison ; le nouveau build à éléments séparés a compilé avec succès. Les 346 avertissements proviennent des shaders du package Unity AI Inference inutilisé par le jeu ; le build n’est pas annoncé sans avertissement. Le plist et la signature locale ad hoc sont vérifiés. Le lancement et son processus enfant sont contrôlés séparément : ils ne prouvent pas une recette complète de l’interface native. Les preuves UI de ce lot proviennent de Unity Editor. Il n’y a ni Developer ID ni notarisation.
 
-Les changements actuels ne sont pas annoncés comme poussés tant que la branche distante n’a pas été relue ; le dernier snapshot poussé confirmé au début de cette passe est `71911ad`.
+Le snapshot de livraison `ddc74e9` est commité et poussé sur `origin/codex/werewolf-playable` ; `git ls-remote` confirme le SHA `ddc74e99b3a31291e362bfc1b7d225c9e8f55dc2`. Le push sauvegarde les sources, sans déploiement public.
 
 Il reste à éprouver une vraie partie entre joueurs et téléphones, le clavier mobile, les permissions audio, le confort des animations, l’équilibrage et les performances. Les tests automatiques ne constituent pas une réception humaine.
