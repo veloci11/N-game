@@ -1,0 +1,483 @@
+{
+  "success": true,
+  "command": "command test_status",
+  "data": {
+    "command": "test_status",
+    "parameters": {},
+    "result": {
+      "status": "completed",
+      "duration": 10.71,
+      "summary": {
+        "total": 65,
+        "passed": 37,
+        "failed": 28,
+        "skipped": 0,
+        "inconclusive": 0
+      },
+      "results": [
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.AppCatalogueVisitsWerewolfLandingAndReturnsWithoutCreatingRoom",
+          "Status": "Failed",
+          "Duration": 0.8703536,
+          "Message": "Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<AppCatalogueVisitsWerewolfLandingAndReturnsWithoutCreatingRoom>d__29:MoveNext() (at Assets/NGame/Tests/PlayMode/GameHubTests.cs:257)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.CatalogueHasThreeSmallAlignedTilesBelowTheHero",
+          "Status": "Passed",
+          "Duration": 0.3955717,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.CatalogueOpensOnlyWerewolfWithoutCreationIntent",
+          "Status": "Passed",
+          "Duration": 0.0823023,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.CompactSafeAreaKeepsFutureCardsAboveSavedResumeAndFooterReachable",
+          "Status": "Passed",
+          "Duration": 0.1346725,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.CreationSelectionCanCancelAndContinueWithoutPrematureCallback",
+          "Status": "Passed",
+          "Duration": 0.233768,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.FutureGamesAreClearlyUnavailableAndIgnorePointerClicks",
+          "Status": "Passed",
+          "Duration": 0.0977582,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.JoinAndSettingsAreIndependentAndFooterNeverMoves",
+          "Status": "Passed",
+          "Duration": 0.0998472,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.SavedAccessShowsResumeOnlyInCatalogue",
+          "Status": "Passed",
+          "Duration": 0.0997088,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.HubBackdropTests.AmbientMotionChangesRealDecorationPosesAndStopsWithReducedMotion",
+          "Status": "Failed",
+          "Duration": 0.0167925,
+          "Message": "SetUp : System.ArgumentException : Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.",
+          "StackTrace": "--SetUp\n  at UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) [0x0002b] in /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482 \n  at UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) [0x00000] in /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472 \n  at UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) [0x00000] in /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502 \n  at UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) [0x00000] in /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507 \n  at NGame.Presentation.HubBackdrop.TryLoadIllustration () [0x00053] in /Users/mathis/Code/N-game/Assets/NGame/Presentation/HubBackdrop.cs:101 \n  at NGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) [0x001fc] in /Users/mathis/Code/N-game/Assets/NGame/Presentation/HubBackdrop.cs:63 \n  at NGame.Presentation.Tests.HubBackdropTests+<SetUp>d__4.MoveNext () [0x000d2] in /Users/mathis/Code/N-game/Assets/NGame/Tests/PlayMode/HubBackdropTests.cs:34 \n  at UnityEngine.TestTools.EnumeratorHelper+<ProgressOnEnumerator>d__5.MoveNext () [0x00017] in ./Library/PackageCache/com.unity.test-framework@80f691d4262b/UnityEngine.TestRunner/NUnitExtensions/Attributes/EnumeratorHelper.cs:43 \n  at UnityEngine.TestTools.BeforeAfterTestCommandBase`1+<ExecuteEnumerable>d__16[T].MoveNext () [0x00132] in ./Library/PackageCache/com.unity.test-framework@80f691d4262b/UnityEngine.TestRunner/NUnitExtensions/Commands/BeforeAfterTestCommandBase.cs:156 "
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.HubBackdropTests.BothGameIconsMoveTheirOwnPaperPartsAndRespectReducedMotion",
+          "Status": "Failed",
+          "Duration": 0.0170646,
+          "Message": "SetUp : System.ArgumentException : Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.",
+          "StackTrace": "--SetUp\n  at UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) [0x0002b] in /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482 \n  at UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) [0x00000] in /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472 \n  at UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) [0x00000] in /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502 \n  at UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) [0x00000] in /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507 \n  at NGame.Presentation.HubBackdrop.TryLoadIllustration () [0x00053] in /Users/mathis/Code/N-game/Assets/NGame/Presentation/HubBackdrop.cs:101 \n  at NGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) [0x001fc] in /Users/mathis/Code/N-game/Assets/NGame/Presentation/HubBackdrop.cs:63 \n  at NGame.Presentation.Tests.HubBackdropTests+<SetUp>d__4.MoveNext () [0x000d2] in /Users/mathis/Code/N-game/Assets/NGame/Tests/PlayMode/HubBackdropTests.cs:34 \n  at UnityEngine.TestTools.EnumeratorHelper+<ProgressOnEnumerator>d__5.MoveNext () [0x00017] in ./Library/PackageCache/com.unity.test-framework@80f691d4262b/UnityEngine.TestRunner/NUnitExtensions/Attributes/EnumeratorHelper.cs:43 \n  at UnityEngine.TestTools.BeforeAfterTestCommandBase`1+<ExecuteEnumerable>d__16[T].MoveNext () [0x00132] in ./Library/PackageCache/com.unity.test-framework@80f691d4262b/UnityEngine.TestRunner/NUnitExtensions/Commands/BeforeAfterTestCommandBase.cs:156 "
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.HubBackdropTests.IllustrationCoversViewportOverOpaquePaperAndNeverBlocksInput",
+          "Status": "Failed",
+          "Duration": 0.0150833,
+          "Message": "SetUp : System.ArgumentException : Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.",
+          "StackTrace": "--SetUp\n  at UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) [0x0002b] in /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482 \n  at UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) [0x00000] in /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472 \n  at UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) [0x00000] in /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502 \n  at UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) [0x00000] in /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507 \n  at NGame.Presentation.HubBackdrop.TryLoadIllustration () [0x00053] in /Users/mathis/Code/N-game/Assets/NGame/Presentation/HubBackdrop.cs:101 \n  at NGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) [0x001fc] in /Users/mathis/Code/N-game/Assets/NGame/Presentation/HubBackdrop.cs:63 \n  at NGame.Presentation.Tests.HubBackdropTests+<SetUp>d__4.MoveNext () [0x000d2] in /Users/mathis/Code/N-game/Assets/NGame/Tests/PlayMode/HubBackdropTests.cs:34 \n  at UnityEngine.TestTools.EnumeratorHelper+<ProgressOnEnumerator>d__5.MoveNext () [0x00017] in ./Library/PackageCache/com.unity.test-framework@80f691d4262b/UnityEngine.TestRunner/NUnitExtensions/Attributes/EnumeratorHelper.cs:43 \n  at UnityEngine.TestTools.BeforeAfterTestCommandBase`1+<ExecuteEnumerable>d__16[T].MoveNext () [0x00132] in ./Library/PackageCache/com.unity.test-framework@80f691d4262b/UnityEngine.TestRunner/NUnitExtensions/Commands/BeforeAfterTestCommandBase.cs:156 "
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.NightCommonTapFeedbackTests.EachAllowedContactUsesTheSameFixedNonBlockingLightThenFades",
+          "Status": "Passed",
+          "Duration": 0.6155001,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.NightCommonTapFeedbackTests.FocusAndPauseMaskImmediatelyAndDoNotReplayAfterReturning",
+          "Status": "Passed",
+          "Duration": 0.101931,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.NightCommonTapFeedbackTests.PhaseMenuAndReducedMotionStopFeedbackWithoutReplayingIt",
+          "Status": "Passed",
+          "Duration": 0.1146765,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.AnExpandedMessageDockStillAllowsARealVoteThenClosesAtPhaseChange",
+          "Status": "Passed",
+          "Duration": 0.3964236,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.AnOpenPrivateDraftIsPurgedBeforeAnotherMatchCanReuseTheChannel",
+          "Status": "Passed",
+          "Duration": 0.1194763,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.ARevokedPrivateChatDraftDoesNotBecomeAPublicMessage",
+          "Status": "Passed",
+          "Duration": 0.0827129,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.ChatCannotOpenOutsideVotingAndItsToggleIsAbsent",
+          "Status": "Passed",
+          "Duration": 0.265313,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.CommunicationPollingDoesNotReplaceAVoteTargetBetweenPointerEvents",
+          "Status": "Passed",
+          "Duration": 0.166192,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.EliminatedPlayersReceiveObserverInstructionsInsteadOfAPowerOrAVote",
+          "Status": "Passed",
+          "Duration": 0.0996092,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.FocusLossRequiresReopeningThePrivateActionBeforeItCanSubmit",
+          "Status": "Passed",
+          "Duration": 0.1343032,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.HostVoteClosureRequiresConfirmationAndCannotCloseAnotherTurn",
+          "Status": "Passed",
+          "Duration": 0.0828067,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.PublicChronicleContainsEveryPublicEventAndNoPrivateFact",
+          "Status": "Passed",
+          "Duration": 0.1307403,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.RemovingASeatRequiresExplicitConfirmationAndKeepsHost",
+          "Status": "Passed",
+          "Duration": 0.0824117,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.ThreeTargetsAndTheirPageControlsFitAboveExpandedMessagesWithoutScrolling",
+          "Status": "Passed",
+          "Duration": 0.2046194,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.VotingMessagesUseABoundedTransparentBottomDock",
+          "Status": "Passed",
+          "Duration": 0.099865,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.WitchMustExplicitlyChooseBeforeConfirming",
+          "Status": "Passed",
+          "Duration": 0.1119982,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerWorkflowTests.APrivatePowerCanBeOpenedSelectedAndConfirmedWithSuccessiveSinglePointerTaps",
+          "Status": "Failed",
+          "Duration": 0.156544,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__12:MoveNext() (at Assets/NGame/Tests/PlayMode/PlayerWorkflowTests.cs:95)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerWorkflowTests.BurgerAndStayNeverLeaveOrSendAGameActionAndTheDockDoesNotMove",
+          "Status": "Failed",
+          "Duration": 0.0582016,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__12:MoveNext() (at Assets/NGame/Tests/PlayMode/PlayerWorkflowTests.cs:95)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerWorkflowTests.DistributionRequiresTheVisibleHoldThenThePrimaryAcknowledgement",
+          "Status": "Failed",
+          "Duration": 0.0615462,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__12:MoveNext() (at Assets/NGame/Tests/PlayMode/PlayerWorkflowTests.cs:95)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerWorkflowTests.FinishedPrimaryPreparesARematchAndClearsTheOldPrivateView",
+          "Status": "Failed",
+          "Duration": 0.0702452,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__12:MoveNext() (at Assets/NGame/Tests/PlayMode/PlayerWorkflowTests.cs:95)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerWorkflowTests.InterruptionMasksTheOneHandPrivatePaneWithoutReopeningIt",
+          "Status": "Failed",
+          "Duration": 0.066363,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__12:MoveNext() (at Assets/NGame/Tests/PlayMode/PlayerWorkflowTests.cs:95)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerWorkflowTests.RealPracticeCanFinishAndPrepareARematchUsingOnlyProductionControls",
+          "Status": "Failed",
+          "Duration": 0.0676557,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__12:MoveNext() (at Assets/NGame/Tests/PlayMode/PlayerWorkflowTests.cs:95)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PracticeGuidanceTests.DiscussionHasNoChatAndWaitsForExplicitAdvance",
+          "Status": "Passed",
+          "Duration": 0.0801607,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PracticeGuidanceTests.DistributionWaitsForLearnerInsteadOfExpiringTheirSecretCard",
+          "Status": "Passed",
+          "Duration": 0.1636923,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PracticeGuidanceTests.FocusAndInactiveViewsPauseTheLocalClockAndHideSecrets",
+          "Status": "Passed",
+          "Duration": 0.0012715,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PracticeGuidanceTests.VoteCannotBePlayedForLearnerAndSubmittedAbstentionIsRespected",
+          "Status": "Passed",
+          "Duration": 0.1206712,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PracticeGuidanceTests.VoteHasThreeLabelledBotExamplesAndAGenericReplyOnlyDuringVoting",
+          "Status": "Passed",
+          "Duration": 0.0292203,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PublicNarratorTests.ConnectedVisibleHostInPresenceUsesTheShippedPublicCall",
+          "Status": "Passed",
+          "Duration": 0.0814426,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PublicNarratorTests.DisablingThePreferenceStopsImmediatelyAndDoesNotReplayTheSameTurn",
+          "Status": "Passed",
+          "Duration": 0.1165331,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PublicNarratorTests.FocusPausePhaseAndHostChangesStopTheCurrentClip",
+          "Status": "Passed",
+          "Duration": 0.1830997,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PublicNarratorTests.GuestRemoteTrainingDisconnectedAndHiddenViewsNeverStartAnAnnouncement",
+          "Status": "Passed",
+          "Duration": 0.1498447,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PublicNarratorTests.NearlyExpiredOrUnknownPublicPhasesStaySilent",
+          "Status": "Passed",
+          "Duration": 0.116663,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PublicNarratorTests.PublicAnnouncementIgnoresAllEightSecretRolesNamesAndPrivateFacts",
+          "Status": "Passed",
+          "Duration": 0.1993123,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.RoomClientPrivacyTests.OrdinaryNetworkCommandsOmitPhantomUnitySettingsButConfigurationKeepsThem",
+          "Status": "Passed",
+          "Duration": 0.0007768,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.RoomClientPrivacyTests.RealRoomCardMasksDuringFlipAndDoesNotResumeAfterPhaseOrFocusChange",
+          "Status": "Passed",
+          "Duration": 2.6724762,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.RoomClientPrivacyTests.TrainingStartsWithEightReadyPlayersAndOnlyTheLocalPrivateRole",
+          "Status": "Passed",
+          "Duration": 0.001536,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ActualProceduralUiSpritesHaveAnOpaqueCenterAndTransparentCorners(\"Panel\")",
+          "Status": "Failed",
+          "Duration": 0.0675082,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ActualProceduralUiSpritesHaveAnOpaqueCenterAndTransparentCorners(\"Disc\")",
+          "Status": "Failed",
+          "Duration": 0.0659486,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ARealUnscaledHoldRevealsAndMaskingHidesTheActualGraphicsImmediately",
+          "Status": "Failed",
+          "Duration": 0.0665023,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ArticulatedWolfAndIndependentSkyMoveThenRestWithReducedMotion",
+          "Status": "Failed",
+          "Duration": 0.0663497,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ASecondPointerCannotTakeOverThePrimaryHold",
+          "Status": "Failed",
+          "Duration": 0.0670699,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.BackgroundingAnUnfinishedHoldCannotRevealAfterResuming",
+          "Status": "Failed",
+          "Duration": 0.0660845,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.CancellingDuringTheCardFlipHidesThePrivateFaceInTheSameFrame",
+          "Status": "Failed",
+          "Duration": 0.0666125,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.FocusLossMasksAVisibleRoleWithoutResumingTheOldHold",
+          "Status": "Failed",
+          "Duration": 0.0659718,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.FullDaylightExtinguishesTheVillageLamps",
+          "Status": "Failed",
+          "Duration": 0.0669284,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.HomeAndPreparationKeepTheCardHiddenAndBoundThePartySize",
+          "Status": "Failed",
+          "Duration": 0.0686499,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.LeavingReducedMotionDoesNotRestartTheEntranceOfAlreadyVisibleCards",
+          "Status": "Failed",
+          "Duration": 0.0709824,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.LivePhaseLightTransitionFinishesDespiteRepeatedRoomSnapshots",
+          "Status": "Failed",
+          "Duration": 0.0661483,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.OpeningThePublicRoleLibraryCancelsThePrivateHoldAndSupportsAllFourPages",
+          "Status": "Failed",
+          "Duration": 0.0668032,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.PhaseAndRouteChangesCancelPendingRevealAndVillageEntryResetsOnlyTheRound",
+          "Status": "Failed",
+          "Duration": 0.066249,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.PublicPortraitCacheRecoversAfterUnityDestroysRuntimeSprites",
+          "Status": "Failed",
+          "Duration": 0.0665028,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ReducedMotionFreezesAmbientClockWaterAndWindowFlickerThenCanResume",
+          "Status": "Failed",
+          "Duration": 0.0669961,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.SettingsCancelTheHoldAndClosingDoesNotRestartIt",
+          "Status": "Failed",
+          "Duration": 0.0661331,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.VillageShadersDoNotReportCompilationErrors",
+          "Status": "Failed",
+          "Duration": 0.066285,
+          "Message": "SetUp : Unhandled log message: '[Exception] ArgumentException: Could not create sprite (0, 1475.2, 853, 368.8) from a 853x1844 texture.'. Use UnityEngine.TestTools.LogAssert.Expect",
+          "StackTrace": "UnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape, UnityEngine.SecondarySpriteTexture[] secondaryTextures) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:482)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border, System.Boolean generateFallbackPhysicsShape) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:472)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType, UnityEngine.Vector4 border) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:502)\nUnityEngine.Sprite.Create (UnityEngine.Texture2D texture, UnityEngine.Rect rect, UnityEngine.Vector2 pivot, System.Single pixelsPerUnit, System.UInt32 extrude, UnityEngine.SpriteMeshType meshType) (at /Users/bokken/build/output/unity/unity/Runtime/2D/Common/ScriptBindings/Sprites.bindings.cs:507)\nNGame.Presentation.HubBackdrop.TryLoadIllustration () (at Assets/NGame/Presentation/HubBackdrop.cs:101)\nNGame.Presentation.HubBackdrop.Initialize (NGame.Core.AppPreferences settings) (at Assets/NGame/Presentation/HubBackdrop.cs:63)\nNGame.Presentation.StorybookApp.BuildCanvas () (at Assets/NGame/Presentation/StorybookApp.cs:131)\nNGame.Presentation.StorybookApp.Initialize () (at Assets/NGame/Presentation/StorybookApp.cs:77)\nNGame.Presentation.StorybookApp.Awake () (at Assets/NGame/Presentation/StorybookApp.cs:64)\nUnityEngine.GameObject:AddComponent()\nNGame.Presentation.Tests.<SetUp>d__9:MoveNext() (at Assets/NGame/Tests/PlayMode/StorybookPrivacyTests.cs:40)\nUnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n\n"
+        }
+      ]
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "/Users/mathis/Code/N-game"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

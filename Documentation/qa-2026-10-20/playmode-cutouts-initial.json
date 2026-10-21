@@ -1,0 +1,126 @@
+{
+  "success": true,
+  "command": "command test_status",
+  "data": {
+    "command": "test_status",
+    "parameters": {},
+    "result": {
+      "status": "completed",
+      "duration": 6.21,
+      "summary": {
+        "total": 14,
+        "passed": 12,
+        "failed": 2,
+        "skipped": 0,
+        "inconclusive": 0
+      },
+      "results": [
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.AppCatalogueVisitsWerewolfLandingAndReturnsWithoutCreatingRoom",
+          "Status": "Passed",
+          "Duration": 0.8306114,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.CatalogueHasThreeSmallAlignedTilesBelowTheHero",
+          "Status": "Failed",
+          "Duration": 2.231916,
+          "Message": "  Each catalogue illustration must animate when motion is enabled\n  Expected: greater than 0.100000001f\n  But was:  0.0169455856f\n",
+          "StackTrace": "at NGame.Presentation.Tests.GameHubTests+<CatalogueHasThreeSmallAlignedTilesBelowTheHero>d__27.MoveNext () [0x0022b] in /Users/mathis/Code/N-game/Assets/NGame/Tests/PlayMode/GameHubTests.cs:186\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__8.MoveNext () [0x0003a] in ./Library/PackageCache/com.unity.test-framework@80f691d4262b/UnityEngine.TestRunner/NUnitExtensions/Attributes/TestEnumerator.cs:52\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.CatalogueOpensOnlyWerewolfWithoutCreationIntent",
+          "Status": "Passed",
+          "Duration": 0.0816322,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.CompactSafeAreaKeepsFutureCardsAboveSavedResumeAndFooterReachable",
+          "Status": "Passed",
+          "Duration": 0.133237,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.CreationSelectionCanCancelAndContinueWithoutPrematureCallback",
+          "Status": "Passed",
+          "Duration": 0.1999518,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.FutureGamesAreClearlyUnavailableAndIgnorePointerClicks",
+          "Status": "Passed",
+          "Duration": 0.1030652,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.JoinAndSettingsAreIndependentAndFooterNeverMoves",
+          "Status": "Passed",
+          "Duration": 0.0962398,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.SavedAccessShowsResumeOnlyInCatalogue",
+          "Status": "Passed",
+          "Duration": 0.0998956,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.HubBackdropTests.AmbientMotionChangesRealDecorationPosesAndStopsWithReducedMotion",
+          "Status": "Passed",
+          "Duration": 0.5709805,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.HubBackdropTests.BothGameIconsMoveTheirOwnPaperPartsAndRespectReducedMotion",
+          "Status": "Passed",
+          "Duration": 0.5794632,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.HubBackdropTests.IllustrationCoversViewportOverOpaquePaperAndNeverBlocksInput",
+          "Status": "Passed",
+          "Duration": 0.0870912,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.HubPaperDioramaTests.EveryCutoutHasRealTransparencyAndCannotInterceptControls",
+          "Status": "Passed",
+          "Duration": 0.0828126,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.HubPaperDioramaTests.HeadAndCloudMoveIndependentlyWhileBookAndBodyStayStill",
+          "Status": "Failed",
+          "Duration": 0.5213611,
+          "Message": "  Expected: greater than 0.00100000005f\n  But was:  0.0f\n",
+          "StackTrace": "at NGame.Presentation.Tests.HubPaperDioramaTests+<HeadAndCloudMoveIndependentlyWhileBookAndBodyStayStill>d__8.MoveNext () [0x0019b] in /Users/mathis/Code/N-game/Assets/NGame/Tests/PlayMode/HubPaperDioramaTests.cs:86\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__8.MoveNext () [0x0003a] in ./Library/PackageCache/com.unity.test-framework@80f691d4262b/UnityEngine.TestRunner/NUnitExtensions/Attributes/TestEnumerator.cs:52\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.HubPaperDioramaTests.ReducedMotionFreezesTheClockAndReturnsTheCutoutsToRest",
+          "Status": "Passed",
+          "Duration": 0.4608499,
+          "Message": null,
+          "StackTrace": null
+        }
+      ]
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "/Users/mathis/Code/N-game"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

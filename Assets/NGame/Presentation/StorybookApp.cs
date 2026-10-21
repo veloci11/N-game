@@ -54,6 +54,7 @@ namespace NGame.Presentation
         private VillageStage stage;
         public HubBackdrop HubBackground { get; private set; }
         private GameObject readingVeil;
+        private GameObject hubBrandMark;
         private VillagePhase previousPhase;
         private float dawnElapsed;
         private AudioSource sound;
@@ -89,6 +90,10 @@ namespace NGame.Presentation
             Game.Initialize(Preferences, NetworkClient, stage.TransitionToDaylight, () => stage.DaylightAmount);
             gameObject.AddComponent<PublicNarrator>().Initialize(Preferences, () => Game.Client, () => Route == AppRoute.Play);
             Game.RequestedHome += OpenHome;
+            var nightTouchRoot = UITheme.Box("Shared night touch ambience", viewport, true);
+            nightTouchRoot.gameObject.AddComponent<NightCommonTapFeedback>().Initialize(Preferences,
+                () => Route == AppRoute.Play && Game.Client?.View?.phase == "night" && Game.Client.View.mode == "in-person",
+                () => IsModalOpen || Game.IsMenuOpen);
             var hubRoot = UITheme.Box("N’GAME game catalogue", viewport, true);
             Hub = hubRoot.gameObject.AddComponent<GameHubView>();
             Hub.Initialize(Preferences, id =>
@@ -127,6 +132,7 @@ namespace NGame.Presentation
             AddReadingVeil(root);
             viewport = UITheme.Box("Safe portrait content", root, true);
             viewport.gameObject.AddComponent<SafeViewport>();
+            HubBackground.SetContentFrame(viewport);
         }
 
         private void AddReadingVeil(Transform parent)
@@ -179,6 +185,10 @@ namespace NGame.Presentation
             header = Label("Current chapter heading", viewport, "N’GAME", 27, UITheme.Parchment,
                 new Vector2(0, 1), 162, -40, 183, 43);
             header.alignment = TextAlignmentOptions.MidlineLeft;
+            var brandMark = UITheme.Box("N’GAME folded paper mark", viewport);
+            UITheme.Position(brandMark, new Vector2(0, 1), 40, -40, 40, 30);
+            brandMark.gameObject.AddComponent<PaperCraneMark>().Initialize(Preferences);
+            hubBrandMark = brandMark.gameObject;
             contextualHelp = Button("Open contextual help", viewport, "?", () =>
             {
                 if (Route == AppRoute.Play) Game.OpenRoomHelp(); else ShowSettings();
@@ -451,6 +461,13 @@ namespace NGame.Presentation
             HubBackground.SetVisible(Route == AppRoute.Home);
             readingVeil.SetActive(Route != AppRoute.Home);
             header.color = Route == AppRoute.Home ? UITheme.Midnight : UITheme.Parchment;
+            header.fontSize = Route == AppRoute.Home ? 37 : 27;
+            header.enableAutoSizing = Route == AppRoute.Home;
+            header.fontSizeMin = 27; header.fontSizeMax = 37;
+            header.textWrappingMode = TextWrappingModes.NoWrap;
+            UITheme.Position(header.rectTransform, new Vector2(0, 1), Route == AppRoute.Home ? 185 : 162, -40,
+                Route == AppRoute.Home ? 230 : 183, Route == AppRoute.Home ? 58 : 43);
+            hubBrandMark.SetActive(Route == AppRoute.Home);
             homeView.SetActive(Route == AppRoute.GameHome);
             Hub.gameObject.SetActive(Route == AppRoute.Home);
             contextualHelp.gameObject.SetActive(Route != AppRoute.Home);
@@ -516,7 +533,10 @@ namespace NGame.Presentation
             if (initialized && gatheringCaption != null)
                 gatheringCaption.text = NetworkClient != null && NetworkClient.HasSession ? "Reprendre ma soirée" : "Créer ou rejoindre";
             if (initialized && Hub != null && Route == AppRoute.Home)
+            {
                 Hub.SetHasSavedRoom(NetworkClient != null && NetworkClient.HasSession);
+                HubBackground.SetCatalogueState(NetworkClient != null && NetworkClient.HasSession, Hub.IsChoosingForCreation);
+            }
             if (initialized && navigation != null)
             {
                 var room = Route == AppRoute.Play && Game?.Client?.HasSession == true;

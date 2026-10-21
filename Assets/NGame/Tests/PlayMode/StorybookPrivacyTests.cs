@@ -301,8 +301,9 @@ namespace NGame.Presentation.Tests
         {
             app.EnterVillage();
             var stage = owner.GetComponentInChildren<VillageStage>();
-            Assert.That(stage.WolfArticulated, Is.True, "The wolf must use its real deformation mesh.");
-            Assert.That(stage.WolfMeshVertexCount, Is.GreaterThan(1000));
+            Assert.That(stage.WolfArticulated, Is.True, "The wolf uses independent head and body cutouts.");
+            Assert.That(stage.WolfIndependentPartCount, Is.EqualTo(2));
+            Assert.That(stage.WolfMeshVertexCount, Is.Zero);
             Assert.That(stage.MoonIndependent, Is.True, "The moving moon requires the separate sky assets.");
             Assert.That(stage.Details, Is.Not.Null);
             Assert.That(stage.Details.ChimneyPuffCount, Is.EqualTo(7));
@@ -319,7 +320,7 @@ namespace NGame.Presentation.Tests
                 "The separate paper clouds must travel across the sky.");
             Assert.That(Vector3.Distance(stage.Details.FirstSmokePosition, smoke), Is.GreaterThan(.0001f));
             Assert.That(Mathf.Abs(stage.Details.FirstStarIntensity - stars), Is.GreaterThan(.00001f));
-            Assert.That(stage.WolfLeftEarAngleDegrees, Is.Not.EqualTo(stage.WolfRightEarAngleDegrees));
+            Assert.That(stage.WolfLeftEarAngleDegrees, Is.Zero, "No fake ear deformation is applied.");
             app.Preferences.SetReducedMotion(true);
             var restingMoon = stage.MoonPosition;
             var quietStars = stage.Details.FirstStarIntensity;

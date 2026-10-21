@@ -259,7 +259,7 @@ namespace NGame.Presentation.Game
                 }
                 info.interactable = Client.IsConnected && !string.IsNullOrEmpty(view.selfRoleId) && !externalBlock;
                 RenderCardLayout(view); RenderCardCaption(); ConfigureDock(view); RefreshChatAccess();
-                if (view.phase == "vote" && voteProgress != null) voteProgress.text = view.votesReceived + " / " + view.votesExpected + " votes reçus · choix cachés jusqu’à la clôture";
+                if (view.phase == "vote" && voteProgress != null) voteProgress.text = view.votesReceived + " / " + view.votesExpected + " votes reçus · choix cachés";
                 if (view.phase == "distribution" && acknowledgementProgress != null) acknowledgementProgress.text = view.acknowledgedCount + " / " + (view.players?.Length ?? 0) + " rôles confirmés";
                 if (IsChatOpen) RefreshChatPanel();
                 lastTurn = view.turn; lastKind = view.action?.kind; lastMatch = view.matchId;
@@ -271,10 +271,11 @@ namespace NGame.Presentation.Game
         private void RenderCardLayout(RoomView view)
         {
             var publicVote = view.phase == "vote" && !privateOpened;
-            var immersive = view.phase == "distribution" || view.phase == "night" && !privateOpened || publicVote && SecretsVisible;
-            roleHeader.gameObject.SetActive(!publicVote || SecretsVisible);
-            if (publicVote && SecretsVisible) roleHeader.SetAsLastSibling();
-            var nightWaiting = immersive && view.phase == "night";
+            var expanded = publicVote || privateOpened;
+            var immersive = view.phase == "distribution" || view.phase == "night" && !privateOpened || expanded && SecretsVisible;
+            roleHeader.gameObject.SetActive(!expanded || SecretsVisible);
+            if (expanded && SecretsVisible) roleHeader.SetAsLastSibling();
+            var nightWaiting = immersive && view.phase == "night" && !privateOpened;
             UITheme.Position(roleHeader, UITheme.Top, 0, immersive ? (nightWaiting ? -545 : -423) : -330, 382, immersive ? 350 : 202);
             var paper = roleHeader.GetComponent<UnityEngine.UI.Image>();
             paper.color = immersive ? Color.clear : UITheme.Opacity(UITheme.Midnight, .78f);
@@ -285,8 +286,14 @@ namespace NGame.Presentation.Game
             info.gameObject.SetActive(view.phase != "distribution" && !SecretsVisible);
             SecretCard.SetImmersivePresentation(immersive);
             var shell = (RectTransform)body.parent.parent;
-            shell.offsetMin = new Vector2(21, publicVote ? (IsChatOpen ? 510 : 280) : nightWaiting ? 570 : 225);
-            shell.offsetMax = new Vector2(-21, publicVote ? -236 : immersive ? (nightWaiting ? -236 : -618) : -445);
+            // While typing, give the conversation the available area and restore the same vote draft afterwards.
+            shell.gameObject.SetActive(!(publicVote && ChatKeyboardInset > 0));
+            shell.offsetMin = new Vector2(21, publicVote ? (IsChatOpen ? ChatDockTop + 10 : 280) : nightWaiting ? 570 : 225);
+            shell.offsetMax = new Vector2(-21, expanded ? -236 : immersive ? (nightWaiting ? -236 : -618) : -445);
+            var bodyLayout = body.GetComponent<UnityEngine.UI.VerticalLayoutGroup>();
+            bodyLayout.padding = expanded || nightWaiting ? new RectOffset(10, 10, 8, 8) : new RectOffset(17, 17, 17, 17);
+            publicContent.GetComponent<UnityEngine.UI.VerticalLayoutGroup>().spacing = publicVote ? 4 : 8;
+            privateContent.GetComponent<UnityEngine.UI.VerticalLayoutGroup>().spacing = 4;
             var viewportPaper = body.parent.GetComponent<UnityEngine.UI.Image>();
             if (viewportPaper != null) viewportPaper.color = immersive ? Color.clear : UITheme.Opacity(UITheme.Midnight, .93f);
         }
@@ -295,7 +302,7 @@ namespace NGame.Presentation.Game
         {
             var view = Client?.View;
             if (!built || view == null) return;
-            if (view.phase == "vote" && !privateOpened && !publicContent.gameObject.activeSelf) RenderBody(view);
+            if (view.phase == "vote" && !privateOpened) RenderBody(view);
             RenderCardLayout(view);
             ConfigureDock(view);
         }
@@ -396,9 +403,11 @@ namespace NGame.Presentation.Game
             }
             if (view.phase == "vote")
             {
-                voteProgress = GameUI.Text(publicContent, "Vote progress", view.votesReceived + " / " + view.votesExpected + " votes reçus · choix cachés", 13, 28, false, UITheme.Brass);
-                RenderAction(publicContent, view.action, false);
-                if (view.mode == "remote") RenderVoiceControl(publicContent);
+                voteProgress = GameUI.Text(publicContent, "Vote progress", view.votesReceived + " / " + view.votesExpected + " votes reçus · choix cachés", 13, 20, false, UITheme.Brass);
+                if (Self(view)?.alive == false && view.action == null)
+                    GameUI.Text(publicContent, "Eliminated vote status", "Tu es éliminé : lis le Village et échange avec les autres éliminés dans Observateurs. Tu ne votes plus.", 15, 70, false, UITheme.Parchment);
+                else RenderAction(publicContent, view.action, false);
+                if (view.mode == "remote" && !IsChatOpen) RenderVoiceControl(publicContent);
                 return;
             }
             if (view.phase == "verdict") RenderVerdict(publicContent, view);
@@ -418,8 +427,12 @@ namespace NGame.Presentation.Game
                     : "Une dernière action doit être résolue avant de continuer.", 17, 86, false);
             else if (view.phase == "night")
             {
-                GameUI.Text(publicContent, "Night personal availability", view.action != null && !view.action.submitted ? "C’est à toi de jouer." : view.action?.submitted == true ? "Choix confirmé" : "Les autres rôles jouent", 24, 42);
-                GameUI.Text(publicContent, "Night waiting explanation", Client.IsTraining ? "Les habitants simulés jouent. Ton action apparaîtra à ton tour."
+                var eliminated = Self(view)?.alive == false && view.action == null;
+                GameUI.Text(publicContent, "Night personal availability", eliminated ? "Tu observes la partie" : view.action != null && !view.action.submitted ? "C’est à toi de jouer." : view.action?.submitted == true ? "Choix confirmé" : "Les autres rôles jouent", 24, 42);
+                GameUI.Text(publicContent, "Night waiting explanation", eliminated ? "Aucune action ne t’est demandée. Les messages des Observateurs seront disponibles au vote."
+                    : view.action != null && !view.action.submitted ? "Ouvre ton action privée, choisis puis confirme."
+                    : view.action?.submitted == true ? "Ton choix est enregistré. Attends la fin de cet appel."
+                    : Client.IsTraining ? "Les habitants simulés jouent. Ton action apparaîtra à ton tour."
                     : view.mode == "in-person" ? "Garde les yeux fermés jusqu’à l’appel de ton rôle." : "Tu recevras ton action quand ce sera ton tour.", 15, 48, false, UITheme.Quiet);
                 return;
             }
@@ -507,22 +520,27 @@ namespace NGame.Presentation.Game
             if (view == null || !privateOpened || !Client.IsConnected || externalBlock) return;
             privateContent.gameObject.SetActive(true); publicContent.gameObject.SetActive(false);
             var row = GameUI.Row(privateContent, "Private pane heading", 41);
-            GameUI.Text(row, "Private pane indicator", "Informations privées", 18, 40, true, UITheme.Brass);
+            GameUI.Text(row, "Private pane indicator", view.selfRoleName ?? "Informations privées", 18, 40, true, UITheme.Brass);
             var close = GameUI.Button(row, "Close private action", "Masquer", ClosePrivateInformation, false, 38);
             close.GetComponent<UnityEngine.UI.LayoutElement>().preferredWidth = 97;
-            var definition = RoleCatalog.Find(view.selfRoleId);
-            GameUI.Text(privateContent, "Private role description", (view.selfRoleName ?? "Ton rôle") + " · " + definition?.Summary, 16, 87, false);
+
             var facts = new StringBuilder();
             if (view.wolfAllyIds?.Length > 0)
             {
-                facts.Append("Ta meute : "); foreach (var id in view.wolfAllyIds) facts.Append(Name(view, id)).Append(" · "); facts.AppendLine();
+                var allies = new List<string>(); foreach (var id in view.wolfAllyIds) allies.Add(Name(view, id));
+                GameUI.Text(privateContent, "Private wolf allies", "Ta meute : " + string.Join(" · ", allies), 13, 32, false, UITheme.Brass);
             }
             foreach (var fact in view.privateFacts ?? Array.Empty<PrivateFact>())
                 if (fact != null) facts.AppendLine(!string.IsNullOrEmpty(fact.description) ? fact.description : Name(view, fact.playerId) + " : " + RoleCatalog.Find(fact.roleId)?.DisplayName);
-            if (!string.IsNullOrEmpty(view.action?.privateInfo)) facts.AppendLine(view.action.privateInfo);
-            if (facts.Length > 0) GameUI.Text(privateContent, "Private authorized facts", facts.ToString(), 15, Mathf.Max(65, 28 + facts.Length / 34 * 22), false, UITheme.Brass);
             if (view.action != null && view.action.kind != "vote") RenderAction(privateContent, view.action, true);
-            else GameUI.Text(privateContent, "Private waiting message", "Aucune action de rôle ne t’est demandée maintenant.", 16, 70);
+            else GameUI.Text(privateContent, "Private waiting message", "Aucune action de rôle ne t’est demandée maintenant.", 16, 42);
+            if (view.action?.kind == "wolves" && !string.IsNullOrEmpty(view.action.privateInfo))
+                GameUI.Text(privateContent, "Private current action information", view.action.privateInfo, 13, 32, false, UITheme.Brass);
+            if (!string.IsNullOrEmpty(view.action?.description))
+                GameUI.Text(privateContent, "Available action instructions", view.action.description, 14, 42, false);
+            var role = RoleCatalog.Find(view.selfRoleId);
+            if (role != null) GameUI.Text(privateContent, "Private role reminder", role.Summary, 14, 42, false, UITheme.Quiet);
+            if (facts.Length > 0) GameUI.Text(privateContent, "Private authorized facts", facts.ToString(), 14, 40, false, UITheme.Brass);
         }
         private void ErasePrivate()
         {
@@ -536,9 +554,11 @@ namespace NGame.Presentation.Game
             if (isPrivate && !privateOpened) return;
             actionTurn = Client.View.turn;
             if (action.kind == "vote") { RenderCompactVote(parent, action); return; }
-            GameUI.Text(parent, "Available action title", action.title ?? "À toi de choisir", 24, 55);
-            if (!string.IsNullOrEmpty(action.description)) GameUI.Text(parent, "Available action instructions", action.description, 15, 86, false);
-            if (action.kind == "witch") GameUI.Text(parent, "Available potion reserves", "Soin : " + (action.healingAvailable ? "disponible" : "utilisé") + " · Poison : " + (action.poisonAvailable ? "disponible" : "utilisé"), 14, 46, false, UITheme.Brass);
+            // The role heading already identifies the power; keep the decisions above the fold.
+            if (!isPrivate) GameUI.Text(parent, "Available action title", action.title ?? "À toi de choisir", 21, 34);
+            if (action.kind != "wolves" && !string.IsNullOrEmpty(action.privateInfo))
+                GameUI.Text(parent, "Private current action information", action.privateInfo, 13, 32, false, UITheme.Brass);
+            if (action.kind == "witch") GameUI.Text(parent, "Available potion reserves", "Soin : " + (action.healingAvailable ? "disponible" : "utilisé") + " · Poison : " + (action.poisonAvailable ? "disponible" : "utilisé"), 13, 28, false, UITheme.Brass);
             var mutableWolf = action.kind == "wolves";
             if (action.submitted && !mutableWolf)
             {
@@ -551,41 +571,44 @@ namespace NGame.Presentation.Game
             if (choice == null || Array.IndexOf(options, choice) < 0)
                 choice = !string.IsNullOrEmpty(action.submittedChoice) && Array.IndexOf(options, action.submittedChoice) >= 0
                     ? action.submittedChoice : action.kind == "witch" ? null : options[0];
-            for (var i = 0; i < options.Length; i += 2)
+
+            var optionColumns = action.kind == "witch" ? 4 : 2;
+            for (var i = 0; i < options.Length; i += optionColumns)
             {
-                var row = GameUI.Row(parent, "Action options row", 53);
-                for (var j = i; j < Math.Min(options.Length, i + 2); j++)
+                var row = GameUI.Row(parent, "Action options row", 44);
+                for (var j = i; j < Math.Min(options.Length, i + optionColumns); j++)
                 {
                     var option = options[j];
-                    var button = GameUI.Button(row, "Action choice " + option, (choice == option ? "• " : "") + ChoiceName(option), () => ChooseActionChoice(option), choice == option, 51);
+                    var button = GameUI.Button(row, "Action choice " + option, (choice == option ? "• " : "") + (action.kind == "witch" && option == "both" ? "Les deux" : ChoiceName(option)), () => ChooseActionChoice(option), choice == option, 44);
                     button.GetComponentInChildren<TMP_Text>().fontSize = 16; button.interactable = !Client.IsBusy;
                 }
             }
             if (choice == null)
             {
-                GameUI.Text(parent, "Explicit potion choice required", "Choisis une potion, les deux, ou Passer. Rien ne sera envoyé avant ta confirmation.", 15, 77, false, UITheme.Brass);
+                GameUI.Text(parent, "Explicit potion choice required", "Choisis une option avant de confirmer.", 14, 32, false, UITheme.Brass);
                 return;
             }
             var required = NeededTargets(action, choice);
             if (required <= 0) return;
-            GameUI.Text(parent, "Required target count", targets.Count + " / " + required + (required == 1 ? " personne choisie" : " personnes choisies"), 16, 35, false, UITheme.Brass);
-            var ids = action.allowedTargetIds ?? Array.Empty<string>(); const int pageSize = 6;
+            GameUI.Text(parent, "Required target count", targets.Count + " / " + required + (required == 1 ? " personne choisie" : " personnes choisies"), 14, 26, false, UITheme.Brass);
+            var ids = action.allowedTargetIds ?? Array.Empty<string>(); const int pageSize = 4;
             var pages = Math.Max(1, (ids.Length + pageSize - 1) / pageSize); targetPage = Mathf.Clamp(targetPage, 0, pages - 1);
-            for (var i = targetPage * pageSize; i < Math.Min(ids.Length, (targetPage + 1) * pageSize); i += 2)
+            var pageEnd = Math.Min(ids.Length, (targetPage + 1) * pageSize);
+            for (var i = targetPage * pageSize; i < pageEnd; i += 2)
             {
-                var row = GameUI.Row(parent, "Target selection row", 52);
-                for (var j = i; j < Math.Min(ids.Length, i + 2); j++)
+                var row = GameUI.Row(parent, "Target selection row", 44);
+                for (var j = i; j < Math.Min(pageEnd, i + 2); j++)
                 {
                     var id = ids[j];
-                    var button = GameUI.Button(row, "Action target " + id, (targets.Contains(id) ? "• " : "") + Name(Client.View, id), () => ToggleTarget(id), targets.Contains(id), 50);
+                    var button = GameUI.Button(row, "Action target " + id, (targets.Contains(id) ? "• " : "") + Name(Client.View, id), () => ToggleTarget(id), targets.Contains(id), 44);
                     button.GetComponentInChildren<TMP_Text>().fontSize = 17; button.interactable = !Client.IsBusy;
                 }
             }
             if (pages > 1)
             {
                 var nav = GameUI.Row(parent, "Target pagination", 40);
-                var back = GameUI.Button(nav, "Previous targets", "← " + (targetPage + 1) + " / " + pages, () => { targetPage--; RefreshActionForm(); }, false, 39); back.interactable = targetPage > 0;
-                var next = GameUI.Button(nav, "Next targets", "Autres personnes →", () => { targetPage++; RefreshActionForm(); }, false, 39); next.interactable = targetPage < pages - 1;
+                var back = GameUI.Button(nav, "Previous targets", "← " + (targetPage + 1) + " / " + pages, () => { targetPage--; RefreshActionForm(); }, false, 40); back.interactable = targetPage > 0;
+                var next = GameUI.Button(nav, "Next targets", "Autres personnes →", () => { targetPage++; RefreshActionForm(); }, false, 40); next.interactable = targetPage < pages - 1;
             }
         }
         public void ChooseActionChoice(string value)
@@ -703,6 +726,7 @@ namespace NGame.Presentation.Game
             GameUI.Text(content, "Rules private gestures", "Le bouton du bas révèle ta carte tant que tu le maintiens. Pour agir d’une main, ouvre le panneau privé ; masque-le ensuite. Un menu, un changement de tour ou une interruption referme les secrets.", 15, 142, false, UITheme.Brass);
             GameUI.Text(content, "Rules remote voice", "Messages écrits et vocal : uniquement pendant le vote de jour. Le micro ne s’active jamais tout seul.", 15, 117, false);
             GameUI.Text(content, "Rules presence protocol", "En présence : gardez les yeux fermés quand la narration le demande. La Petite Fille observe la table ; elle ne reçoit jamais une liste numérique de loups.", 15, 117, false);
+            if (Client.View?.mode == "in-person") GameUI.Text(content, "Rules common night gestures", "Pendant la nuit, tous peuvent tapoter doucement leur téléphone, même les yeux fermés. Hors de l’appel de ton rôle, garde les yeux fermés ; la Petite Fille conserve sa consigne physique. Ce geste est facultatif et ne garantit pas de cacher les gestes des autres.", 15, 164, false);
             MenuDock("Revenir au village", CloseMenu); SecretCard.SetBlocked(true);
             if (Client?.View != null) ConfigureDock(Client.View);
         }

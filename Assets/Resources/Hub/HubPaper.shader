@@ -51,18 +51,24 @@ Shader "NGame/Living Universal Storybook UI"
             {
                 float2 uv = input.uv;
                 // The central reading field remains still. Only the book's two page fans and border foliage move.
-                float pageArea = smoothstep(.105,.15,uv.y) * (1-smoothstep(.265,.30,uv.y))
+                float pageArea = smoothstep(.37,.39,uv.y) * (1-smoothstep(.44,.46,uv.y))
                     * smoothstep(.06,.15,uv.x) * (1-smoothstep(.86,.94,uv.x));
                 float distanceToSpine = abs(uv.x-.5);
                 float pageLift = sin(_Clock*1.45-distanceToSpine*20) * distanceToSpine * .021 * pageArea;
                 float foliage = (1-smoothstep(.06,.24,uv.x) + smoothstep(.76,.94,uv.x))
-                    * smoothstep(.02,.13,uv.y) * (1-smoothstep(.43,.58,uv.y));
+                    * smoothstep(.40,.46,uv.y) * (1-smoothstep(.69,.78,uv.y));
                 float sway = sin(_Clock*.82+uv.y*13) * foliage;
-                uv.x += (sway*.009 + pageLift*.24) * _Motion;
-                uv.y += (pageLift + cos(_Clock*.66+uv.x*8)*foliage*.0035) * _Motion;
+                float wolf = smoothstep(.53,.68,uv.x) * (1-smoothstep(.93,1,uv.x))
+                    * smoothstep(.54,.62,uv.y) * (1-smoothstep(.77,.81,uv.y));
+                float headTurn = sin(_Clock*.74) * wolf * .012;
+                uv.x += (sway*.006 + pageLift*.24 - (uv.y-.55)*headTurn) * _Motion;
+                uv.y += (pageLift + cos(_Clock*.66+uv.x*8)*foliage*.002 + (uv.x-.68)*headTurn) * _Motion;
                 fixed4 color = (tex2D(_MainTex,clamp(uv,.001,.999)) + _TextureSampleAdd) * input.color;
                 float pageShine = pow(saturate(1-abs(distanceToSpine-frac(_Clock*.09)) * 15),3) * pageArea;
                 color.rgb += float3(.035,.022,.004) * pageShine * _Motion;
+                float2 paperBand = float2(input.uv.x, (input.uv.y-.365)/.425);
+                color.a *= smoothstep(0,.025,paperBand.x) * (1-smoothstep(.975,1,paperBand.x))
+                    * smoothstep(0,.035,paperBand.y) * (1-smoothstep(.985,1,paperBand.y));
                 #ifdef UNITY_UI_CLIP_RECT
                 color.a *= UnityGet2DClipping(input.localPosition.xy,_ClipRect);
                 #endif

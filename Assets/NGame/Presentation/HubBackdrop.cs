@@ -24,8 +24,11 @@ namespace NGame.Presentation
         private UnityEngine.UI.Image illustration, light;
         private RectTransform content;
         private Sprite ownedSprite;
-        private Material paperMaterial;
-        public bool PaperMotionEnabled => paperMaterial != null && !ReducedMotion;
+        private RectTransform safeFrame;
+        private bool hasSavedRoom, choosingGame;
+        private RectTransform hero;
+        public HubPaperDiorama Diorama { get; private set; }
+        public bool PaperMotionEnabled => Diorama != null && !ReducedMotion;
         private float ambientClock, nextAssetAttempt;
         private bool initialized;
         private bool ReducedMotion => preferences != null && preferences.ReducedMotion;
@@ -46,12 +49,9 @@ namespace NGame.Presentation
             illustration = UITheme.Surface("Universal storybook illustration", content, Color.white);
             UITheme.Position(illustration.rectTransform, UITheme.Center, 0, 0, 430, 932);
             illustration.enabled = false;
-            var paperShader = Resources.Load<Shader>("Hub/HubPaper");
-            if (paperShader != null)
-            {
-                paperMaterial = new Material(paperShader) { name = "N’GAME living book and foliage" };
-                illustration.material = paperMaterial;
-            }
+            hero = UITheme.Box("Independent paper diorama", content);
+            Diorama = hero.gameObject.AddComponent<HubPaperDiorama>();
+            Diorama.Initialize(preferences);
             light = UITheme.Surface("Warm breathing paper light", content, UITheme.Opacity(Color.white, .035f), UITheme.Mist);
             UITheme.Position(light.rectTransform, new Vector2(.5f, 1), 0, -85, 700, 340);
             for (var i = 0; i < 8; i++) AddDecoration(i, false);
@@ -59,6 +59,10 @@ namespace NGame.Presentation
             TryLoadIllustration();
             Render();
         }
+
+        public void SetContentFrame(RectTransform frame) => safeFrame = frame;
+        public void SetCatalogueState(bool savedRoom, bool choosing)
+        { hasSavedRoom = savedRoom; choosingGame = choosing; }
 
         public void SetVisible(bool visible) => gameObject.SetActive(visible);
 
@@ -86,20 +90,14 @@ namespace NGame.Presentation
         private void TryLoadIllustration()
         {
             if (illustration == null || illustration.sprite != null) return;
-            var sprite = Resources.Load<Sprite>("Hub/storybook-hub");
-            if (sprite == null)
-            {
-                var texture = Resources.Load<Texture2D>("Hub/storybook-hub");
-                if (texture != null)
-                {
-                    if (ownedSprite != null) Destroy(ownedSprite);
-                    ownedSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height),
-                        Vector2.one * .5f, 100, 0, SpriteMeshType.FullRect);
-                    sprite = ownedSprite;
-                }
-            }
-            if (sprite == null) return;
-            illustration.sprite = sprite;
+            var source = Resources.Load<Sprite>("Hub/storybook-hub");
+            var texture = source != null ? source.texture : Resources.Load<Texture2D>("Hub/storybook-hub");
+            if (texture == null) return;
+            // Use the clear top of the approved-style artwork as paper, and its middle as a separate pop-up layer.
+            var paperBottom = Mathf.FloorToInt(texture.height * .80f);
+            ownedSprite = Sprite.Create(texture, new Rect(0, paperBottom, texture.width, texture.height - paperBottom),
+                Vector2.one * .5f, 100, 0, SpriteMeshType.FullRect);
+            illustration.sprite = ownedSprite;
             illustration.enabled = true;
         }
 
@@ -115,11 +113,6 @@ namespace NGame.Presentation
         private void Render()
         {
             var clock = ReducedMotion ? 0 : ambientClock;
-            if (paperMaterial != null)
-            {
-                paperMaterial.SetFloat("_Clock", clock);
-                paperMaterial.SetFloat("_Motion", ReducedMotion ? 0 : 1);
-            }
             if (illustration != null)
             {
                 var bounds = content.rect.size;
@@ -131,8 +124,16 @@ namespace NGame.Presentation
                     var cover = Mathf.Max((bounds.x + 20) / source.x, (bounds.y + 20) / source.y);
                     illustration.rectTransform.sizeDelta = source * cover;
                 }
-                illustration.rectTransform.anchoredPosition = ReducedMotion ? Vector2.zero :
-                    new Vector2(Mathf.Sin(clock * .11f) * 5, Mathf.Sin(clock * .083f) * 6);
+                illustration.rectTransform.anchoredPosition = Vector2.zero;
+            }
+            if (hero != null)
+            {
+                var frame = safeFrame != null ? safeFrame : (RectTransform)transform;
+                var rowBottom = hasSavedRoom && !choosingGame ? 300f : 260f;
+                var available = Mathf.Max(80, frame.rect.height - rowBottom - 298f);
+                var topCenter = content.InverseTransformPoint(frame.TransformPoint(new Vector3(frame.rect.center.x, frame.rect.yMax, 0)));
+                UITheme.Position(hero, UITheme.Center, topCenter.x,
+                    topCenter.y - 200 - available * .5f, frame.rect.width, available);
             }
             if (light != null) light.color = UITheme.Opacity(Color.white,
                 ReducedMotion ? .035f : .035f + Mathf.Sin(clock * .47f) * .015f);
@@ -152,7 +153,6 @@ namespace NGame.Presentation
         private void OnDestroy()
         {
             if (ownedSprite != null) Destroy(ownedSprite);
-            if (paperMaterial != null) Destroy(paperMaterial);
         }
     }
 }

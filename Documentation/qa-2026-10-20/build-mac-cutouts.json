@@ -1,0 +1,14 @@
+{
+  "status": "completed",
+  "buildId": "build_7a93b43317cf",
+  "result": "Succeeded",
+  "platform": "StandaloneOSX",
+  "outputPath": "/Users/mathis/Code/N-game/Builds/Mac/NGame.app",
+  "totalSizeBytes": 212989857,
+  "buildTimeMs": 19281,
+  "buildStartedAt": "2026-10-21T00:11:48.6308180Z",
+  "buildEndedAt": "2026-10-21T00:12:07.9119280Z",
+  "totalWarnings": 346,
+  "totalErrors": 0,
+  "note": "346 warnings from AI inference/Sentis shaders; local Mac build, no mobile device or notarization validation."
+}

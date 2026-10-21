@@ -1,0 +1,490 @@
+{
+  "success": true,
+  "command": "command test_status",
+  "data": {
+    "command": "test_status",
+    "parameters": {},
+    "result": {
+      "status": "completed",
+      "duration": 108.42,
+      "summary": {
+        "total": 66,
+        "passed": 65,
+        "failed": 1,
+        "skipped": 0,
+        "inconclusive": 0
+      },
+      "results": [
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.AppCatalogueVisitsWerewolfLandingAndReturnsWithoutCreatingRoom",
+          "Status": "Passed",
+          "Duration": 0.7185494,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.CatalogueHasThreeSmallAlignedTilesBelowTheHero",
+          "Status": "Passed",
+          "Duration": 0.249369,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.CatalogueOpensOnlyWerewolfWithoutCreationIntent",
+          "Status": "Passed",
+          "Duration": 0.0236512,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.CompactSafeAreaKeepsFutureCardsAboveSavedResumeAndFooterReachable",
+          "Status": "Passed",
+          "Duration": 0.0589944,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.CreationSelectionCanCancelAndContinueWithoutPrematureCallback",
+          "Status": "Passed",
+          "Duration": 0.1079328,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.FutureGamesAreClearlyUnavailableAndIgnorePointerClicks",
+          "Status": "Passed",
+          "Duration": 0.0302272,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.JoinAndSettingsAreIndependentAndFooterNeverMoves",
+          "Status": "Passed",
+          "Duration": 0.0199935,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.SavedAccessShowsResumeOnlyInCatalogue",
+          "Status": "Passed",
+          "Duration": 0.0263428,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.HubBackdropTests.AmbientMotionChangesRealDecorationPosesAndStopsWithReducedMotion",
+          "Status": "Passed",
+          "Duration": 0.4608359,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.HubBackdropTests.BothGameIconsMoveTheirOwnPaperPartsAndRespectReducedMotion",
+          "Status": "Passed",
+          "Duration": 0.4826947,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.HubBackdropTests.IllustrationCoversViewportOverOpaquePaperAndNeverBlocksInput",
+          "Status": "Passed",
+          "Duration": 0.0221162,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.NightCommonTapFeedbackTests.EachAllowedContactUsesTheSameFixedNonBlockingLightThenFades",
+          "Status": "Passed",
+          "Duration": 0.5666658,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.NightCommonTapFeedbackTests.FocusAndPauseMaskImmediatelyAndDoNotReplayAfterReturning",
+          "Status": "Passed",
+          "Duration": 0.0217855,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.NightCommonTapFeedbackTests.PhaseMenuAndReducedMotionStopFeedbackWithoutReplayingIt",
+          "Status": "Passed",
+          "Duration": 0.0281577,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.AnExpandedMessageDockStillAllowsARealVoteThenClosesAtPhaseChange",
+          "Status": "Passed",
+          "Duration": 0.1759426,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.AnOpenPrivateDraftIsPurgedBeforeAnotherMatchCanReuseTheChannel",
+          "Status": "Passed",
+          "Duration": 0.0948477,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.ARevokedPrivateChatDraftDoesNotBecomeAPublicMessage",
+          "Status": "Passed",
+          "Duration": 0.0446093,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.ChatCannotOpenOutsideVotingAndItsToggleIsAbsent",
+          "Status": "Passed",
+          "Duration": 0.1466462,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.CommunicationPollingDoesNotReplaceAVoteTargetBetweenPointerEvents",
+          "Status": "Passed",
+          "Duration": 0.0420913,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.EliminatedPlayersReceiveObserverInstructionsInsteadOfAPowerOrAVote",
+          "Status": "Passed",
+          "Duration": 0.0358587,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.FocusLossRequiresReopeningThePrivateActionBeforeItCanSubmit",
+          "Status": "Passed",
+          "Duration": 0.0936769,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.HostVoteClosureRequiresConfirmationAndCannotCloseAnotherTurn",
+          "Status": "Passed",
+          "Duration": 0.0497171,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.PrivateWitchTargetsAndPagerFitInsideAn850PointSafeFrame",
+          "Status": "Failed",
+          "Duration": 0.0468907,
+          "Message": "System.InvalidOperationException : Sequence contains no matching element",
+          "StackTrace": "  at System.Linq.Enumerable.Single[TSource] (System.Collections.Generic.IEnumerable`1[T] source, System.Func`2[T,TResult] predicate) [0x00070] in <1b6d7e99e5414d05b29c34e3609a3284>:0 \n  at NGame.Presentation.Tests.PlayerCommunicationTests+<PrivateWitchTargetsAndPagerFitInsideAn850PointSafeFrame>d__20.MoveNext () [0x002e4] in /Users/mathis/Code/N-game/Assets/NGame/Tests/PlayMode/PlayerCommunicationTests.cs:313 \n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__8.MoveNext () [0x0003a] in ./Library/PackageCache/com.unity.test-framework@80f691d4262b/UnityEngine.TestRunner/NUnitExtensions/Attributes/TestEnumerator.cs:52 "
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.PublicChronicleContainsEveryPublicEventAndNoPrivateFact",
+          "Status": "Passed",
+          "Duration": 0.0948432,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.RemovingASeatRequiresExplicitConfirmationAndKeepsHost",
+          "Status": "Passed",
+          "Duration": 0.0370468,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.ThreeTargetsAndTheirPageControlsFitAboveExpandedMessagesWithoutScrolling",
+          "Status": "Passed",
+          "Duration": 0.0946934,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.VotingMessagesUseABoundedTransparentBottomDock",
+          "Status": "Passed",
+          "Duration": 0.0440135,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.WitchMustExplicitlyChooseBeforeConfirming",
+          "Status": "Passed",
+          "Duration": 0.0337241,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerWorkflowTests.APrivatePowerCanBeOpenedSelectedAndConfirmedWithSuccessiveSinglePointerTaps",
+          "Status": "Passed",
+          "Duration": 0.2751532,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerWorkflowTests.BurgerAndStayNeverLeaveOrSendAGameActionAndTheDockDoesNotMove",
+          "Status": "Passed",
+          "Duration": 0.2399647,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerWorkflowTests.DistributionRequiresTheVisibleHoldThenThePrimaryAcknowledgement",
+          "Status": "Passed",
+          "Duration": 0.9657116,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerWorkflowTests.FinishedPrimaryPreparesARematchAndClearsTheOldPrivateView",
+          "Status": "Passed",
+          "Duration": 0.1529234,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerWorkflowTests.InterruptionMasksTheOneHandPrivatePaneWithoutReopeningIt",
+          "Status": "Passed",
+          "Duration": 0.1664845,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerWorkflowTests.RealPracticeCanFinishAndPrepareARematchUsingOnlyProductionControls",
+          "Status": "Passed",
+          "Duration": 84.977617,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PracticeGuidanceTests.DiscussionHasNoChatAndWaitsForExplicitAdvance",
+          "Status": "Passed",
+          "Duration": 0.0851676,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PracticeGuidanceTests.DistributionWaitsForLearnerInsteadOfExpiringTheirSecretCard",
+          "Status": "Passed",
+          "Duration": 0.1506861,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PracticeGuidanceTests.FocusAndInactiveViewsPauseTheLocalClockAndHideSecrets",
+          "Status": "Passed",
+          "Duration": 0.0010881,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PracticeGuidanceTests.VoteCannotBePlayedForLearnerAndSubmittedAbstentionIsRespected",
+          "Status": "Passed",
+          "Duration": 0.116599,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PracticeGuidanceTests.VoteHasThreeLabelledBotExamplesAndAGenericReplyOnlyDuringVoting",
+          "Status": "Passed",
+          "Duration": 0.0344023,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PublicNarratorTests.ConnectedVisibleHostInPresenceUsesTheShippedPublicCall",
+          "Status": "Passed",
+          "Duration": 0.0228076,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PublicNarratorTests.DisablingThePreferenceStopsImmediatelyAndDoesNotReplayTheSameTurn",
+          "Status": "Passed",
+          "Duration": 0.0156785,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PublicNarratorTests.FocusPausePhaseAndHostChangesStopTheCurrentClip",
+          "Status": "Passed",
+          "Duration": 0.0209576,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PublicNarratorTests.GuestRemoteTrainingDisconnectedAndHiddenViewsNeverStartAnAnnouncement",
+          "Status": "Passed",
+          "Duration": 0.0139988,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PublicNarratorTests.NearlyExpiredOrUnknownPublicPhasesStaySilent",
+          "Status": "Passed",
+          "Duration": 0.0110216,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PublicNarratorTests.PublicAnnouncementIgnoresAllEightSecretRolesNamesAndPrivateFacts",
+          "Status": "Passed",
+          "Duration": 0.0171786,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.RoomClientPrivacyTests.OrdinaryNetworkCommandsOmitPhantomUnitySettingsButConfigurationKeepsThem",
+          "Status": "Passed",
+          "Duration": 0.0018675,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.RoomClientPrivacyTests.RealRoomCardMasksDuringFlipAndDoesNotResumeAfterPhaseOrFocusChange",
+          "Status": "Passed",
+          "Duration": 2.5867139,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.RoomClientPrivacyTests.TrainingStartsWithEightReadyPlayersAndOnlyTheLocalPrivateRole",
+          "Status": "Passed",
+          "Duration": 0.0023607,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ActualProceduralUiSpritesHaveAnOpaqueCenterAndTransparentCorners(\"Panel\")",
+          "Status": "Passed",
+          "Duration": 0.0868265,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ActualProceduralUiSpritesHaveAnOpaqueCenterAndTransparentCorners(\"Disc\")",
+          "Status": "Passed",
+          "Duration": 0.0792458,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ARealUnscaledHoldRevealsAndMaskingHidesTheActualGraphicsImmediately",
+          "Status": "Passed",
+          "Duration": 0.9143943,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ArticulatedWolfAndIndependentSkyMoveThenRestWithReducedMotion",
+          "Status": "Passed",
+          "Duration": 0.6052466,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ASecondPointerCannotTakeOverThePrimaryHold",
+          "Status": "Passed",
+          "Duration": 0.9156121,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.BackgroundingAnUnfinishedHoldCannotRevealAfterResuming",
+          "Status": "Passed",
+          "Duration": 0.9363972,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.CancellingDuringTheCardFlipHidesThePrivateFaceInTheSameFrame",
+          "Status": "Passed",
+          "Duration": 1.201781,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.FocusLossMasksAVisibleRoleWithoutResumingTheOldHold",
+          "Status": "Passed",
+          "Duration": 1.739389,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.FullDaylightExtinguishesTheVillageLamps",
+          "Status": "Passed",
+          "Duration": 0.0615983,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.HomeAndPreparationKeepTheCardHiddenAndBoundThePartySize",
+          "Status": "Passed",
+          "Duration": 0.0653793,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.LeavingReducedMotionDoesNotRestartTheEntranceOfAlreadyVisibleCards",
+          "Status": "Passed",
+          "Duration": 0.1733015,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.LivePhaseLightTransitionFinishesDespiteRepeatedRoomSnapshots",
+          "Status": "Passed",
+          "Duration": 4.0860941,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.OpeningThePublicRoleLibraryCancelsThePrivateHoldAndSupportsAllFourPages",
+          "Status": "Passed",
+          "Duration": 0.9373671,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.PhaseAndRouteChangesCancelPendingRevealAndVillageEntryResetsOnlyTheRound",
+          "Status": "Passed",
+          "Duration": 0.9332182,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.PublicPortraitCacheRecoversAfterUnityDestroysRuntimeSprites",
+          "Status": "Passed",
+          "Duration": 0.1328818,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.ReducedMotionFreezesAmbientClockWaterAndWindowFlickerThenCanResume",
+          "Status": "Passed",
+          "Duration": 0.7335328,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.SettingsCancelTheHoldAndClosingDoesNotRestartIt",
+          "Status": "Passed",
+          "Duration": 0.9366231,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.StorybookPrivacyTests.VillageShadersDoNotReportCompilationErrors",
+          "Status": "Passed",
+          "Duration": 0.0699147,
+          "Message": null,
+          "StackTrace": null
+        }
+      ]
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "/Users/mathis/Code/N-game"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

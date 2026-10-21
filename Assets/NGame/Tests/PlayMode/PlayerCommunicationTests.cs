@@ -85,7 +85,11 @@ namespace NGame.Presentation.Tests
                 },
                 Voice = new VoiceView { available = true, canListen = true, canTransmit = true }
             };
-            flow = owner.AddComponent<RoomFlowView>();
+            var frame = new GameObject("Player safe frame", typeof(RectTransform));
+            frame.transform.SetParent(owner.transform, false);
+            var frameRect = (RectTransform)frame.transform; frameRect.anchorMin = Vector2.zero; frameRect.anchorMax = Vector2.one;
+            frameRect.offsetMin = frameRect.offsetMax = Vector2.zero;
+            flow = frame.AddComponent<RoomFlowView>();
             flow.Initialize(new AppPreferences(new MemoryPreferences()), client, _ => { });
             flow.SetRouteActive(true);
             yield return null;
@@ -182,6 +186,49 @@ namespace NGame.Presentation.Tests
         }
 
         [UnityTest]
+        public IEnumerator ThreeTargetsAndTheirPageControlsFitAboveExpandedMessagesWithoutScrolling()
+        {
+            var extra = Enumerable.Range(3, 7).Select(i => new PlayerView { id = "person-" + i, displayName = "Joueur " + i, alive = true, connected = true });
+            client.View.players = client.View.players.Concat(extra).ToArray();
+            client.View.action.allowedTargetIds = client.View.players.Where(item => item.id != "one").Select(item => item.id).ToArray();
+            client.View.revision++; client.Refresh(); yield return null;
+            yield return TapProduction("Open room chat"); yield return null;
+            var visibleTargets = owner.GetComponentsInChildren<UnityEngine.UI.Button>().Where(item => item.name.StartsWith("Action target ")).ToArray();
+            Assert.That(visibleTargets.Length, Is.EqualTo(3), "One row avoids the clipped second row while messages are open.");
+            foreach (var target in visibleTargets)
+            {
+                Assert.That(((RectTransform)target.transform).rect.height, Is.GreaterThanOrEqualTo(44));
+                Assert.That(CanHit(target, out _), Is.True, "Every target is visible without scrolling: " + target.name);
+            }
+            Assert.That(CanHit(Button("Next targets"), out _), Is.True, "Page navigation must be visible above messages without scrolling.");
+            Assert.That(owner.GetComponentsInChildren<TMP_Text>().Single(item => item.name == "Target page indicator").text, Is.EqualTo("1 / 3"));
+            yield return TapProduction("Next targets");
+            Assert.That(owner.GetComponentsInChildren<TMP_Text>().Single(item => item.name == "Target page indicator").text, Is.EqualTo("2 / 3"));
+            const string targetName = "Action target person-5";
+            yield return TapProduction(targetName);
+            var selectedTargetControl = Button(targetName);
+            client.View.votesReceived++; client.View.revision++; client.Refresh(); yield return null;
+            Assert.That(Button(targetName), Is.SameAs(selectedTargetControl), "Another vote must not replace my paged selection control.");
+            yield return TapProduction("Player primary action");
+            Assert.That(client.Commands.Single().targetIds, Is.EqualTo(new[] { "person-5" }));
+        }
+
+        [UnityTest]
+        public IEnumerator EliminatedPlayersReceiveObserverInstructionsInsteadOfAPowerOrAVote()
+        {
+            client.View.players[0].alive = false; client.View.action = null; client.View.revision++; client.Refresh(); yield return null;
+            var voteNotice = owner.GetComponentsInChildren<TMP_Text>().Single(item => item.name == "Eliminated vote status");
+            Assert.That(voteNotice.text, Does.Contain("Tu ne votes plus").And.Contain("Observateurs"));
+            Assert.That(flow.PrimaryAction.interactable, Is.False);
+            client.View.phase = "night"; client.View.turn++; client.View.revision++; client.Refresh(); yield return null;
+            var nightNotice = owner.GetComponentsInChildren<TMP_Text>().Single(item => item.name == "Night personal availability");
+            Assert.That(nightNotice.text, Is.EqualTo("Tu observes la partie"));
+            Assert.That(flow.PrimaryAction.interactable, Is.False);
+            Assert.That(flow.IsPrivateActionVisible, Is.False);
+            Assert.That(client.Commands, Is.Empty);
+        }
+
+        [UnityTest]
         public IEnumerator CommunicationPollingDoesNotReplaceAVoteTargetBetweenPointerEvents()
         {
             var target = Button("Action target two");
@@ -237,13 +284,78 @@ namespace NGame.Presentation.Tests
             flow.PrimaryAction.onClick.Invoke();
             Assert.That(flow.IsPrivateActionVisible, Is.True, "The action can be opened with one tap; holding a second finger is unnecessary.");
             Button("Action target two").onClick.Invoke();
-            owner.SendMessage("OnApplicationFocus", false, SendMessageOptions.RequireReceiver);
+            flow.SendMessage("OnApplicationFocus", false, SendMessageOptions.RequireReceiver);
             Assert.That(flow.IsPrivateActionVisible, Is.False);
             Assert.That(flow.PrimaryAction.GetComponentInChildren<TMP_Text>().text, Is.EqualTo("Ouvrir mon action privée"));
             flow.PrimaryAction.onClick.Invoke();
             Assert.That(flow.IsPrivateActionVisible, Is.True);
             Assert.That(client.Commands, Is.Empty, "The first tap after masking reopens; it does not silently submit the old private choice.");
             yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator TypingTemporarilyHidesTheVoteBodyAndRestoresItsSelectedPage()
+        {
+            client.View.players = client.View.players.Concat(Enumerable.Range(3, 7).Select(i => new PlayerView
+                { id = "person-" + i, displayName = "Joueur " + i, alive = true, connected = true })).ToArray();
+            client.View.action.allowedTargetIds = client.View.players.Where(p => p.id != "one").Select(p => p.id).ToArray();
+            client.View.revision++; client.Refresh(); yield return null;
+            yield return TapProduction("Open room chat");
+            yield return TapProduction("Next targets");
+            yield return TapProduction("Action target person-5");
+            var selected = Button("Action target person-5");
+            var scrollShell = selected.GetComponentInParent<ScrollRect>().gameObject;
+            var insetSetter = typeof(RoomFlowView).GetProperty("ChatKeyboardInset").GetSetMethod(true);
+            var refresh = typeof(RoomFlowView).GetMethod("RefreshChatLayout", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            // Inject the operating-system inset synchronously: no device keyboard is claimed by this regression.
+            insetSetter.Invoke(flow, new object[] { 350f }); refresh.Invoke(flow, null);
+            Assert.That(scrollShell.activeSelf, Is.False, "No negative-height or obscured vote controls while typing.");
+            Assert.That(flow.PrimaryAction.interactable, Is.False);
+            insetSetter.Invoke(flow, new object[] { 0f }); refresh.Invoke(flow, null);
+            Assert.That(scrollShell.activeSelf, Is.True);
+            yield return null; yield return null; // Allow destroyed controls and the restored layout to settle.
+            Assert.That(Button("Action target person-5").GetComponentInChildren<TMP_Text>().text, Does.Contain("• "), "Keyboard must preserve the selected target on its page.");
+            Assert.That(owner.GetComponentsInChildren<TMP_Text>().Single(t => t.name == "Target page indicator").text, Is.EqualTo("2 / 3"));
+            Assert.That(CanHit(Button("Next targets"), out _), Is.True);
+            yield return TapProduction("Player primary action");
+            Assert.That(client.Commands.Single().targetIds, Is.EqualTo(new[] { "person-5" }));
+        }
+
+        [UnityTest]
+        public IEnumerator PrivateWitchTargetsAndPagerFitInsideAn850PointSafeFrame()
+        {
+            var frame = (RectTransform)flow.transform;
+            frame.offsetMin = new Vector2(0, 40); frame.offsetMax = new Vector2(0, -42);
+            client.View.players = client.View.players.Concat(Enumerable.Range(3, 7).Select(i => new PlayerView
+                { id = "person-" + i, displayName = "Joueur " + i, alive = true, connected = true })).ToArray();
+            client.View.phase = "night"; client.View.turn++; client.View.revision++;
+            client.View.selfRoleId = "witch"; client.View.selfRoleName = "Sorcière";
+            client.View.privateFacts = new[] { new PrivateFact { description = "Une ancienne information doit rester consultable." } };
+            client.View.action = new ActionView { kind = "witch", title = "Utiliser les potions",
+                description = "Soin et poison sont chacun utilisables une fois. Avec les deux, sélectionne uniquement la cible du poison.",
+                privateInfo = "La victime de la meute est Max.", healingAvailable = true, poisonAvailable = true,
+                targetCount = 1, choices = new[] { "pass", "save", "poison", "both" },
+                allowedTargetIds = client.View.players.Where(p => p.id != "one").Select(p => p.id).ToArray() };
+            client.Refresh(); flow.PrimaryAction.onClick.Invoke(); yield return null; yield return null;
+            Assert.That(frame.rect.height, Is.EqualTo(850).Within(1));
+            var roleHeader = (RectTransform)typeof(RoomFlowView).GetField("roleHeader", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(flow);
+            Assert.That(roleHeader.gameObject.activeInHierarchy, Is.False);
+            Assert.That(CanHit(Button("Action choice both"), out _), Is.True);
+            yield return TapProduction("Action choice both"); yield return null; yield return null;
+            var visible = owner.GetComponentsInChildren<UnityEngine.UI.Button>().Where(b => b.name.StartsWith("Action target ")).ToArray();
+            Assert.That(visible.Length, Is.EqualTo(4));
+            foreach (var target in visible)
+            {
+                Assert.That(((RectTransform)target.transform).rect.height, Is.GreaterThanOrEqualTo(44));
+                Assert.That(CanHit(target, out _), Is.True, "Target must be reachable without scrolling: " + target.name);
+            }
+            Assert.That(CanHit(Button("Next targets"), out _), Is.True, "Private page controls fit without scrolling at safe height850.");
+            yield return TapProduction("Next targets"); yield return null;
+            yield return TapProduction("Action target person-6");
+            yield return TapProduction("Player primary action");
+            Assert.That(client.Commands.Single().choice, Is.EqualTo("both"));
+            Assert.That(client.Commands.Single().targetIds, Is.EqualTo(new[] { "person-6" }));
+            Assert.That(owner.GetComponentsInChildren<TMP_Text>().Any(t => !string.IsNullOrEmpty(t.text) && t.text.Contains("ancienne information")), Is.True);
         }
 
         [UnityTest]

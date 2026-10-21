@@ -1,0 +1,133 @@
+{
+  "success": true,
+  "command": "command test_status",
+  "data": {
+    "command": "test_status",
+    "parameters": {},
+    "result": {
+      "status": "completed",
+      "duration": 1.59,
+      "summary": {
+        "total": 15,
+        "passed": 13,
+        "failed": 2,
+        "skipped": 0,
+        "inconclusive": 0
+      },
+      "results": [
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.AnExpandedMessageDockStillAllowsARealVoteThenClosesAtPhaseChange",
+          "Status": "Passed",
+          "Duration": 0.495076,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.AnOpenPrivateDraftIsPurgedBeforeAnotherMatchCanReuseTheChannel",
+          "Status": "Passed",
+          "Duration": 0.0836471,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.ARevokedPrivateChatDraftDoesNotBecomeAPublicMessage",
+          "Status": "Passed",
+          "Duration": 0.0484279,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.ChatCannotOpenOutsideVotingAndItsToggleIsAbsent",
+          "Status": "Passed",
+          "Duration": 0.1571104,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.CommunicationPollingDoesNotReplaceAVoteTargetBetweenPointerEvents",
+          "Status": "Passed",
+          "Duration": 0.0453557,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.EliminatedPlayersReceiveObserverInstructionsInsteadOfAPowerOrAVote",
+          "Status": "Passed",
+          "Duration": 0.0526149,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.FocusLossRequiresReopeningThePrivateActionBeforeItCanSubmit",
+          "Status": "Passed",
+          "Duration": 0.1011937,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.HostVoteClosureRequiresConfirmationAndCannotCloseAnotherTurn",
+          "Status": "Passed",
+          "Duration": 0.0387411,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.PrivateWitchTargetsAndPagerFitInsideAn850PointSafeFrame",
+          "Status": "Failed",
+          "Duration": 0.1218702,
+          "Message": "System.NullReferenceException : Object reference not set to an instance of an object",
+          "StackTrace": "  at NGame.Presentation.Tests.PlayerCommunicationTests+<>c.<PrivateWitchTargetsAndPagerFitInsideAn850PointSafeFrame>b__21_2 (TMPro.TMP_Text t) [0x00000] in /Users/mathis/Code/N-game/Assets/NGame/Tests/PlayMode/PlayerCommunicationTests.cs:356 \n  at System.Linq.Enumerable.Any[TSource] (System.Collections.Generic.IEnumerable`1[T] source, System.Func`2[T,TResult] predicate) [0x0002c] in <1b6d7e99e5414d05b29c34e3609a3284>:0 \n  at NGame.Presentation.Tests.PlayerCommunicationTests+<PrivateWitchTargetsAndPagerFitInsideAn850PointSafeFrame>d__21.MoveNext () [0x00534] in /Users/mathis/Code/N-game/Assets/NGame/Tests/PlayMode/PlayerCommunicationTests.cs:356 \n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__8.MoveNext () [0x0003a] in ./Library/PackageCache/com.unity.test-framework@80f691d4262b/UnityEngine.TestRunner/NUnitExtensions/Attributes/TestEnumerator.cs:52 "
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.PublicChronicleContainsEveryPublicEventAndNoPrivateFact",
+          "Status": "Passed",
+          "Duration": 0.0771171,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.RemovingASeatRequiresExplicitConfirmationAndKeepsHost",
+          "Status": "Passed",
+          "Duration": 0.088722,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.ThreeTargetsAndTheirPageControlsFitAboveExpandedMessagesWithoutScrolling",
+          "Status": "Passed",
+          "Duration": 0.0873233,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.TypingTemporarilyHidesTheVoteBodyAndRestoresItsSelectedPage",
+          "Status": "Failed",
+          "Duration": 0.0722841,
+          "Message": "  Keyboard must not replace the paged vote draft.\n  Expected: same as <Action target person-5 (UnityEngine.UI.Button)>\n  But was:  <Action target person-5 (UnityEngine.UI.Button)>\n",
+          "StackTrace": "at NGame.Presentation.Tests.PlayerCommunicationTests+<TypingTemporarilyHidesTheVoteBodyAndRestoresItsSelectedPage>d__20.MoveNext () [0x0028a] in /Users/mathis/Code/N-game/Assets/NGame/Tests/PlayMode/PlayerCommunicationTests.cs:316\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__8.MoveNext () [0x0003a] in ./Library/PackageCache/com.unity.test-framework@80f691d4262b/UnityEngine.TestRunner/NUnitExtensions/Attributes/TestEnumerator.cs:52\n"
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.VotingMessagesUseABoundedTransparentBottomDock",
+          "Status": "Passed",
+          "Duration": 0.044903,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.PlayerCommunicationTests.WitchMustExplicitlyChooseBeforeConfirming",
+          "Status": "Passed",
+          "Duration": 0.0345835,
+          "Message": null,
+          "StackTrace": null
+        }
+      ]
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "/Users/mathis/Code/N-game"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

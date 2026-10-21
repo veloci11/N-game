@@ -8,10 +8,13 @@ namespace NGame.Presentation.Game
 {
     public sealed partial class RoomFlowView
     {
-        // Expanded message dock only; it never disables public vote controls.
+        // Bounded message dock; voting resumes with its choices intact after keyboard entry.
         public bool IsChatOpen => chatPanel != null && chatPanel.gameObject.activeSelf;
         public TMP_InputField ChatInput { get; private set; }
         public float ChatKeyboardInset { get; private set; }
+        public float ChatDockHeight => chatPanel != null ? chatPanel.rect.height : 0;
+        public float ChatDockTop => chatPanel != null ? chatPanel.anchoredPosition.y + chatPanel.rect.height * (1 - chatPanel.pivot.y) : 270;
+        private float AvailableChatHeight => Mathf.Clamp(((RectTransform)transform).rect.height - 692, 140, 230);
         private bool ChatAllowed => Client?.View?.phase == "vote" && Client.HasSession && communications != null;
         private IRoomCommunicationClient communications;
         private UnityEngine.UI.Button chatAccess, sendChat, microphoneButton;
@@ -85,7 +88,8 @@ namespace NGame.Presentation.Game
             foreach (var channel in channels) if (channel.canRead && (first == null || channel.id == "village")) first = channel;
             if (first == null) { error.text = "Messages indisponibles pendant ce vote."; return; }
             chatPanel = UITheme.Box("Room conversation panel", transform);
-            UITheme.Position(chatPanel, UITheme.Bottom, 0, 385, 382, 230);
+            var dockHeight = AvailableChatHeight;
+            UITheme.Position(chatPanel, UITheme.Bottom, 0, 270 + dockHeight * .5f, 382, dockHeight);
             var backdrop = UITheme.Surface("Conversation dock background", chatPanel, new Color(.025f, .05f, .075f, .76f), UITheme.Panel, true);
             backdrop.raycastTarget = true;
             chatChannels = UITheme.Box("Conversation channel choices", chatPanel);
@@ -219,12 +223,17 @@ namespace NGame.Presentation.Game
             if (!ChatAllowed) { if (IsChatOpen) CloseChatPanel(); if (chatAccess != null) chatAccess.gameObject.SetActive(false); return; }
             if (!IsChatOpen || chatComposer == null || chatHistoryShell == null) return;
             var root = (RectTransform)transform;
+            var previousKeyboardInset = ChatKeyboardInset;
             ChatKeyboardInset = TouchScreenKeyboard.visible && Screen.height > 0
                 ? TouchScreenKeyboard.area.height / Screen.height * root.rect.height : 0;
-            // Only the bounded dock rises. The public vote controls retain their normal positions and state.
+            // Reserve the actual dock top when the keyboard raises it; keep vote selections intact.
             var bottom = Mathf.Max(270, ChatKeyboardInset + 8);
-            var height = Mathf.Clamp(root.rect.height - bottom - 235, 140, 230);
+            var height = Mathf.Clamp(root.rect.height - bottom - 235, 140, AvailableChatHeight);
+            var layoutChanged = Mathf.Abs(previousKeyboardInset - ChatKeyboardInset) > .5f
+                || Mathf.Abs(chatPanel.rect.height - height) > .5f
+                || Mathf.Abs(chatPanel.anchoredPosition.y - bottom - height * .5f) > .5f;
             UITheme.Position(chatPanel, UITheme.Bottom, 0, bottom + height * .5f, 382, height);
+            if (layoutChanged) RefreshChatLayout();
             if (sendChat != null && communications != null)
             {
                 var canSend = false;

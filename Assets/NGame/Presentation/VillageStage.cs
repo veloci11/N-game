@@ -37,7 +37,7 @@ namespace NGame.Presentation
         private Material glowMaterial;
         private Sprite glowSprite;
         private Texture2D glowTexture;
-        private WolfPaperPuppet wolfPuppet;
+        private IndependentWolfPuppet wolfPuppet;
         private LivingSky sky;
         private VillageDetails details;
         private Layer night;
@@ -63,11 +63,12 @@ namespace NGame.Presentation
         public bool LampFlickerEnabled => !quiet && daylight < .99f;
         public float FirstLampIntensity => firstLampIntensity;
         public bool WolfArticulated => wolfPuppet != null && wolfPuppet.IsReady;
-        public int WolfMeshVertexCount => wolfPuppet != null ? wolfPuppet.VertexCount : 0;
+        public int WolfMeshVertexCount => 0; // Independent sprites no longer require a deformation mesh.
+        public int WolfIndependentPartCount => wolfPuppet != null && wolfPuppet.IsReady ? 2 : 0;
         public float WolfHeadAngleDegrees => wolfPuppet != null ? wolfPuppet.HeadAngleDegrees : 0;
-        public float WolfLeftEarAngleDegrees => wolfPuppet != null ? wolfPuppet.LeftEarAngleDegrees : 0;
-        public float WolfRightEarAngleDegrees => wolfPuppet != null ? wolfPuppet.RightEarAngleDegrees : 0;
-        public float WolfEyeGlow => wolfPuppet != null ? wolfPuppet.EyeGlow : 0;
+        public float WolfLeftEarAngleDegrees => 0;
+        public float WolfRightEarAngleDegrees => 0;
+        public float WolfEyeGlow => 0;
         public bool MoonIndependent => sky != null && sky.IsReady;
         public Vector3 MoonPosition => sky != null ? sky.MoonPosition : Vector3.zero;
         public float CloudDisplacement => sky != null ? sky.CloudDisplacement : 0;
@@ -112,7 +113,7 @@ namespace NGame.Presentation
             details = gameObject.AddComponent<VillageDetails>();
             details.Initialize(night.Renderer, paperMaterial, glowSprite, glowMaterial);
             wolf = AddLayer("Folded wolf", UITheme.Art("wolf"), 4, false, 2.9f, new Vector2(-.34f, -.02f), new Vector2(.012f, .008f));
-            wolfPuppet = wolf.Renderer.gameObject.AddComponent<WolfPaperPuppet>();
+            wolfPuppet = wolf.Renderer.gameObject.AddComponent<IndependentWolfPuppet>();
             wolfPuppet.Initialize(wolf.Renderer);
             for (var i = 0; i < 3; i++)
             {
@@ -172,7 +173,7 @@ namespace NGame.Presentation
             if (wolf != null) wolf.Renderer.color = new Color(1, 1, 1, (1 - daylight) * (home ? 0 : 1));
             if (foreground != null) foreground.Renderer.color = Color.Lerp(Color.white, new Color(1.14f, 1.1f, 1.02f), daylight);
             if (riverMaterial != null) riverMaterial.SetFloat("_Reflection", Mathf.Lerp(1, .18f, daylight));
-            if (wolfPuppet != null) wolfPuppet.Evaluate(time, quiet, wolf.Renderer.color);
+            if (wolfPuppet != null) { wolfPuppet.SetReducedMotion(quiet); wolfPuppet.SetTint(wolf.Renderer.color); }
             if (sky != null) sky.Evaluate(time, quiet, daylight);
             if (details != null) details.Evaluate(time, quiet, daylight);
             AnimateLights();
@@ -184,7 +185,7 @@ namespace NGame.Presentation
             foreach (var firefly in fireflies) firefly.gameObject.SetActive(!enabled);
             if (riverMaterial != null) riverMaterial.SetFloat("_Motion", enabled ? 0 : 1);
             if (enabled) Layout();
-            if (wolfPuppet != null) wolfPuppet.Evaluate(time, enabled, wolf.Renderer.color);
+            if (wolfPuppet != null) { wolfPuppet.SetReducedMotion(enabled); wolfPuppet.SetTint(wolf.Renderer.color); }
             if (sky != null) sky.Evaluate(time, enabled, daylight);
             if (details != null) details.Evaluate(time, enabled, daylight);
             AnimateLights();
@@ -245,14 +246,7 @@ namespace NGame.Presentation
                 var y = layer.Anchor.y * height + Mathf.Cos(time * speed * .7f + (layer.Cover ? 0 : i)) * layer.Drift.y;
                 layer.Renderer.transform.localPosition = new Vector3(x, y, 0);
             }
-            if (wolf != null && !WolfArticulated)
-            {
-                var breath = Mathf.Sin(time * 1.23f);
-                wolf.Renderer.transform.localScale = Vector3.Scale(wolf.RestScale,
-                    new Vector3(1 + breath * .0035f, 1 + breath * .009f, 1));
-                wolf.Renderer.transform.localEulerAngles = new Vector3(0, 0, Mathf.Sin(time * .34f) * .48f);
-            }
-            if (WolfArticulated) wolfPuppet.Evaluate(time, false, wolf.Renderer.color);
+            if (WolfArticulated) wolfPuppet.SetTint(wolf.Renderer.color);
             if (sky != null) sky.Evaluate(time, false, daylight);
             if (details != null) details.Evaluate(time, false, daylight);
             for (var i = 0; i < fireflies.Count; i++) fireflies[i].color = UITheme.Opacity(UITheme.Brass,

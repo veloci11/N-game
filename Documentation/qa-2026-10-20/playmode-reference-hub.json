@@ -1,0 +1,105 @@
+{
+  "success": true,
+  "command": "command test_status",
+  "data": {
+    "command": "test_status",
+    "parameters": {},
+    "result": {
+      "status": "completed",
+      "duration": 2.86,
+      "summary": {
+        "total": 11,
+        "passed": 11,
+        "failed": 0,
+        "skipped": 0,
+        "inconclusive": 0
+      },
+      "results": [
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.AppCatalogueVisitsWerewolfLandingAndReturnsWithoutCreatingRoom",
+          "Status": "Passed",
+          "Duration": 0.4940253,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.CatalogueHasThreeSmallAlignedTilesBelowTheHero",
+          "Status": "Passed",
+          "Duration": 0.3321651,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.CatalogueOpensOnlyWerewolfWithoutCreationIntent",
+          "Status": "Passed",
+          "Duration": 0.0828998,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.CompactSafeAreaKeepsFutureCardsAboveSavedResumeAndFooterReachable",
+          "Status": "Passed",
+          "Duration": 0.1330471,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.CreationSelectionCanCancelAndContinueWithoutPrematureCallback",
+          "Status": "Passed",
+          "Duration": 0.1999302,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.FutureGamesAreClearlyUnavailableAndIgnorePointerClicks",
+          "Status": "Passed",
+          "Duration": 0.0994612,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.JoinAndSettingsAreIndependentAndFooterNeverMoves",
+          "Status": "Passed",
+          "Duration": 0.1003043,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.GameHubTests.SavedAccessShowsResumeOnlyInCatalogue",
+          "Status": "Passed",
+          "Duration": 0.0994982,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.HubBackdropTests.AmbientMotionChangesRealDecorationPosesAndStopsWithReducedMotion",
+          "Status": "Passed",
+          "Duration": 0.5657138,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.HubBackdropTests.BothGameIconsMoveTheirOwnPaperPartsAndRespectReducedMotion",
+          "Status": "Passed",
+          "Duration": 0.5647806,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.HubBackdropTests.IllustrationCoversViewportOverOpaquePaperAndNeverBlocksInput",
+          "Status": "Passed",
+          "Duration": 0.0833097,
+          "Message": null,
+          "StackTrace": null
+        }
+      ]
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "/Users/mathis/Code/N-game"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

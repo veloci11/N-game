@@ -126,7 +126,8 @@ Shader "NGame/Animated Storybook Card UI"
                     ornament.x = ribbon * sin(_Clock * 1.05) * 0.016;
                 }
                 shift += ornament * _ArtRect.zw * _Motion;
-                float2 uv = clamp(input.texcoord + shift, _ArtRect.xy + 0.0001, _ArtRect.xy + _ArtRect.zw - 0.0001);
+                // Keep the illustration rigid. Character motion belongs to separate cutouts.
+                float2 uv = clamp(input.texcoord, _ArtRect.xy + 0.0001, _ArtRect.xy + _ArtRect.zw - 0.0001);
                 fixed4 paper = tex2D(_MainTex, uv) + _TextureSampleAdd;
                 float gold = smoothstep(0.055, 0.22, paper.r - paper.b) * smoothstep(0.27, 0.66, dot(paper.rgb, float3(0.299, 0.587, 0.114)));
                 float diagonal = local.x * 0.74 + local.y * 0.26;

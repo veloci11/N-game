@@ -1,0 +1,17 @@
+{
+  "source": "64 actual Unity GameView frames; no interpolated motion",
+  "frameCount": 64,
+  "size": [
+    430,
+    932
+  ],
+  "actualSpanSeconds": 6.714,
+  "gifDurationMs": 6810,
+  "palette": "single shared 256-color palette",
+  "pixelDifferenceBBoxFirstLast": [
+    0,
+    0,
+    430,
+    932
+  ]
+}

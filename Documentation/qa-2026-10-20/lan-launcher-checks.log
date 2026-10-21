@@ -1,0 +1,30 @@
+LAN launcher validation: no server started, --check only.
+PASS accept http://localhost:8787
+PASS accept http://127.0.0.1:18787
+PASS accept http://[::1]:18787
+PASS accept http://10.1.2.3:12345
+PASS accept http://172.16.0.2:1
+PASS accept http://172.31.255.254:65535
+PASS accept http://192.168.1.42:8787/
+PASS accept http://010.001.002.003:00878
+PASS reject http://0.0.0.0:8787
+PASS reject http://8.8.8.8:8787
+PASS reject http://172.15.0.1:8787
+PASS reject http://172.32.0.1:8787
+PASS reject http://192.169.1.42:8787
+PASS reject http://10.0.0.256:8787
+PASS reject http://10.0.0.1:0
+PASS reject http://10.0.0.1:65536
+PASS reject http://10.0.0.1:-1
+PASS reject https://10.0.0.1:8787
+PASS reject http://example.com:8787
+PASS reject http://user@10.0.0.1:8787
+PASS reject http://10.0.0.1:8787/path
+PASS reject http://10.0.0.1:8787;echo
+PASS reject http://[::]:8787
+PASS arguments []
+PASS arguments ['--listen-url']
+PASS arguments ['--listen-url', 'http://127.0.0.1:8787', '--listen-url', 'http://10.1.2.3:1234']
+PASS arguments ['--oops']
+PASS arguments ['--help']
+RESULT 28 validation cases passed; bash -n passed; no socket opened.

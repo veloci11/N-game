@@ -22,6 +22,7 @@ namespace NGame.Presentation.Tests
 
         private GameObject owner, ownedEvents;
         private GameHubView hub;
+        private AppPreferences hubPreferences;
         private readonly List<string> opened = new List<string>();
         private readonly List<bool> intentions = new List<bool>();
         private readonly List<RaycastResult> hits = new List<RaycastResult>();
@@ -45,7 +46,8 @@ namespace NGame.Presentation.Tests
             scaler.matchWidthOrHeight = 1;
             if (EventSystem.current == null) ownedEvents = new GameObject("Hub fixture events", typeof(EventSystem));
             hub = owner.AddComponent<GameHubView>();
-            hub.Initialize(new AppPreferences(new MemoryStore()), id =>
+            hubPreferences = new AppPreferences(new MemoryStore());
+            hub.Initialize(hubPreferences, id =>
             { opened.Add(id); intentions.Add(hub.WantsToCreate); }, () => joined++, () => settings++, () => resumed++);
             yield return null;
         }
@@ -153,6 +155,50 @@ namespace NGame.Presentation.Tests
         }
 
         [UnityTest]
+        public IEnumerator CatalogueHasThreeSmallAlignedTilesBelowTheHero()
+        {
+            var names = new[] { "Hub game werewolf", "Hub game president unavailable", "Hub game mimes unavailable" };
+            for (var i = 0; i < names.Length; i++)
+            {
+                var tile = (RectTransform)Find(names[i]).transform;
+                Assert.AreEqual(new Vector2(118, 172), tile.sizeDelta);
+                Assert.AreEqual(new Vector2((i - 1) * 128, 0), tile.anchoredPosition);
+            }
+            var thumbnails = owner.GetComponentsInChildren<HubCatalogueThumbnail>();
+            Assert.AreEqual(3, thumbnails.Length);
+            var atlas = Resources.Load<Texture2D>("Hub/catalogue-storybook");
+            Assert.IsNotNull(atlas);
+            for (var i = 0; i < names.Length; i++)
+            {
+                var thumbnail = Find(names[i]).GetComponentInChildren<HubCatalogueThumbnail>();
+                Assert.IsNotNull(thumbnail);
+                var artwork = thumbnail.GetComponentInChildren<UnityEngine.UI.Image>();
+                Assert.IsTrue(artwork.enabled);
+                Assert.IsNotNull(artwork.sprite);
+                Assert.AreEqual(atlas, artwork.sprite.texture);
+                Assert.AreEqual(new Rect(atlas.width / 3f * i, 0, atlas.width / 3f, atlas.height), artwork.sprite.rect);
+                Assert.IsFalse(artwork.raycastTarget);
+            }
+            hubPreferences.SetReducedMotion(false);
+            var initialClocks = thumbnails.Select(thumbnail => thumbnail.AnimationClock).ToArray();
+            yield return new WaitForSecondsRealtime(.22f);
+            for (var i = 0; i < thumbnails.Length; i++)
+                Assert.Greater(thumbnails[i].AnimationClock, initialClocks[i] + .001f,
+                    "Each catalogue illustration must animate when motion is enabled");
+            hubPreferences.SetReducedMotion(true);
+            var row = (RectTransform)Find(names[0]).transform.parent;
+            Assert.AreEqual(new Vector2(.5f, 0), row.anchorMin);
+            Assert.AreEqual(new Vector2(0, 260), row.anchoredPosition);
+            Assert.LessOrEqual(row.anchoredPosition.y + 86, 390, "The central illustration area must stay clear");
+            hub.SetHasSavedRoom(true);
+            yield return null;
+            yield return null;
+            Assert.AreEqual(new Vector2(0, 300), row.anchoredPosition);
+            Assert.LessOrEqual(row.anchoredPosition.y + 86, 390);
+            AssertFooter();
+        }
+
+        [UnityTest]
         public IEnumerator CompactSafeAreaKeepsFutureCardsAboveSavedResumeAndFooterReachable()
         {
             // Keep the Canvas at its real screen size and constrain only the safe-area child.
@@ -176,10 +222,11 @@ namespace NGame.Presentation.Tests
             var resumeCorners = new Vector3[4];
             ((RectTransform)hub.ResumeAction.transform).GetWorldCorners(resumeCorners);
             var resumeTop = resumeCorners.Max(corner => corner.y);
-            foreach (var id in new[] { "president", "mimes" })
+            foreach (var id in new[] { "werewolf", "president", "mimes" })
             {
                 var corners = new Vector3[4];
-                ((RectTransform)Find("Hub game " + id + " unavailable").transform).GetWorldCorners(corners);
+                var name = "Hub game " + id + (id == "werewolf" ? "" : " unavailable");
+                ((RectTransform)Find(name).transform).GetWorldCorners(corners);
                 Assert.GreaterOrEqual(corners.Min(corner => corner.y) - resumeTop,
                     10f * safeArea.lossyScale.y, id + " must stay above the saved-resume button with a visible gap");
             }
