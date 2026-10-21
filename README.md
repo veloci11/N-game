@@ -14,7 +14,7 @@ Des finitions visuelles sont postérieures à ces rapports : village visible der
 
 Le build Mac courant compile : **zéro erreur**, 346 avertissements de shaders Unity AI Inference, 295 727 649 octets, 17 995 ms ; plist valide et signature locale ad hoc vérifiée. Son processus natif exact est confirmé ; cela ne constitue pas une recette complète de l’interface native. Les anciens 70/70 et build cutouts précèdent cette reconstruction et ne la valident pas. Les huit rôles d’extension restent sans moteur, Président/Mimes en préparation. Aucun jeu complet publié ou validé sur téléphone n’est annoncé.
 
-Le build est prêt localement ; les changements actuels restent locaux jusqu’à un nouveau push vérifié. **Hébergement public reporté à plus tard par Mathis, aucun déploiement dans ce lot.** [Bilan courant de la reconstruction](Documentation/qa-2026-10-20/delivery-layered-current.md), [suivi détaillé](Documentation/SUIVI-PRODUCTION.md).
+Le build est prêt localement ; la reconstruction est sauvegardée sur `codex/werewolf-playable` au commit `9b45359b852b3260f314613f3bba1bf4e2b052d7`, SHA distant vérifié. **Hébergement public reporté à plus tard par Mathis, aucun déploiement dans ce lot.** [Bilan courant de la reconstruction](Documentation/qa-2026-10-20/delivery-layered-current.md), [suivi détaillé](Documentation/SUIVI-PRODUCTION.md).
 
 - Salons de 6 à 24 personnes : code d’invitation, pseudonymes, portraits, confirmations et composition réglable par l’hôte.
 - Distribution aléatoire avec découverte et confirmation individuelle avant les pouvoirs ; informations secrètes par destinataire, actions nocturnes, discussion, votes, verdict lisible, réactions, victoire et revanche.

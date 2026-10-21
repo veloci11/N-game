@@ -1,4 +1,4 @@
-# Village entièrement séparé — bilan local en cours
+# Village entièrement séparé — livraison locale sauvegardée
 
 20 octobre 2026. Cette passe répond au rejet de l’animation de régions d’un PNG entier. Elle ne déploie aucun serveur public et n’annonce pas une application publiée ou réceptionnée de A à Z.
 
@@ -47,7 +47,7 @@ Des clics simulés par le pointeur Unity sur les contrôles réels ont attrapé 
 | Finitions visuelles postérieures | [Village 5/5](playmode-layered-village-final.json), 3,79 s ; [vue joueur 20/20](playmode-layered-player-final.json), 3,58 s ; [lucioles 3/3](playmode-layered-fireflies-final.json), 0,91 s ; zéro échec/ignoré/inconclusif | Après les dernières finitions ; pas une nouvelle campagne complète de 91 cas |
 | Rendus actuels | Aide, nuit publique/privée des loups et GIF relus indépendamment ; 96 images réelles sur 9,677 s | Entraînement Practice ; aucun groupe humain, téléphone ou partie réseau prouvé par ces images |
 | [Build Mac courant](build-mac-layered.json) | Succeeded (`build_6de2384b8f40`), **0 erreur**, 346 warnings AI, 295 727 649 octets, 17 995 ms ; plist lint et signature ad hoc `--deep --strict` vérifiés ; processus natif exact confirmé | Prêt localement ; pas de recette UI native complète ni Developer ID/notarisation. Les preuves UI décrites viennent de l’Editor |
-| Git | Passe actuelle locale tant que nouveau push non vérifié | La livraison précédente sauvegardée ne signifie pas que ces modifications sont déjà distantes |
+| Git | Source sauvegardée au commit `9b45359b852b3260f314613f3bba1bf4e2b052d7` sur `codex/werewolf-playable`, SHA distant vérifié | Sauvegarde GitHub ; aucun déploiement public |
 
 Le lancement natif courant est confirmé : processus enfant **19494**, chemin exact `Builds/Mac/NGame.app/Contents/MacOS/N’GAME`, vérifié par la racine. Cette preuve de processus ne doit pas être confondue avec une recette interactive de l’application native. Aucun serveur public n’est déployé.
 
