@@ -1,6 +1,6 @@
 # Fenêtres, interfaces de rôles et lucioles — passe locale en cours
 
-20 octobre 2026. Les lumières et la présentation des pouvoirs ont été reprises après le retour de Mathis. Aucun serveur public n’est déployé ; cette passe reste locale tant qu’un nouveau push n’est pas vérifié. Les bilans `delivery-layered-current.md` et `delivery-current.md` sont des archives des livraisons précédentes.
+20 octobre 2026. Les lumières et la présentation des pouvoirs ont été reprises après le retour de Mathis. Aucun serveur public n’est déployé ; la source est sauvegardée au commit `0a74ebe82cd5f85151bbbe002c332f70229c3e9a` sur `codex/werewolf-playable`, SHA distant vérifié. Les bilans `delivery-layered-current.md` et `delivery-current.md` sont des archives des livraisons précédentes.
 
 ## Éclairage des fenêtres
 
@@ -26,7 +26,7 @@ Le cartouche privé final fait 84 unités et le chronomètre reste séparé à 2
 
 Les huit rendus Unity suivants ont été relus indépendamment : [Loup-Garou](role-polish-werewolf.png), [Voyante](role-polish-seer.png), [Sorcière](role-polish-witch.png), [Garde](role-polish-guard.png), [Cupidon](role-polish-cupid.png), [Chasseur](role-polish-hunter.png), [Villageois](role-polish-villager.png), [Petite Fille](role-polish-little-girl.png). La Petite Fille décrit l’observation physique sans fausse confirmation de choix ; le Garde explicite sa restriction et le Chasseur son dernier tir. Aucun P1 ergonomique confirmé sur ces vues : bandeau, chronomètre, cibles, pagination et boutons restent lisibles et séparés. Le bandeau final fait 84 unités.
 
-Le [manifest de captures](role-polish-visual-manifest.json) qualifie ces écrans comme des **fixtures contrôlées d’interface**, sans partie réseau ni participants humains. Ils prouvent le rendu de ces états ; les véritables parties HTTP sont vérifiées séparément. La réception artistique et le confort restent à valider par Mathis. 
+Le [manifest de captures](role-polish-visual-manifest.json) qualifie ces écrans comme des **fixtures contrôlées d’interface**, sans partie réseau ni participants humains. Ils prouvent le rendu de ces états ; les véritables parties HTTP sont vérifiées séparément. La réception artistique et le confort restent à valider par Mathis.
 
 Le [rendu public](role-polish-public.png) et les frames 0/20/40 des deux GIF ont également été relus indépendamment : pas de P1 visuel confirmé. Le [GIF de nuit](role-polish-night.gif), [manifest](role-polish-night.json), conserve 96 images réelles sur 9,471 s (GIF 9 690 ms), sans interpolation ; clic raycast EventSystem à l’image 12 puis une luciole capturée. La lanterne est posée sur le chemin, les vitres gardent leurs croisillons, les insectes et le loup se déplacent sans ancien panneau central.
 
@@ -43,6 +43,6 @@ Le [GIF Sorcière](role-polish-witch-action.gif), [manifest](role-polish-witch-a
 | Vocal distant | Deux fragments PCM synthétiques relayés pendant les votes ; émission éliminé et endpoint hors vote refusés | Pas de microphone, haut-parleur, permission système ou conversation humaine essayés |
 | Rendus actuels | Huit PNG de rôles, rendu public et frames intermédiaires des deux GIF relus | PNG : fixtures UI. GIF : moteur local Practice, clics réels contrôlés ; pas une partie réseau/humaine. Anciennes captures `layered-*` historiques |
 | [Build Mac final](build-mac-role-polish.json) | Succeeded, **0 erreur**, 346 avertissements AI, **295 742 929 octets**, **15 998 ms** ; plist valide, signature ad hoc `--deep --strict` vérifiée ; processus natif exact **25993** confirmé | Preuve de compilation, signature locale et lancement ; rendu relu dans Unity, pas une recette UI native complète ou notarisation |
-| Git | Local, nouveau push à vérifier | Aucun déploiement public |
+| Git | Source sauvegardée au commit `0a74ebe`, SHA distant vérifié | Aucun déploiement public |
 
 Huit rôles de base ont un moteur ; les huit extensions illustrées restent sans règles. Président et Mimes sont en préparation. Clavier et toucher sur vrais téléphones, permissions et acoustique, partie humaine, équilibre et réception artistique restent à vérifier. Aucun achèvement publié de l’application entière n’est revendiqué.
