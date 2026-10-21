@@ -464,7 +464,8 @@ namespace NGame.Core.Multiplayer
         {
             if (phase == "discussion") return true;
             if (phase == "dawn" || phase == "verdict") return now - phaseStarted >= 3000;
-            if (phase == "night") return now - phaseStarted >= 3000 && (AllActionsSubmitted() || now >= deadline);
+            if (phase == "night") return settings.nightProtocol == "screen"
+                ? now >= deadline : now - phaseStarted >= 3000 && (AllActionsSubmitted() || now >= deadline);
             if (phase == "vote") return now >= deadline || (AllActionsSubmitted() && (settings.mode != "remote" || now - phaseStarted >= 30000));
             if (phase == "reaction") return AllActionsSubmitted() || now >= deadline;
             return false;
@@ -720,6 +721,8 @@ namespace NGame.Core.Multiplayer
         private static RuleResult ValidateSettings(RoomSettings value)
         {
             if (value.mode != "in-person" && value.mode != "remote") return Fail("INVALID_MODE", "Choisis le mode en présence ou à distance.");
+            if (value.nightProtocol != "traditional" && value.nightProtocol != "screen")
+                return Fail("INVALID_NIGHT_PROTOCOL", "Choisis la nuit traditionnelle ou la nuit sur écran.");
             if (value.ruleset != "ngame-classic-v1") return Fail("UNSUPPORTED_RULESET", "Ce jeu de règles n’est pas disponible.");
             if (value.discussionSeconds < 5 || value.discussionSeconds > 600 || value.nightSeconds < 3 || value.nightSeconds > 120
                 || value.voteSeconds < 30 || value.voteSeconds > 300)
@@ -732,8 +735,8 @@ namespace NGame.Core.Multiplayer
                 if (!ids.Add(entry.roleId)) return Fail("DUPLICATE_ROLE", "Regroupe chaque rôle dans une seule ligne de composition.");
                 if (entry.count < 1 || entry.count > 24 || (entry.roleId != "werewolf" && entry.roleId != "villager" && entry.count > 1))
                     return Fail("INVALID_ROLE_COUNT", "Les rôles spéciaux sont uniques dans cette première version.");
-                if (entry.roleId == "little-girl" && value.mode != "in-person")
-                    return Fail("PHYSICAL_ROLE", "La Petite Fille exige ici le protocole physique autour de la table.");
+                if (entry.roleId == "little-girl" && (value.mode != "in-person" || value.nightProtocol != "traditional"))
+                    return Fail("PHYSICAL_ROLE", "La Petite Fille exige une partie en présence avec nuit traditionnelle, les yeux fermés. Elle n’est pas disponible en nuit sur écran.");
                 total += entry.count;
             }
             if (value.composition.Length > 0 && (total < 6 || total > 24)) return Fail("DECK_SIZE", "Prévois entre six et vingt-quatre cartes.");
@@ -747,6 +750,7 @@ namespace NGame.Core.Multiplayer
                 case "lobby": return "Chacun rejoint le village et confirme qu’il est prêt.";
                 case "distribution": return "Découvre discrètement ta carte puis confirme. La nuit commence quand chacun est prêt, ou après deux minutes d’attente.";
                 case "night":
+                    if (settings.nightProtocol == "screen") return "La nuit sur écran est en cours. Chacun garde son téléphone ; ouvre ta vue privée pour tes choix. Chaque appel garde la même durée, même après confirmation.";
                     if (settings.mode != "in-person") return "Le village dort. Consulte discrètement les actions qui te sont proposées.";
                     switch (nightSteps[nightIndex])
                     {
@@ -900,7 +904,7 @@ namespace NGame.Core.Multiplayer
         };
         private static RoomSettings CopySettings(RoomSettings value) => new RoomSettings
         {
-            mode = value.mode, ruleset = value.ruleset, discussionSeconds = value.discussionSeconds,
+            mode = value.mode, nightProtocol = value.nightProtocol ?? "traditional", ruleset = value.ruleset, discussionSeconds = value.discussionSeconds,
             nightSeconds = value.nightSeconds, voteSeconds = value.voteSeconds, revealEliminatedRoles = value.revealEliminatedRoles,
             composition = (value.composition ?? Array.Empty<RoleCount>()).Select(CopyCount).ToArray()
         };
@@ -910,7 +914,9 @@ namespace NGame.Core.Multiplayer
         {
             var settingsPart = value.settings == null ? string.Empty : value.settings.mode + ":" + value.settings.ruleset
                 + ":" + value.settings.discussionSeconds + ":" + value.settings.nightSeconds + ":" + value.settings.voteSeconds + ":" + value.settings.revealEliminatedRoles
-                + ":" + string.Join(",", (value.settings.composition ?? Array.Empty<RoleCount>()).Select(c => c == null ? "null" : c.roleId + "=" + c.count));
+                + ":" + string.Join(",", (value.settings.composition ?? Array.Empty<RoleCount>()).Select(c => c == null ? "null" : c.roleId + "=" + c.count))
+                // Preserve old traditional command receipts when restoring a pre-protocol save.
+                + (value.settings.nightProtocol == null || value.settings.nightProtocol == "traditional" ? string.Empty : ":nightProtocol=" + value.settings.nightProtocol);
             return value.kind + "\u001f" + value.turn + "\u001f" + value.choice + "\u001f" + value.ready + "\u001f"
                 + string.Join("\u001f", value.targetIds ?? Array.Empty<string>()) + "\u001f" + settingsPart;
         }

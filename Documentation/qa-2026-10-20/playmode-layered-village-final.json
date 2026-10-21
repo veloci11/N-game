@@ -1,0 +1,63 @@
+{
+  "success": true,
+  "command": "command test_status",
+  "data": {
+    "command": "test_status",
+    "parameters": {},
+    "result": {
+      "status": "completed",
+      "duration": 3.79,
+      "summary": {
+        "total": 5,
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0,
+        "inconclusive": 0
+      },
+      "results": [
+        {
+          "FullName": "NGame.Presentation.Tests.LayeredVillageSceneTests.GeneratedVillagePartsContainRealTransparentAndOpaquePixels",
+          "Status": "Passed",
+          "Duration": 0.4907009,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.LayeredVillageSceneTests.RebindingOneCachedPublicSnapshotForTwoSecondsNeverRewindsTheCallClock",
+          "Status": "Passed",
+          "Duration": 1.9857503,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.LayeredVillageSceneTests.VillageUsesIndividualLoadedObjectsAndNoWholePictureMapperOrWarpMaterial",
+          "Status": "Passed",
+          "Duration": 0.0497969,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.LayeredVillageSceneTests.WindowsHaveSeparateClippedFlamesWithDifferentFlickerWhileHousesRemainFixed",
+          "Status": "Passed",
+          "Duration": 0.5833787,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.LayeredVillageSceneTests.WolfPatrolDependsOnPublicCallNotPrivateActorTargetsOrFactsAndDoesNotRestartOnPoll",
+          "Status": "Passed",
+          "Duration": 0.5822592,
+          "Message": null,
+          "StackTrace": null
+        }
+      ]
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "/Users/mathis/Code/N-game"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

@@ -78,7 +78,7 @@ namespace NGame.Presentation.Game
             // The physical Little Girl is deliberately absent from a solo simulation.
             var practice = new RoomSettings
             {
-                mode = "in-person", discussionSeconds = 60, nightSeconds = 25, voteSeconds = 45,
+                mode = "in-person", nightProtocol = "screen", discussionSeconds = 60, nightSeconds = 12, voteSeconds = 45,
                 composition = new[]
                 {
                     new RoleCount { roleId = "werewolf", count = 2 },

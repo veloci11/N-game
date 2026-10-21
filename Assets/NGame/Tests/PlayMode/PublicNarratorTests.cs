@@ -108,6 +108,55 @@ namespace NGame.Presentation.Tests
         }
 
         [UnityTest]
+        public IEnumerator ScreenNightNeverPlaysEyesClosedCallsButKeepsDaytimeHostAnnouncements()
+        {
+            client.View = PublicView("night", "seer");
+            yield return null;
+            AssertCall("seer");
+            foreach (var step in new[] { "cupid", "lovers", "guard", "seer", "werewolf", "witch" })
+            {
+                var screen = PublicView("night", step);
+                screen.settings = new RoomSettings { nightProtocol = "screen" };
+                client.View = screen;
+                yield return null;
+                AssertSilent("The traditional eyes-closed clip must not contradict screen night: " + step);
+            }
+            client.View = PublicView("dawn", null);
+            client.View.settings = new RoomSettings { nightProtocol = "screen" };
+            yield return null;
+            AssertCall("dawn");
+            client.View = PublicView("vote", null);
+            client.View.settings = new RoomSettings { nightProtocol = "screen" };
+            yield return null;
+            AssertCall("vote");
+            client.View = PublicView("vote", null);
+            client.View.settings = new RoomSettings { nightProtocol = "screen" };
+            client.View.isHost = false;
+            yield return null;
+            AssertSilent("Screen protocol must not expand narration permissions to a guest.");
+            client = null;
+            yield return null;
+            AssertSilent("A missing client or host view detaches public narration safely.");
+        }
+
+        [UnityTest]
+        public IEnumerator SwitchingProtocolDuringOneObservedCallStopsAndNeverReplaysThatCall()
+        {
+            client.View = PublicView("night", "werewolf");
+            yield return null;
+            AssertCall("wolves");
+            client.View.settings = new RoomSettings { nightProtocol = "screen" };
+            yield return null;
+            AssertSilent("Even an unchanged turn must stop if its protocol no longer permits this clip.");
+            client.View.settings.nightProtocol = "traditional";
+            yield return null;
+            AssertSilent("Restoring eligibility alone cannot restart a call in the middle of its window.");
+            client.View = PublicView("night", "guard");
+            yield return null;
+            AssertCall("guard");
+        }
+
+        [UnityTest]
         public IEnumerator GuestRemoteTrainingDisconnectedAndHiddenViewsNeverStartAnAnnouncement()
         {
             client.View = PublicView(); client.View.isHost = false;

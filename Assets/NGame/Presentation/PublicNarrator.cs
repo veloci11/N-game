@@ -44,7 +44,10 @@ namespace NGame.Presentation
             var changed = key != observedKey;
             if (changed) { observedKey = key; StopSpeech(); }
             var eligible = focused && !paused && preferences.PublicNarration && (routeVisible?.Invoke() ?? true)
-                && client != null && !client.IsTraining && client.IsConnected && view != null && view.isHost && view.mode == "in-person";
+                && client != null && !client.IsTraining && client.IsConnected && view != null && view.isHost && view.mode == "in-person"
+                // Shipped night clips explicitly say "Yeux fermés" and belong only to the traditional protocol.
+                // Daytime announcements remain available for both protocols.
+                && !(view.phase == "night" && view.settings?.nightProtocol == "screen");
             if (!eligible) { StopSpeech(); return; }
             if (!changed) return;
             var call = view.phase == "night" ? view.nightStep : view.phase == "reaction" ? "hunter" : view.phase;

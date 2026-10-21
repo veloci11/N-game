@@ -133,6 +133,121 @@ namespace NGame.Presentation.Tests
         }
 
         [UnityTest]
+        public IEnumerator ScreenNightUsesTheSamePublicViewAndMaVueForActorsAndWaitingPlayers()
+        {
+            client.View.settings = new RoomSettings { nightProtocol = "screen" };
+            client.View.phase = "night"; client.View.nightStep = "seer"; client.View.serverTimeUnixMs = 120000; client.View.phaseStartedUnixMs = 100000;
+            foreach (var role in new[] { "villager", "werewolf", "seer" })
+            {
+                client.View.selfRoleId = role; client.View.turn++; client.View.revision++;
+                client.View.action = role == "villager" ? null : new ActionView { kind = role == "werewolf" ? "wolves" : "seer",
+                    choices = new[] { "inspect" }, targetCount = 1, allowedTargetIds = new[] { "two" } };
+                client.Refresh(); yield return null;
+                Assert.That(flow.PrimaryAction.GetComponentInChildren<TMP_Text>().text, Is.EqualTo("Ma vue"));
+                Assert.That(owner.GetComponentsInChildren<TMP_Text>().Single(t => t.name == "Real room heading").text, Is.EqualTo("Tour de la Voyante"), "The public call follows nightStep, never the private action or role.");
+                Assert.That(flow.NightActivity.IsAvailable, Is.True);
+                Assert.That(flow.PrivateActionStage.gameObject.activeInHierarchy, Is.False);
+                Assert.That(owner.GetComponentsInChildren<TMP_Text>().Single(t => t.name == "Common screen night activity").text, Is.EqualTo("Veille des lucioles"));
+                Assert.That(owner.GetComponentsInChildren<TMP_Text>().Any(t => t.name == "Night personal availability"), Is.False);
+                yield return TapProduction("Player primary action");
+                Assert.That(flow.IsPrivateActionVisible, Is.True);
+                Assert.That(flow.PrivateActionStage.gameObject.activeInHierarchy, Is.True);
+                Assert.That(flow.NightActivity.gameObject.activeInHierarchy, Is.False);
+                flow.ClosePrivateInformation(); yield return null;
+                Assert.That(flow.PrivateActionStage.gameObject.activeInHierarchy, Is.False);
+            }
+        }
+
+        [UnityTest]
+        public IEnumerator PrivateActionSceneryWaitsForTheServerReceiptAndMasksOnFocusLoss()
+        {
+            client.View.settings = new RoomSettings { nightProtocol = "screen" };
+            client.View.phase = "night"; client.View.selfRoleId = "seer"; client.View.selfRoleName = "Voyante";
+            client.View.turn++; client.View.revision++;
+            client.View.action = new ActionView { kind = "seer", choices = new[] { "inspect", "pass" }, targetCount = 1, allowedTargetIds = new[] { "two" } };
+            client.Refresh(); yield return null;
+            yield return TapProduction("Player primary action");
+            var stage = flow.PrivateActionStage;
+            Assert.That(stage.gameObject.activeInHierarchy, Is.True);
+            Assert.That(owner.GetComponentsInChildren<Image>().Single(i => i.name == "Small private role portrait").preserveAspect, Is.True);
+            yield return TapProduction("Action target two");
+            Assert.That(owner.GetComponentsInChildren<Image>().Any(i => i.name == "Private selected target avatar 0" && i.sprite != null), Is.True);
+            yield return TapProduction("Player primary action");
+            Assert.That(client.Commands.Count, Is.EqualTo(1));
+            Assert.That(stage.ConfirmationVersion, Is.Zero, "A tap sends a request; it is not an accepted power yet.");
+            client.View.action.submitted = true; client.View.revision++; client.Refresh(); yield return null;
+            Assert.That(stage.ConfirmationVersion, Is.EqualTo(1));
+            client.View.revision++; client.Refresh(); yield return null;
+            Assert.That(stage.ConfirmationVersion, Is.EqualTo(1), "A later projection must not replay the receipt.");
+            flow.SendMessage("OnApplicationFocus", false, SendMessageOptions.RequireReceiver);
+            Assert.That(flow.IsPrivateActionVisible, Is.False);
+            Assert.That(stage.gameObject.activeInHierarchy, Is.False);
+            Assert.That(owner.GetComponentsInChildren<Image>(true).Single(i => i.name == "Small private role portrait").gameObject.activeInHierarchy, Is.False);
+            Assert.That(owner.GetComponentsInChildren<Image>(true).Where(i => i.name.StartsWith("Private selected target avatar ")).All(i => !i.gameObject.activeInHierarchy), Is.True);
+            Assert.That(flow.PrimaryAction.GetComponentInChildren<TMP_Text>().text, Is.EqualTo("Ma vue"));
+        }
+
+        [UnityTest]
+        public IEnumerator ScreenNightActivityAndPrivateTargetsFitThe850PointSafeFrameWithoutOverlap()
+        {
+            var frame = (RectTransform)flow.transform; frame.offsetMin = new Vector2(0, 40); frame.offsetMax = new Vector2(0, -42);
+            client.View.settings = new RoomSettings { nightProtocol = "screen" }; client.View.phase = "night";
+            client.View.turn++; client.View.revision++; client.View.selfRoleId = "seer";
+            client.View.action = new ActionView { kind = "seer", choices = new[] { "inspect", "pass" }, targetCount = 1, allowedTargetIds = new[] { "two" } };
+            client.Refresh(); yield return null; yield return null;
+            var body = (RectTransform)typeof(RoomFlowView).GetField("body", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(flow);
+            var shell = (RectTransform)body.parent.parent;
+            Assert.That(shell.rect.height, Is.EqualTo(94).Within(1));
+            var activity = (RectTransform)flow.NightActivity.transform;
+            Assert.That(activity.anchoredPosition.y + activity.rect.height * .5f, Is.LessThan(shell.offsetMin.y));
+            Assert.That(activity.anchoredPosition.y - activity.rect.height * .5f, Is.GreaterThan(225));
+            Assert.That(CanHit(Button("Firefly touch target 0"), out _), Is.True);
+            yield return TapProduction("Firefly touch target 0"); Assert.That(flow.NightActivity.LocalCatchCount, Is.EqualTo(1));
+            yield return TapProduction("Player primary action"); yield return null;
+            Assert.That(shell.rect.height, Is.EqualTo(389).Within(1));
+            Assert.That(CanHit(Button("Action target two"), out _), Is.True);
+            flow.ClosePrivateInformation(); client.View.settings.nightProtocol = "traditional"; client.View.revision++; client.Refresh(); yield return null;
+            Assert.That(flow.NightActivity.gameObject.activeInHierarchy, Is.False);
+            Assert.That(owner.GetComponentsInChildren<TMP_Text>().Any(t => t.name == "Night personal availability"), Is.True);
+        }
+
+        [UnityTest]
+        public IEnumerator ChangingNightProtocolNeverSilentlyReplacesTheLittleGirl()
+        {
+            var dialog = new GameObject("Protocol composition UI fixture", typeof(RectTransform)); dialog.transform.SetParent(owner.transform, false);
+            var rect = (RectTransform)dialog.transform; rect.anchorMin = Vector2.zero; rect.anchorMax = Vector2.one; rect.offsetMin = rect.offsetMax = Vector2.zero;
+            var initial = new RoomSettings { mode = "in-person", nightProtocol = "traditional", composition = new[]
+                { new NGame.Core.Multiplayer.RoleCount { roleId = "werewolf", count = 1 }, new NGame.Core.Multiplayer.RoleCount { roleId = "villager", count = 4 }, new NGame.Core.Multiplayer.RoleCount { roleId = "little-girl", count = 1 } } };
+            RoomSettings applied = null;
+            dialog.AddComponent<RoomCompositionPanel>().Initialize(new RoomView { mode = "in-person", players = new PlayerView[6] }, initial, value => applied = value, () => { });
+            yield return null;
+            yield return TapProduction("Host screen night protocol");
+            Assert.That(Button("Apply room composition").interactable, Is.False);
+            Assert.That(owner.GetComponentsInChildren<TMP_Text>().Single(t => t.name == "Count little-girl").text, Does.Contain("1"));
+            Assert.That(Button("Remove little-girl").interactable, Is.True, "The host must explicitly remove an incompatible selected card.");
+            yield return TapProduction("Remove little-girl"); yield return TapProduction("Add villager");
+            yield return TapProduction("Apply room composition");
+            Assert.That(applied, Is.Not.Null); Assert.That(applied.nightProtocol, Is.EqualTo("screen"));
+            Assert.That(applied.composition.Any(c => c.roleId == "little-girl"), Is.False);
+            Assert.That(initial.composition.Single(c => c.roleId == "little-girl").count, Is.EqualTo(1), "The original room settings are copied, never mutated while editing.");
+        }
+
+        [UnityTest]
+        public IEnumerator RoleGuideStaysInsideTheRoomAndShowsOnlyPublicCatalogueRules()
+        {
+            client.View.privateFacts = new[] { new PrivateFact { description = "CONFIDENTIAL ASSIGNMENT" } };
+            flow.OpenRoomHelp(); yield return null;
+            yield return TapProduction("Open implemented role guide");
+            var guide = owner.GetComponentsInChildren<RectTransform>().Single(t => t.name == "Implemented role guide");
+            Assert.That(guide.GetComponentsInChildren<TMP_Text>().Count(t => t.name.StartsWith("Role guide name ")), Is.EqualTo(8));
+            Assert.That(guide.GetComponentsInChildren<TMP_Text>().Any(t => !string.IsNullOrEmpty(t.text) && t.text.Contains("CONFIDENTIAL ASSIGNMENT")), Is.False);
+            Assert.That(flow.IsPrivateActionVisible, Is.False);
+            Assert.That(client.Commands, Is.Empty);
+            yield return TapProduction("Close safe room menu");
+            Assert.That(owner.GetComponentsInChildren<TMP_Text>().Any(t => t.name == "Rules title"), Is.True);
+        }
+
+        [UnityTest]
         public IEnumerator ChatCannotOpenOutsideVotingAndItsToggleIsAbsent()
         {
             foreach (var phase in new[] { "lobby", "distribution", "night", "dawn", "discussion", "verdict", "reaction", "finished" })

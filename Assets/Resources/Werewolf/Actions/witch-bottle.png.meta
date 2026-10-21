@@ -1,0 +1,860 @@
+fileFormatVersion: 2
+guid: f56cb8329f59640849947b1667d4801d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3320816002208339377
+    second: witch-bottle_0
+  - first:
+      213: 1827659277855765848
+    second: witch-bottle_1
+  - first:
+      213: -4852973356469343282
+    second: witch-bottle_2
+  - first:
+      213: 287334757678075453
+    second: witch-bottle_3
+  - first:
+      213: -839901915200142375
+    second: witch-bottle_4
+  - first:
+      213: 415173274970441079
+    second: witch-bottle_5
+  - first:
+      213: 771137343835427604
+    second: witch-bottle_6
+  - first:
+      213: -8232429558209013269
+    second: witch-bottle_7
+  - first:
+      213: -6874544092654553500
+    second: witch-bottle_8
+  - first:
+      213: 8110462098162370841
+    second: witch-bottle_9
+  - first:
+      213: -1654665414938800148
+    second: witch-bottle_10
+  - first:
+      213: 9184400619675788581
+    second: witch-bottle_11
+  - first:
+      213: -6628327730419939108
+    second: witch-bottle_12
+  - first:
+      213: 526963968424634379
+    second: witch-bottle_13
+  - first:
+      213: 7218436936402896379
+    second: witch-bottle_14
+  - first:
+      213: -32386240862037657
+    second: witch-bottle_15
+  - first:
+      213: -4770382141774019393
+    second: witch-bottle_16
+  - first:
+      213: 461878684967946866
+    second: witch-bottle_17
+  - first:
+      213: 8690622716741181083
+    second: witch-bottle_18
+  - first:
+      213: 1558098525429776701
+    second: witch-bottle_19
+  - first:
+      213: 7612924593012788915
+    second: witch-bottle_20
+  - first:
+      213: 6665028571342426964
+    second: witch-bottle_21
+  - first:
+      213: 8172212085328914677
+    second: witch-bottle_22
+  - first:
+      213: 6047555338543782139
+    second: witch-bottle_23
+  - first:
+      213: -3023448802348841081
+    second: witch-bottle_24
+  - first:
+      213: -3110053724198789160
+    second: witch-bottle_25
+  - first:
+      213: -3028744062588343391
+    second: witch-bottle_26
+  - first:
+      213: -9061189143892734947
+    second: witch-bottle_27
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: witch-bottle_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1241
+        height: 1235
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4a60ffb0771ae1d0800000000000000
+      internalID: -3320816002208339377
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 989
+        width: 102
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8553a0b0e662d5910800000000000000
+      internalID: 1827659277855765848
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_2
+      rect:
+        serializedVersion: 2
+        x: 788
+        y: 1205
+        width: 29
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecba537c176c6acb0800000000000000
+      internalID: -4852973356469343282
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_3
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 1123
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3e46039071dcf300800000000000000
+      internalID: 287334757678075453
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_4
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 1123
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d3435a78a11854f0800000000000000
+      internalID: -839901915200142375
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_5
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 951
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77549d6d4edf2c500800000000000000
+      internalID: 415173274970441079
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_6
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 958
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 413595c1451a3ba00800000000000000
+      internalID: 771137343835427604
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_7
+      rect:
+        serializedVersion: 2
+        x: 1141
+        y: 951
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be996802fe880cd80800000000000000
+      internalID: -8232429558209013269
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_8
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 901
+        width: 14
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 466b0941296b890a0800000000000000
+      internalID: -6874544092654553500
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_9
+      rect:
+        serializedVersion: 2
+        x: 1190
+        y: 907
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 919cc35ae462e8070800000000000000
+      internalID: 8110462098162370841
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_10
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 890
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cefc27862927909e0800000000000000
+      internalID: -1654665414938800148
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_11
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 859
+        width: 42
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52527aad3bb857f70800000000000000
+      internalID: 9184400619675788581
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_12
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 861
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd8c27d2c037304a0800000000000000
+      internalID: -6628327730419939108
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_13
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 867
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b086163ffe6205700800000000000000
+      internalID: 526963968424634379
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_14
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 795
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf58ad3162a0d2460800000000000000
+      internalID: 7218436936402896379
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_15
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 803
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 769dec1b2e0fc8ff0800000000000000
+      internalID: -32386240862037657
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_16
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 765
+        width: 36
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb441b477b23ccdb0800000000000000
+      internalID: -4770382141774019393
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_17
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 680
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27ac6d2873ce86600800000000000000
+      internalID: 461878684967946866
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_18
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 649
+        width: 17
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9e5c44e05b4b9870800000000000000
+      internalID: 8690622716741181083
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_19
+      rect:
+        serializedVersion: 2
+        x: 1204
+        y: 562
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d314d4d8a5a7f9510800000000000000
+      internalID: 1558098525429776701
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 434
+        width: 7
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3becc54159a86a960800000000000000
+      internalID: 7612924593012788915
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_21
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 450
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 453d1bc3c20fe7c50800000000000000
+      internalID: 6665028571342426964
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_22
+      rect:
+        serializedVersion: 2
+        x: 1161
+        y: 166
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f82f27e797896170800000000000000
+      internalID: 8172212085328914677
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_23
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 95
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf85b610a8b3de350800000000000000
+      internalID: 6047555338543782139
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_24
+      rect:
+        serializedVersion: 2
+        x: 1037
+        y: 36
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 787ca6b455d8a06d0800000000000000
+      internalID: -3023448802348841081
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_25
+      rect:
+        serializedVersion: 2
+        x: 1075
+        y: 53
+        width: 23
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8df10c89d9ed6d4d0800000000000000
+      internalID: -3110053724198789160
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_26
+      rect:
+        serializedVersion: 2
+        x: 723
+        y: 24
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ab29d1725db7f5d0800000000000000
+      internalID: -3028744062588343391
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witch-bottle_27
+      rect:
+        serializedVersion: 2
+        x: 1145
+        y: 31
+        width: 22
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1cc5ab5b70304280800000000000000
+      internalID: -9061189143892734947
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData:
+    physicsShape: []
+    bones: []
+    spriteID:
+    internalID: 0
+    vertices: []
+    indices:
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      witch-bottle_0: -3320816002208339377
+      witch-bottle_1: 1827659277855765848
+      witch-bottle_10: -1654665414938800148
+      witch-bottle_11: 9184400619675788581
+      witch-bottle_12: -6628327730419939108
+      witch-bottle_13: 526963968424634379
+      witch-bottle_14: 7218436936402896379
+      witch-bottle_15: -32386240862037657
+      witch-bottle_16: -4770382141774019393
+      witch-bottle_17: 461878684967946866
+      witch-bottle_18: 8690622716741181083
+      witch-bottle_19: 1558098525429776701
+      witch-bottle_2: -4852973356469343282
+      witch-bottle_20: 7612924593012788915
+      witch-bottle_21: 6665028571342426964
+      witch-bottle_22: 8172212085328914677
+      witch-bottle_23: 6047555338543782139
+      witch-bottle_24: -3023448802348841081
+      witch-bottle_25: -3110053724198789160
+      witch-bottle_26: -3028744062588343391
+      witch-bottle_27: -9061189143892734947
+      witch-bottle_3: 287334757678075453
+      witch-bottle_4: -839901915200142375
+      witch-bottle_5: 415173274970441079
+      witch-bottle_6: 771137343835427604
+      witch-bottle_7: -8232429558209013269
+      witch-bottle_8: -6874544092654553500
+      witch-bottle_9: 8110462098162370841
+  mipmapLimitGroupName:
+  pSDRemoveMatte: 0
+  userData:
+  assetBundleName:
+  assetBundleVariant:

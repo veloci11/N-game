@@ -19,6 +19,12 @@ namespace NGame.Presentation.Game
         public bool IsPrivateActionVisible => privateContent != null && privateContent.gameObject.activeInHierarchy;
         public bool IsMenuOpen => menu != null && menu.activeSelf;
         public bool IsQuitConfirmationOpen => quitConfirmation;
+        public NightFireflyActivity NightActivity { get; private set; }
+        public RoleActionStage PrivateActionStage { get; private set; }
+        private RectTransform nightActivityFrame, privateScenery;
+        private UnityEngine.UI.Image privatePortrait;
+        private readonly UnityEngine.UI.Image[] privateTargetAvatars = new UnityEngine.UI.Image[2];
+        private TextMeshProUGUI creationProtocolDescription;
         public bool IsResumingAccess => Client?.HasSession == true && Client.View == null;
         public TMP_InputField DisplayNameInput { get; private set; }
         public TMP_InputField JoinCodeInput { get; private set; }
@@ -99,6 +105,10 @@ namespace NGame.Presentation.Game
             var modes = GameUI.Row(entryContent, "Creation mode choices", 44);
             GameUI.Button(modes, "Create in person", "En présence", () => { creationSettings.mode = "in-person"; Render(); }, false, 44);
             GameUI.Button(modes, "Create remote", "À distance", () => { creationSettings.mode = "remote"; Render(); }, false, 44);
+            var protocols = GameUI.Row(entryContent, "Creation night protocol choices", 44);
+            GameUI.Button(protocols, "Create traditional night protocol", "Yeux fermés", () => { creationSettings.nightProtocol = "traditional"; Render(); }, false, 44);
+            GameUI.Button(protocols, "Create screen night protocol", "Lucioles", () => { creationSettings.nightProtocol = "screen"; Render(); }, false, 44);
+            creationProtocolDescription = GameUI.Text(entryContent, "Creation night protocol explanation", "", 13, 84, false, UITheme.Brass);
             var modeHint = GameUI.Text(entryContent, "Creation mode description", "", 13, 55, false, UITheme.Brass);
             modeHint.gameObject.AddComponent<ModeDescription>().Read = () => creationSettings.mode;
             GameUI.Button(entryContent, "Advanced room connectivity", "Paramètres de connexion", () =>
@@ -147,6 +157,28 @@ namespace NGame.Presentation.Game
             UITheme.Position((RectTransform)retry.transform, UITheme.Top, 0, -215, 240, 31);
             retry.GetComponentInChildren<TMP_Text>().fontSize = 14;
             BuildChatAccess();
+            nightActivityFrame = UITheme.Box("Shared optional night activity area", game.transform);
+            UITheme.Position(nightActivityFrame, UITheme.Bottom, 0, 365, 382, 220);
+            NightActivity = nightActivityFrame.gameObject.AddComponent<NightFireflyActivity>();
+            NightActivity.Initialize(preferences, () => Client?.View,
+                () => !routeActive || externalBlock || IsMenuOpen || composer != null || privateOpened || SecretsVisible || Client?.IsConnected != true);
+            nightActivityFrame.gameObject.SetActive(false);
+            privateScenery = UITheme.Box("Private role action scenery area", game.transform);
+            UITheme.Position(privateScenery, UITheme.Top, 0, -180, 382, 70);
+            privatePortrait = UITheme.Surface("Small private role portrait", privateScenery, Color.white);
+            privatePortrait.preserveAspect = true;
+            UITheme.Position(privatePortrait.rectTransform, UITheme.Center, -119, 0, 51, 70);
+            var actionStage = UITheme.Box("Private role kinetic stage", privateScenery);
+            UITheme.Position(actionStage, UITheme.Center, 27, 0, 180, 60);
+            PrivateActionStage = actionStage.gameObject.AddComponent<RoleActionStage>(); PrivateActionStage.Initialize(preferences);
+            for (var i = 0; i < privateTargetAvatars.Length; i++)
+            {
+                var targetAvatar = UITheme.Surface("Private selected target avatar " + i, privateScenery, Color.white);
+                targetAvatar.preserveAspect = true;
+                UITheme.Position(targetAvatar.rectTransform, UITheme.Center, 95 + i * 40, 0, 34, 40);
+                privateTargetAvatars[i] = targetAvatar; targetAvatar.gameObject.SetActive(false);
+            }
+            privateScenery.gameObject.SetActive(false);
         }
 
         public void CreateRoom()
@@ -184,6 +216,7 @@ namespace NGame.Presentation.Game
         {
             externalBlock = blocked; SecretCard?.SetBlocked(blocked);
             if (blocked) { ForceMaskSecrets(); CloseChatPanel(); }
+            if (built && Client?.View != null) RenderCardLayout(Client.View);
         }
         public void ForceMaskSecrets()
         {
@@ -191,7 +224,7 @@ namespace NGame.Presentation.Game
             SecretCard?.MaskImmediately(); ErasePrivate(); MaskChatForInterruption();
             if (built && !rendering && Client?.View != null)
             {
-                if (game != null && game.activeInHierarchy) RenderBody(Client.View);
+                if (game != null && game.activeInHierarchy) { RenderBody(Client.View); RenderCardLayout(Client.View); }
                 ConfigureDock(Client.View);
             }
         }
@@ -217,6 +250,7 @@ namespace NGame.Presentation.Game
             try
             {
                 var view = Client.View;
+                if (creationProtocolDescription != null) creationProtocolDescription.text = NightProtocolExplanation(creationSettings);
                 var inRoom = Client.HasSession && view != null;
                 var pending = Client is UnityRoomClient httpPending && httpPending.HasPendingCommand;
                 entry.SetActive(!inRoom && !IsResumingAccess); lobby.SetActive(inRoom && view.phase == "lobby"); game.SetActive(inRoom && view.phase != "lobby");
@@ -246,10 +280,12 @@ namespace NGame.Presentation.Game
                     else SetDock("Créer un village", CreateRoom, !Client.IsBusy, "Rejoindre le village", JoinRoom, !Client.IsBusy);
                     lastRevision = -1; lastMatch = null; RefreshChatAccess(); return;
                 }
-                title.text = !string.IsNullOrEmpty(view.phaseTitle) ? view.phaseTitle : PhaseTitle(view.phase, view.winner);
+                title.text = view.phase == "night" ? PublicNightTitle(view.nightStep)
+                    : !string.IsNullOrEmpty(view.phaseTitle) ? view.phaseTitle : PhaseTitle(view.phase, view.winner);
                 subtitle.text = Client is PracticeRoomClient practice ? practice.PracticeHint : view.phase == "lobby" && view.mode == "in-person"
                     ? "Chacun son téléphone · l’hôte garde les appels publics audibles. Les autres confirment leur préparation."
                     : view.statusMessage;
+                if (IsScreenNight(view)) subtitle.text = "Les étapes suivent le chronomètre. « Ma vue » ouvre tes informations privées.";
                 if (routeActive) setDaylight?.Invoke(view.phase == "night" || view.phase == "reaction" || view.phase == "lobby" || view.phase == "distribution" ? 0 : 1);
                 var changed = changedTurn || view.revision != lastRevision || Client.IsBusy != lastBusy || Client.IsConnected != lastConnected;
                 if (changed)
@@ -271,8 +307,9 @@ namespace NGame.Presentation.Game
         private void RenderCardLayout(RoomView view)
         {
             var publicVote = view.phase == "vote" && !privateOpened;
-            var expanded = publicVote || privateOpened;
-            var immersive = view.phase == "distribution" || view.phase == "night" && !privateOpened || expanded && SecretsVisible;
+            var screenNight = IsScreenNight(view) && !privateOpened;
+            var expanded = publicVote || privateOpened || screenNight;
+            var immersive = view.phase == "distribution" || view.phase == "night" && !privateOpened && !screenNight || expanded && SecretsVisible;
             roleHeader.gameObject.SetActive(!expanded || SecretsVisible);
             if (expanded && SecretsVisible) roleHeader.SetAsLastSibling();
             var nightWaiting = immersive && view.phase == "night" && !privateOpened;
@@ -283,19 +320,63 @@ namespace NGame.Presentation.Game
             if (edge != null) edge.enabled = !immersive;
             roleCaption.gameObject.SetActive(!immersive);
             roleSummary.gameObject.SetActive(!immersive);
-            info.gameObject.SetActive(view.phase != "distribution" && !SecretsVisible);
+            info.gameObject.SetActive(view.phase != "distribution" && !SecretsVisible && !screenNight && !privateOpened);
             SecretCard.SetImmersivePresentation(immersive);
             var shell = (RectTransform)body.parent.parent;
             // While typing, give the conversation the available area and restore the same vote draft afterwards.
             shell.gameObject.SetActive(!(publicVote && ChatKeyboardInset > 0));
-            shell.offsetMin = new Vector2(21, publicVote ? (IsChatOpen ? ChatDockTop + 10 : 280) : nightWaiting ? 570 : 225);
+            shell.offsetMin = new Vector2(21, publicVote ? (IsChatOpen ? ChatDockTop + 10 : 280) : screenNight ? 520 : nightWaiting ? 570 : 225);
             shell.offsetMax = new Vector2(-21, expanded ? -236 : immersive ? (nightWaiting ? -236 : -618) : -445);
             var bodyLayout = body.GetComponent<UnityEngine.UI.VerticalLayoutGroup>();
             bodyLayout.padding = expanded || nightWaiting ? new RectOffset(10, 10, 8, 8) : new RectOffset(17, 17, 17, 17);
-            publicContent.GetComponent<UnityEngine.UI.VerticalLayoutGroup>().spacing = publicVote ? 4 : 8;
+            publicContent.GetComponent<UnityEngine.UI.VerticalLayoutGroup>().spacing = publicVote || screenNight ? 4 : 8;
             privateContent.GetComponent<UnityEngine.UI.VerticalLayoutGroup>().spacing = 4;
+            RefreshPrivateScenery(view);
             var viewportPaper = body.parent.GetComponent<UnityEngine.UI.Image>();
-            if (viewportPaper != null) viewportPaper.color = immersive ? Color.clear : UITheme.Opacity(UITheme.Midnight, .93f);
+            if (viewportPaper != null) viewportPaper.color = immersive || screenNight ? Color.clear : UITheme.Opacity(UITheme.Midnight, .93f);
+        }
+
+        private static string PublicNightTitle(string step)
+        {
+            switch (step)
+            {
+                case "cupid": return "Tour de Cupidon";
+                case "lovers": return "Les amoureux";
+                case "guard": return "Tour du Garde";
+                case "seer": return "Tour de la Voyante";
+                case "werewolf": return "Tour des loups";
+                case "witch": return "Tour de la Sorcière";
+                default: return "La nuit";
+            }
+        }
+
+        private static bool IsScreenNight(RoomView view) => view?.phase == "night" && view.settings?.nightProtocol == "screen";
+        private void RefreshPrivateScenery(RoomView view)
+        {
+            var showing = privateOpened && routeActive && !externalBlock && !IsMenuOpen && composer == null && !SecretsVisible && Client?.IsConnected == true;
+            if (privateScenery != null) privateScenery.gameObject.SetActive(showing);
+            if (subtitle != null) subtitle.gameObject.SetActive(!privateOpened);
+            UITheme.Position(clock.rectTransform, UITheme.Top, 0, privateOpened ? -223 : -213, 370, privateOpened ? 20 : 26);
+            if (showing)
+            {
+                var role = RoleCatalog.Find(view?.selfRoleId);
+                privatePortrait.sprite = role != null ? UITheme.RoleCard(role.RoleArtIndex) : null;
+                privatePortrait.enabled = privatePortrait.sprite != null;
+                for (var i = 0; i < privateTargetAvatars.Length; i++)
+                {
+                    PlayerView selected = null;
+                    if (i < targets.Count)
+                        foreach (var player in view?.players ?? Array.Empty<PlayerView>())
+                            if (player != null && player.id == targets[i]) { selected = player; break; }
+                    var image = privateTargetAvatars[i];
+                    image.sprite = selected != null ? UITheme.Portrait(selected.avatarIndex) : null;
+                    image.gameObject.SetActive(image.sprite != null);
+                }
+                PrivateActionStage.Bind(view?.action, view?.selfRoleId, view?.action?.submitted == true,
+                    (view?.matchId ?? "") + "/" + (view?.turn ?? 0));
+            }
+            if (nightActivityFrame != null) nightActivityFrame.gameObject.SetActive(IsScreenNight(view) && !privateOpened && !SecretsVisible
+                && routeActive && !externalBlock && !IsMenuOpen && composer == null && Client?.IsConnected == true);
         }
 
         private void RefreshChatLayout()
@@ -334,6 +415,8 @@ namespace NGame.Presentation.Game
                 caption = view.roleAcknowledged ? "Ton rôle est confirmé" : "J’ai découvert mon rôle";
                 primary = () => Send("acknowledge-role"); enabled = !view.roleAcknowledged && viewedRole && live;
             }
+            else if (IsScreenNight(view) && !privateOpened)
+            { caption = "Ma vue"; primary = OpenPrivateInformation; enabled = live; }
             else if (view.phase == "finished")
             { caption = view.isHost ? "Préparer une revanche" : "L’hôte prépare la revanche"; primary = () => Send("reset"); enabled = live && view.isHost; }
             else if (view.phase == "vote" && view.isHost && view.canAdvance && (view.action == null || view.action.submitted))
@@ -355,7 +438,8 @@ namespace NGame.Presentation.Game
                 primary = privateOpened ? (Action)SubmitAction : OpenPrivateInformation;
                 enabled = live && (!privateOpened || CanUseAction(view.action) && HasChosenAction(view.action) && targets.Count == NeededTargets(view.action, choice));
             }
-            else if (view.action?.kind == "observe") { caption = "Lire ma consigne privée"; primary = OpenPrivateInformation; enabled = live; }
+            else if (view.action?.kind == "observe") { caption = privateOpened ? "Masquer ma vue" : "Lire ma consigne privée"; primary = privateOpened ? (Action)ClosePrivateInformation : OpenPrivateInformation; enabled = live; }
+            else if (IsScreenNight(view) && privateOpened) { caption = "Masquer ma vue"; primary = ClosePrivateInformation; enabled = live; }
             else if (view.isHost && view.canAdvance) { caption = view.phase == "discussion" ? "Ouvrir le vote" : "Continuer"; primary = () => Send("advance"); enabled = live; }
             else if (view.action?.submitted == true) caption = "Ton choix est enregistré";
             else if (Self(view)?.alive == false) caption = "Tu observes le village";
@@ -376,6 +460,7 @@ namespace NGame.Presentation.Game
             foreach (var count in view.composition ?? Array.Empty<NGame.Core.Multiplayer.RoleCount>())
                 deck.Append(count.count).Append(' ').Append(RoleCatalog.Find(count.roleId)?.DisplayName ?? count.roleId).Append(" · ");
             GameUI.Text(lobbyContent, "Public selected roles", deck.Length > 0 ? deck.ToString().Trim(' ', '·') : "Composition automatique selon le nombre de joueurs.", 14, 84);
+            GameUI.Text(lobbyContent, "Room night protocol", NightProtocolExplanation(view.settings), 14, 105, false, UITheme.Brass);
             GameUI.Text(lobbyContent, "Room mode", view.mode == "remote" ? "À distance · messages et micro uniquement pendant le vote de jour."
                 : "En présence · chacun son téléphone. Les appels publics sont lus sur le téléphone de l’hôte : gardez-le ouvert et audible. Si la narration est coupée, une personne doit lire ces appels à la table.", 13, 110, false, UITheme.Quiet);
             if (view.isHost)
@@ -392,7 +477,7 @@ namespace NGame.Presentation.Game
             {
             GameUI.Clear(publicContent); ErasePrivate();
             publicContent.gameObject.SetActive(!privateOpened);
-            if (privateOpened) { RenderPrivate(); return; }
+            if (privateOpened) { RenderPrivate(); RefreshPrivateScenery(view); return; }
             if (view.phase == "distribution")
             {
                 acknowledgementProgress = GameUI.Text(publicContent, "Role acknowledgements", view.acknowledgedCount + " / " + (view.players?.Length ?? 0) + " rôles confirmés", 18, 44, true, UITheme.Brass);
@@ -427,6 +512,12 @@ namespace NGame.Presentation.Game
                     : "Une dernière action doit être résolue avant de continuer.", 17, 86, false);
             else if (view.phase == "night")
             {
+                if (IsScreenNight(view))
+                {
+                    GameUI.Text(publicContent, "Common screen night activity", "Veille des lucioles", 21, 32);
+                    GameUI.Text(publicContent, "Common screen night instruction", "L’activité est facultative. « Ma vue » ouvre tes informations privées.", 13, 36, false, UITheme.Quiet);
+                    return;
+                }
                 var eliminated = Self(view)?.alive == false && view.action == null;
                 GameUI.Text(publicContent, "Night personal availability", eliminated ? "Tu observes la partie" : view.action != null && !view.action.submitted ? "C’est à toi de jouer." : view.action?.submitted == true ? "Choix confirmé" : "Les autres rôles jouent", 24, 42);
                 GameUI.Text(publicContent, "Night waiting explanation", eliminated ? "Aucune action ne t’est demandée. Les messages des Observateurs seront disponibles au vote."
@@ -445,7 +536,7 @@ namespace NGame.Presentation.Game
         }
         private string BodyFingerprint(RoomView view)
         {
-            var key = new StringBuilder().Append(view.matchId).Append('|').Append(view.turn).Append('|').Append(view.phase).Append('|').Append(privateOpened)
+            var key = new StringBuilder().Append(view.matchId).Append('|').Append(view.settings?.nightProtocol).Append('|').Append(view.turn).Append('|').Append(view.phase).Append('|').Append(privateOpened)
                 .Append('|').Append(view.roleAcknowledged).Append('|').Append(view.winner).Append('|').Append(view.voteRound)
                 .Append('|').Append(view.selfVoteTargetId).Append('|').Append(view.selfVoteAbstained).Append('|').Append(JsonUtility.ToJson(view.action))
                 .Append('|').Append(JsonUtility.ToJson(view.verdict)).Append('|').Append(rosterPage).Append('|').Append(targetPage);
@@ -544,6 +635,7 @@ namespace NGame.Presentation.Game
         }
         private void ErasePrivate()
         {
+            if (privateScenery != null) privateScenery.gameObject.SetActive(false);
             if (privateContent == null) return;
             foreach (var label in privateContent.GetComponentsInChildren<TMP_Text>(true)) label.text = "";
             GameUI.Clear(privateContent); privateContent.gameObject.SetActive(false);
@@ -722,11 +814,12 @@ namespace NGame.Presentation.Game
             var shade = UITheme.Surface("Room help backdrop", menu.transform, new Color(.025f, .05f, .075f, .99f), null, true); shade.raycastTarget = true;
             var content = GameUI.Scroll(menu.transform, "Room instructions", 100, 175);
             GameUI.Text(content, "Rules title", "Comment jouer", 31, 64);
+            GameUI.Button(content, "Open implemented role guide", "Les rôles", OpenImplementedRoleGuide, false, 44);
             GameUI.Text(content, "Rules basic flow", "1. Découvre ton rôle et confirme.\n\n2. La nuit, seuls les rôles appelés agissent : ouvre ton action privée, choisis puis confirme. Les autres attendent.\n\n3. Au jour, échangez vos soupçons, puis votez.\n\n4. Les réactions sont résolues avant le résultat. Une partie se termine par une victoire ou une égalité.", 18, 365, false);
             GameUI.Text(content, "Rules private gestures", "Le bouton du bas révèle ta carte tant que tu le maintiens. Pour agir d’une main, ouvre le panneau privé ; masque-le ensuite. Un menu, un changement de tour ou une interruption referme les secrets.", 15, 142, false, UITheme.Brass);
             GameUI.Text(content, "Rules remote voice", "Messages écrits et vocal : uniquement pendant le vote de jour. Le micro ne s’active jamais tout seul.", 15, 117, false);
-            GameUI.Text(content, "Rules presence protocol", "En présence : gardez les yeux fermés quand la narration le demande. La Petite Fille observe la table ; elle ne reçoit jamais une liste numérique de loups.", 15, 117, false);
-            if (Client.View?.mode == "in-person") GameUI.Text(content, "Rules common night gestures", "Pendant la nuit, tous peuvent tapoter doucement leur téléphone, même les yeux fermés. Hors de l’appel de ton rôle, garde les yeux fermés ; la Petite Fille conserve sa consigne physique. Ce geste est facultatif et ne garantit pas de cacher les gestes des autres.", 15, 164, false);
+            GameUI.Text(content, "Rules presence protocol", NightProtocolExplanation(Client.View?.settings), 15, 150, false);
+            if (Client.View?.mode == "in-person" && Client.View.settings?.nightProtocol != "screen") GameUI.Text(content, "Rules common night gestures", "Pendant la nuit, tous peuvent tapoter doucement leur téléphone, même les yeux fermés. Hors de l’appel de ton rôle, garde les yeux fermés ; la Petite Fille conserve sa consigne physique. Ce geste est facultatif et ne garantit pas de cacher les gestes des autres.", 15, 164, false);
             MenuDock("Revenir au village", CloseMenu); SecretCard.SetBlocked(true);
             if (Client?.View != null) ConfigureDock(Client.View);
         }

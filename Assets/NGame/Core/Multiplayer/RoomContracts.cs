@@ -7,6 +7,8 @@ namespace NGame.Core.Multiplayer
     [Serializable] public sealed class RoomSettings
     {
         public string mode = "in-person";
+        // Traditional keeps the physical eyes-closed protocol; screen keeps each public call open to its deadline.
+        public string nightProtocol = "traditional";
         public string ruleset = "ngame-classic-v1";
         public int discussionSeconds = 90;
         public int nightSeconds = 25;

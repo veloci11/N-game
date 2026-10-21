@@ -106,6 +106,10 @@ Création :
 
 Une composition vide active la proposition dynamique du moteur. Une composition explicite utilise des lignes `{ "roleId": "werewolf", "count": 2 }`. Le nombre total doit correspondre au nombre de joueurs au démarrage. Chaque spécial est unique ; `werewolf` et `villager` peuvent apparaître en plusieurs exemplaires dans leur ligne.
 
+Le réglage public `settings.nightProtocol` accepte `traditional` (valeur par défaut, y compris anciennes sauvegardes sans champ) et `screen`. La nuit traditionnelle conserve les yeux fermés autour de la table. La nuit sur écran permet l’activité commune et les scènes publiques : chaque appel garde son échéance serveur, même si tous les pouvoirs ont été confirmés ; l’hôte ne peut pas l’écourter. La Petite Fille est refusée en nuit sur écran, et reste interdite à distance. Un changement de protocole dans le salon annule les confirmations de préparation. Les nouveaux clients qui envoient ce champ doivent utiliser ce serveur à jour : une ancienne version au parseur strict le rejetterait.
+
+Recette ciblée, après compilation : `python3 Server/NGame.Server/night_protocol_smoke.py`. Elle démarre et arrête son propre serveur localhost avec données temporaires, sans intervenir sur le serveur de développement.
+
 Nouvelle entrée : `{ "displayName": "Max", "avatarIndex": 1 }`. Reprise : `{ "resumeToken": "<sessionToken précédemment reçu>" }`. Une reprise valide retrouve le même `playerId` et le même token, y compris après le début de la partie. Elle n’ajoute pas de joueur et ne change pas son identité. Sans ce token, un pseudo ne permet pas de récupérer un siège.
 
 `RoomAccess` contient `roomCode`, `playerId`, `sessionToken`, `view`. Le token est une capacité privée aléatoire de 32 octets, encodée base64url (43 caractères). Le serveur n’en conserve qu’une empreinte SHA-256. Le client le transmet dans l’en-tête Bearer, jamais dans l’URL ; le corps `resumeToken` est réservé à la reprise. Il ne faut pas inclure ce token dans un lien de partage. Le code public de salle suffit pour inviter un nouvel arrivant.

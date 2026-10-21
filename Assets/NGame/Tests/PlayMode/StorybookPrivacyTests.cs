@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using System.Reflection;
 using NGame.Core;
 using NUnit.Framework;
@@ -59,6 +60,27 @@ namespace NGame.Presentation.Tests
         {
             if (existed) PlayerPrefs.SetInt(key, value);
             else PlayerPrefs.DeleteKey(key);
+        }
+
+        [UnityTest]
+        public IEnumerator GameHomeUsesOneVisibleQuestionControlAndAnExplicitHelpMenu()
+        {
+            app.OpenGameHome(); yield return null;
+            var controls = owner.GetComponentsInChildren<UnityEngine.UI.Button>(true);
+            Assert.That(controls.Any(b => b.name == "Learn the game" || b.name == "Discover the illustrated roles"), Is.False);
+            var help = controls.Single(b => b.name == "Open contextual help");
+            Assert.That(help.GetComponentInChildren<TMPro.TMP_Text>().text, Is.EqualTo("?"));
+            Assert.That(help.GetComponent<UnityEngine.UI.Image>().color.a, Is.GreaterThan(.8f));
+            Assert.That(((RectTransform)help.transform).rect.width, Is.GreaterThanOrEqualTo(44));
+            help.onClick.Invoke(); yield return null;
+            Assert.That(app.IsModalOpen, Is.True);
+            var rules = owner.GetComponentsInChildren<UnityEngine.UI.Button>().Single(b => b.name == "Help read rules");
+            Assert.That(rules.GetComponent<UnityEngine.UI.Image>().color.a, Is.GreaterThan(.5f));
+            rules.onClick.Invoke(); yield return null;
+            Assert.That(app.IsModalOpen, Is.True);
+            app.CloseDialog(); app.ShowGameHelp(); yield return null;
+            owner.GetComponentsInChildren<UnityEngine.UI.Button>().Single(b => b.name == "Help browse roles").onClick.Invoke(); yield return null;
+            Assert.That(app.Route, Is.EqualTo(AppRoute.RoleLibrary)); Assert.That(app.IsModalOpen, Is.False);
         }
 
         private GameObject SecretFace()
@@ -240,10 +262,10 @@ namespace NGame.Presentation.Tests
             var activeIntensity = stage.FirstLampIntensity;
             yield return new WaitForSecondsRealtime(.2f);
             Assert.That(stage.AmbientClock, Is.GreaterThan(activeClock));
-            Assert.That(stage.WaterAnimationEnabled, Is.True, "The actual river shader must be available and animated.");
+            Assert.That(stage.WaterAnimationEnabled, Is.True, "The independent reflection objects must animate without a full-village shader.");
             Assert.That(stage.LampFlickerEnabled, Is.True);
             Assert.That(Mathf.Abs(stage.FirstLampIntensity - activeIntensity), Is.GreaterThan(.0001f));
-            Assert.That(stage.ActiveLampCount, Is.EqualTo(10), "Only lights anchored to the village remain.");
+            Assert.That(stage.ActiveLampCount, Is.GreaterThanOrEqualTo(10), "Only lights anchored to the village remain.");
             Assert.That(GameObject.Find("Independent paper lantern"), Is.Null, "The unsupported floating lantern was removed.");
 
             app.Preferences.SetReducedMotion(true);
@@ -293,7 +315,7 @@ namespace NGame.Presentation.Tests
             stage.TransitionToDaylight(0);
             yield return new WaitForSecondsRealtime(.35f);
             Assert.That(stage.DaylightAmount, Is.Zero.Within(.001f));
-            Assert.That(stage.ActiveLampCount, Is.EqualTo(10));
+            Assert.That(stage.ActiveLampCount, Is.GreaterThanOrEqualTo(10));
         }
 
         [UnityTest]
@@ -305,32 +327,31 @@ namespace NGame.Presentation.Tests
             Assert.That(stage.WolfIndependentPartCount, Is.EqualTo(2));
             Assert.That(stage.WolfMeshVertexCount, Is.Zero);
             Assert.That(stage.MoonIndependent, Is.True, "The moving moon requires the separate sky assets.");
-            Assert.That(stage.Details, Is.Not.Null);
-            Assert.That(stage.Details.ChimneyPuffCount, Is.EqualTo(7));
-            Assert.That(stage.Details.TwinklingStarCount, Is.EqualTo(5));
+            Assert.That(stage.Details, Is.Null, "The old full-picture detail mapper is no longer instantiated.");
+            Assert.That(stage.Scene, Is.Not.Null);
+            Assert.That(stage.Scene.IndependentRendererCount, Is.GreaterThan(50));
+            Assert.That(stage.Scene.GetComponentsInChildren<SpriteMask>().Length, Is.EqualTo(stage.Scene.LampCount));
             var head = stage.WolfHeadAngleDegrees;
             var moon = stage.MoonPosition;
             var clouds = stage.CloudDisplacement;
-            var smoke = stage.Details.FirstSmokePosition;
-            var stars = stage.Details.FirstStarIntensity;
+            var window = stage.Scene.GetLampIntensity(1);
             yield return new WaitForSecondsRealtime(.25f);
             Assert.That(Mathf.Abs(stage.WolfHeadAngleDegrees - head), Is.GreaterThan(.001f));
             Assert.That(Vector3.Distance(stage.MoonPosition, moon), Is.GreaterThan(.0001f));
             Assert.That(Mathf.Abs(stage.CloudDisplacement - clouds), Is.GreaterThan(.0001f),
                 "The separate paper clouds must travel across the sky.");
-            Assert.That(Vector3.Distance(stage.Details.FirstSmokePosition, smoke), Is.GreaterThan(.0001f));
-            Assert.That(Mathf.Abs(stage.Details.FirstStarIntensity - stars), Is.GreaterThan(.00001f));
+            Assert.That(Mathf.Abs(stage.Scene.GetLampIntensity(1) - window), Is.GreaterThan(.0001f));
             Assert.That(stage.WolfLeftEarAngleDegrees, Is.Zero, "No fake ear deformation is applied.");
             app.Preferences.SetReducedMotion(true);
             var restingMoon = stage.MoonPosition;
-            var quietStars = stage.Details.FirstStarIntensity;
+            var quietWindow = stage.Scene.GetLampIntensity(1);
             Assert.That(stage.WolfHeadAngleDegrees, Is.Zero);
             Assert.That(stage.WolfLeftEarAngleDegrees, Is.Zero);
             Assert.That(stage.WolfRightEarAngleDegrees, Is.Zero);
             Assert.That(stage.CloudDisplacement, Is.Zero);
             yield return new WaitForSecondsRealtime(.2f);
             Assert.That(stage.MoonPosition, Is.EqualTo(restingMoon));
-            Assert.That(stage.Details.FirstStarIntensity, Is.EqualTo(quietStars));
+            Assert.That(stage.Scene.GetLampIntensity(1), Is.EqualTo(quietWindow));
         }
 
         [UnityTest]

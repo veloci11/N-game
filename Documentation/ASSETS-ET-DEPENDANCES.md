@@ -67,3 +67,30 @@ La racine a observé le diorama chargé dans Unity. Les [capture actuelle](qa-20
 ### Limite du découpage actuel
 
 Six éléments générés sont prêts ; il n’y a pas encore d’asset séparé pour le soleil ou les cartes du grand décor d’accueil. Le loup comporte **deux parties**, corps et tête : les oreilles ne sont pas articulées indépendamment. Les portraits des cartes de rôles restent des illustrations rigides tant que leurs propres éléments séparés ne sont pas produits. Les cartes conservent retournement, révélation et effets de lumière, sans prétendre que chaque personnage ou rôle possède déjà sa propre articulation.
+
+## Village reconstruit et pouvoirs — quatorze nouveaux assets
+
+La nouvelle passe reconstruit **tout le village visible** avec des objets indépendants : maisons, auberge, église, pont, berges, arbres et chemin. `VillageStage` délègue à `LayeredVillageScene` ; les anciens PNG complets du village, `VillageDetails` et `PaperRiver` ne sont plus utilisés par ce rendu. Le ciel et la rivière sont des géométries séparées, les reflets sont des traits indépendants. Lune et nuages réutilisent leurs véritables illustrations isolées.
+
+Quatorze PNG générés avec ImageGen intégré à Codex, sans clé API locale. [Briefs de production normalisés](Village-layered-asset-prompts.md), sans prétendre une transcription verbatim des prompts. Aucune bibliothèque graphique tierce ni achat nécessaire pour ces fichiers. Inventaire mesuré sur les fichiers intégrés :
+
+| Asset sous `Assets/Resources/Werewolf` | Dimensions | Mode / alpha mesuré | SHA-256 |
+| --- | --- | --- | --- |
+| `Layered/bridge.png` | 1536 × 1024 | RGBA, 0–254 | `03549cd536692f26f88f07718f186e9ebaab5d7f0556ab1d5cde39befa554f39` |
+| `Layered/church.png` | 1275 × 1234 | RGBA, 0–255 | `410391917100838c76f3fe286e284e14417aaf96192a3c22051996bf3ab1dad7` |
+| `Layered/cottage.png` | 1312 × 1199 | RGBA, 0–255 | `94b3a761b8dfee0e0cfb16f2acd2cf8ea92e48e48cc86df8e573839190ad10de` |
+| `Layered/hearth-flame.png` | 2172 × 724 | RGBA, 0–255 | `e309a78808115515df1685ec2edff1c1f5af334b8c0777c7d847ed8fe5437d4b` |
+| `Layered/inn.png` | 1312 × 1199 | RGBA, 0–255 | `ff2373101e7bd6d517b1a22683f3517b85d62dbad1c95fd1423a6b418b8475fd` |
+| `Layered/path.png` | 1024 × 1536 | RGBA, 0–254 | `f1a383d7eb01695e9a9fd91108d9066afdddf0eff1de28a89b9d1eec7ae2a806` |
+| `Layered/pine.png` | 1024 × 1536 | RGBA, 0–254 | `b9fa8c008b138068193a38b50fa108c4e1daad62e62db4349bb1db8e6564a2a2` |
+| `Layered/rock-bank.png` | 2172 × 724 | RGBA, 0–255 | `1b3540f14beaa6f33c333635690e73b0f37cbef75f8302f581106dc8fa46899e` |
+| `Layered/wolf-walk.png` | 1774 × 887 | RGBA, 0–255 | `2e875eed30a0e86367eab106cf028b9925abfcef8e86909506191655caf82c3d` |
+| `Actions/cupid-bow.png` | 1254 × 1254 | RGBA, 0–255 | `bc989295a8b8aee3f6ebfdcc710334dd4a4163076da05ba36b018e9274859478` |
+| `Actions/guard-shield.png` | 1254 × 1254 | RGBA, 0–255 | `aaac9d91b3c2195e78fd6eee32453f41e30b8c78d2b6b4bde088cc94d9b04acc` |
+| `Actions/hunter-crossbow.png` | 1254 × 1254 | RGBA, 0–255 | `5b3da4352a93a59f55021f1d7bb3e9b304eabe93bd08bc58cdcfee1c08b95523` |
+| `Actions/seer-orb.png` | 1254 × 1254 | RGBA, 0–255 | `3131da3fcb4434a676169853258daad062289bea29c4b79445c79d0bdc5c7e39` |
+| `Actions/witch-bottle.png` | 1254 × 1254 | RGBA, 0–255 | `e7c86b25882a540bb081f4a300875a022bb632c6eec0240e810e3cd14f039025` |
+
+Les maxima alpha 254 de `bridge`, `path` et `pine` sont les valeurs réelles, proches de l’opacité ; ils ne sont pas annoncés comme 255. Tous les fichiers contiennent une transparence réelle. La présence d’un alpha ne valide pas à elle seule les raccords, le placement ou la qualité perçue.
+
+Le loup de marche comporte huit poses. Les 14 fenêtres utilisent leurs propres flammes de foyer sur atlas quatre poses, ouverture masquée, halo extérieur et variations de couleur/intensité déphasées ; les bâtiments eux-mêmes ne pulsent pas. Les symboles Garde/Voyante/Sorcière/Cupidon/amoureux sont des appels publics génériques, sans information de cible. Les illustrations privées de pouvoirs utilisent les cinq assets `Actions`. Les anciens rapports 70/70 et le build `build-mac-cutouts.json` précèdent cette reconstruction et ne la valident pas. Les nouvelles preuves Unity et le build courant seront consignés dans [le bilan de cette passe](qa-2026-10-20/delivery-layered-current.md).

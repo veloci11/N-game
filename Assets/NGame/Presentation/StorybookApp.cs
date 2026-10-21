@@ -52,6 +52,7 @@ namespace NGame.Presentation
         private UnityEngine.UI.Button confirmationButton;
         private readonly UnityEngine.UI.Image[] playerTiles = new UnityEngine.UI.Image[6];
         private VillageStage stage;
+        private RoomView lastSceneSnapshot;
         public HubBackdrop HubBackground { get; private set; }
         private GameObject readingVeil;
         private GameObject hubBrandMark;
@@ -92,7 +93,7 @@ namespace NGame.Presentation
             Game.RequestedHome += OpenHome;
             var nightTouchRoot = UITheme.Box("Shared night touch ambience", viewport, true);
             nightTouchRoot.gameObject.AddComponent<NightCommonTapFeedback>().Initialize(Preferences,
-                () => Route == AppRoute.Play && Game.Client?.View?.phase == "night" && Game.Client.View.mode == "in-person",
+                () => Route == AppRoute.Play && Game.Client?.View?.phase == "night" && Game.Client.View.mode == "in-person" && Game.Client.View.settings?.nightProtocol != "screen",
                 () => IsModalOpen || Game.IsMenuOpen);
             var hubRoot = UITheme.Box("N’GAME game catalogue", viewport, true);
             Hub = hubRoot.gameObject.AddComponent<GameHubView>();
@@ -191,8 +192,13 @@ namespace NGame.Presentation
             hubBrandMark = brandMark.gameObject;
             contextualHelp = Button("Open contextual help", viewport, "?", () =>
             {
-                if (Route == AppRoute.Play) Game.OpenRoomHelp(); else ShowSettings();
-            }, new Vector2(1, 1), -40, -40, 42, 42, false);
+                if (Route == AppRoute.Play) Game.OpenRoomHelp(); else ShowGameHelp();
+            }, new Vector2(1, 1), -40, -40, 44, 44, false);
+            var helpSurface = contextualHelp.GetComponent<UnityEngine.UI.Image>();
+            helpSurface.sprite = UITheme.Disc;
+            helpSurface.color = UITheme.Opacity(UITheme.Midnight, .91f);
+            UITheme.Edge(helpSurface, UITheme.Opacity(UITheme.Brass, .8f));
+            contextualHelp.GetComponentInChildren<TMP_Text>().fontSize = 27;
         }
 
         private void BuildHome()
@@ -212,12 +218,7 @@ namespace NGame.Presentation
                 UITheme.Bottom, 0, 21, 350, 22, false);
             // The earlier illustration/composition previews stay available to Editor tools and tests,
             // but must not masquerade as additional playable paths in the player's home screen.
-            var roles = Button("Discover the illustrated roles", homeView.transform, "Les rôles", OpenRoleLibrary,
-                UITheme.Bottom, -94, 212, 174, 40, false);
-            roles.GetComponent<UnityEngine.UI.Image>().color = Color.clear;
-            var how = Button("Learn the game", homeView.transform, "Comment jouer", ShowRules,
-                UITheme.Bottom, 94, 212, 174, 40, false);
-            how.GetComponent<UnityEngine.UI.Image>().color = Color.clear;
+
         }
 
         private void BuildPreparation()
@@ -471,7 +472,7 @@ namespace NGame.Presentation
             homeView.SetActive(Route == AppRoute.GameHome);
             Hub.gameObject.SetActive(Route == AppRoute.Home);
             contextualHelp.gameObject.SetActive(Route != AppRoute.Home);
-            contextualHelp.GetComponentInChildren<TMP_Text>().text = Route == AppRoute.Play ? "?" : "…";
+            contextualHelp.GetComponentInChildren<TMP_Text>().text = "?";
             preparationView.SetActive(Route == AppRoute.Preparation);
             villageView.SetActive(Route == AppRoute.Village);
             RoleLibrary.gameObject.SetActive(Route == AppRoute.RoleLibrary);
@@ -530,6 +531,11 @@ namespace NGame.Presentation
 
         private void LateUpdate()
         {
+            if (initialized && stage != null)
+            {
+                var snapshot = Route == AppRoute.Play ? Game?.Client?.View : null;
+                if (!ReferenceEquals(lastSceneSnapshot, snapshot)) { lastSceneSnapshot = snapshot; stage.BindPublic(snapshot); }
+            }
             if (initialized && gatheringCaption != null)
                 gatheringCaption.text = NetworkClient != null && NetworkClient.HasSession ? "Reprendre ma soirée" : "Créer ou rejoindre";
             if (initialized && Hub != null && Route == AppRoute.Home)
@@ -590,6 +596,15 @@ namespace NGame.Presentation
             Button("Close preferences", panel, "Fermer", CloseDialog,
                 UITheme.Bottom, 0, 45, 322, 53);
             ApplyPreferences();
+        }
+
+        public void ShowGameHelp()
+        {
+            if (!initialized) return;
+            var panel = Dialog("AIDE", "Loup-Garou", 370);
+            Button("Help read rules", panel, "Comment jouer", ShowRules, UITheme.Top, 0, -158, 314, 52);
+            Button("Help browse roles", panel, "Voir les rôles", () => { CloseDialog(); OpenRoleLibrary(); }, UITheme.Top, 0, -220, 314, 52, false);
+            Button("Help close", panel, "Fermer", CloseDialog, UITheme.Bottom, 0, 48, 314, 46, false);
         }
 
         public void ShowRules()

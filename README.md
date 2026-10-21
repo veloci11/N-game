@@ -4,26 +4,32 @@ Application de jeux de soirée sous Unity, reconstruite dans ce nouveau dépôt.
 
 ## Version 0.3 — intégration en cours
 
-L’accueil utilise désormais des éléments séparés : livre/décor, nuages, corps et tête du loup, feuillage et couronne, animés par déplacements et rotations propres à chaque élément. Cette méthode remplace la déformation de l’image entière rejetée par Mathis. Le style reste celui du livre de papier choisi ; la qualité du nouveau rendu reste à valider par l’utilisateur.
+Le village Loup-Garou est maintenant reconstruit avec des **bâtiments, arbres, pont, berges et chemin indépendants**. Le ciel et la rivière sont des géométries séparées ; les reflets sont des éléments distincts. Le rendu actif n’utilise plus un PNG complet de village ni `PaperRiver`. Chaque fenêtre possède une flamme de foyer masquée dans son ouverture, un halo ancré et ses propres variations chaudes de couleur et d’intensité. Le loup marche avec huit poses sur une rue commune.
 
-La campagne complète actuelle réussit **70/70 PlayMode**, zéro échec/ignoré/inconclusif, en **118,62 s** : elle couvre l’interface Loup-Garou et les nouveaux éléments séparés. Les **116/116 EditMode** proviennent du précédent passage ; le cœur n’a pas changé et cette suite n’a pas été rejouée. Le scénario Sorcière safe850 et la restauration du vote après saisie sont couverts. Le retour lumineux nocturne reste facultatif, sans garantie de dissimuler les gestes.
+Les pouvoirs ont un décor privé propre et un retour lié à la confirmation autoritaire ; les appels nocturnes ont aussi des vignettes publiques génériques, sans révéler les cibles. L’aide « ? » ouvre deux vrais boutons, règles et rôles. Le salon distingue **yeux fermés** et **nuit sur écran avec lucioles** : la Petite Fille reste physique et est refusée en mode écran ou à distance ; les appels du mode écran gardent une durée fixe côté serveur, même après soumission des acteurs. L’activité commune n’est pas une garantie d’anonymat des gestes.
 
-Le nouveau build Mac compile : **zéro erreur**, 346 avertissements des shaders Unity AI Inference, plist valide et signature locale ad hoc vérifiée. Le lancement ne vaut pas recette de l’interface native ; les captures et parcours UI proviennent de l’Editor. Le snapshot `ddc74e9` est poussé sur `origin/codex/werewolf-playable`, SHA distant relu et confirmé. **Hébergement public reporté à plus tard par Mathis, aucun déploiement dans ce lot.** Téléphones, acoustique et partie humaine restent non validés. [État de livraison](Documentation/qa-2026-10-20/delivery-current.md), [suivi détaillé](Documentation/SUIVI-PRODUCTION.md).
+Preuves disponibles : **125/125 Unity EditMode** en 1,68 s, **76/76 moteur hors Unity** et **214 contrôles/requêtes HTTP** pour le protocole nocturne. Le passage PlayMode complet obtient **90/91** en 162,02 s : seule une ancienne assertion attendait 10 masques de fenêtre au lieu des 14 actuels. Cette fixture est corrigée sans modification produit ; le retest ciblé réussit **19/19** en 17,28 s. L’union des deux rapports couvre **91 cas uniques réussis**, sans revendiquer une campagne unique 91/91.
+
+Des finitions visuelles sont postérieures à ces rapports : village visible derrière la nuit écran, loup agrandi et cheminement aligné au pont, lanterne/son support déplacés à droite. Leurs retests ciblés réussissent : **5/5 village**, **20/20 vue joueur**, **3/3 lucioles**, zéro échec/ignoré/inconclusif. Ces trois suites ne constituent pas une nouvelle campagne complète de 91 cas ; les captures actuelles ont été relues.
+
+Le build Mac courant compile : **zéro erreur**, 346 avertissements de shaders Unity AI Inference, 295 727 649 octets, 17 995 ms ; plist valide et signature locale ad hoc vérifiée. Son processus natif exact est confirmé ; cela ne constitue pas une recette complète de l’interface native. Les anciens 70/70 et build cutouts précèdent cette reconstruction et ne la valident pas. Les huit rôles d’extension restent sans moteur, Président/Mimes en préparation. Aucun jeu complet publié ou validé sur téléphone n’est annoncé.
+
+Le build est prêt localement ; les changements actuels restent locaux jusqu’à un nouveau push vérifié. **Hébergement public reporté à plus tard par Mathis, aucun déploiement dans ce lot.** [Bilan courant de la reconstruction](Documentation/qa-2026-10-20/delivery-layered-current.md), [suivi détaillé](Documentation/SUIVI-PRODUCTION.md).
 
 - Salons de 6 à 24 personnes : code d’invitation, pseudonymes, portraits, confirmations et composition réglable par l’hôte.
 - Distribution aléatoire avec découverte et confirmation individuelle avant les pouvoirs ; informations secrètes par destinataire, actions nocturnes, discussion, votes, verdict lisible, réactions, victoire et revanche.
 - Huit rôles avec règles : Loup-Garou, Villageois, Voyante, Sorcière, Chasseur, Cupidon, Garde et Petite Fille. Les huit autres illustrations restent au catalogue, sans activation de règles absentes.
-- Deux configurations : en présence et à distance. La Petite Fille exige l’observation physique à table et est désactivée à distance.
+- Deux configurations : en présence et à distance, avec protocole nocturne explicite. La Petite Fille exige l’observation physique à table, yeux fermés, et est désactivée en mode écran ainsi qu’à distance.
 - Messages écrits pendant le vote uniquement : Village pour les vivants, Village en lecture seule et Observateurs pour les éliminés. Aucun canal Meute ni historique accessible hors vote. Le dock passe les scénarios UI de vote et confidentialité ; les ACL passent 913 contrôles HTTP. Le vrai clavier mobile reste à éprouver. Relais vocal natif développé, limité au vote de jour distant et activé volontairement ; le microphone WebGL reste indisponible, avec secours écrit. Le transport audio est testé côté serveur, pas encore l’acoustique ou les permissions sur téléphone.
 - Cadre commun avec commandes fixes, burger et confirmation de départ. Les actions privées s’ouvrent volontairement pour être utilisées à une main.
 - Entraînement hors ligne avec sept habitants simulés et le même moteur de règles. Ce mode est explicitement individuel.
-- Village animé : lune et trois groupes de nuages séparés, eau et reflets, dix lumières ancrées au décor, flammes irrégulières, brume, fumée de cheminée, étoiles, branches et loup composé d’un corps et d’une tête indépendants.
+- Village en objets séparés : maisons, auberge, église, pont, chemin, berges, sapins, lune, trois groupes de nuages et étoiles ; eau géométrique et reflets indépendants, quatorze fenêtres avec foyers distincts, loup de marche en huit poses.
 - Cartes animées : apparition, inclinaison, dorures, effets de lumière et retournement. Les portraits restent rigides tant que leurs propres éléments séparés ne sont pas créés ; les rôles n’ont pas encore tous une articulation individuelle. Maintenir pour lire sa carte, relâcher pour la masquer. Le panneau d’action privée se ferme aux interruptions et changements de tour ; aucun effet du dos commun ne dépend du rôle caché.
 - Fondu progressif nuit/aube dans les vraies parties ; son ambiant optionnel et mouvements réduits persistants.
 
 Les règles et conventions N’GAME sont détaillées dans [WEREWOLF-RULESET.md](Documentation/WEREWOLF-RULESET.md). Les compositions et les formats six/sept demandent encore des essais d’équilibrage entre amis.
 
-Le décor utilise des illustrations 2D en plusieurs plans, des shaders d’eau et de lumière, et un loup dont le corps et la tête sont deux éléments séparés. La tête tourne au niveau du cou sans déformer son illustration ; les oreilles ne sont pas des pièces indépendantes. Les six éléments générés actuels n’incluent pas encore de soleil ni de cartes séparées pour le grand décor. Les maisons ne sont pas encore des objets 3D indépendants. La lanterne flottante a été supprimée ; les lumières du village restent à leur place.
+Les objets sont des illustrations de papier 2D indépendantes et des géométries simples ; les maisons ne sont pas des modèles 3D. Les portraits des cartes restent rigides, avec lumière et retournement, sans articulation de chaque personnage. Le corps et la tête du loup au repos sont séparés ; les oreilles ne le sont pas. La lanterne flottante a été supprimée : les lumières du village et la lanterne du mini-jeu restent ancrées.
 
 ## Essayer
 
@@ -59,9 +65,9 @@ Le projet conserve aussi l’ancienne démonstration visuelle, avec rôle fixe e
 
 Les tests actuellement exécutés et leurs limites figurent dans [VALIDATION.md](Documentation/VALIDATION.md), et les tâches restantes dans [SUIVI-PRODUCTION.md](Documentation/SUIVI-PRODUCTION.md). Les objectifs mobiles, l’accessibilité et le profilage sur appareil restent à valider.
 
-![Accueil actuel en éléments séparés, capture Unity du 20 octobre](Documentation/qa-2026-10-20/home-cutouts-final.gif)
+![Nuit actuelle dans le village reconstruit, entraînement Unity](Documentation/qa-2026-10-20/layered-night-final.gif)
 
-64 images réelles de Unity sur 6,714 s, sans interpolation. Le [village actuel](Documentation/qa-2026-10-20/werewolf-cutouts-village-final.png) est montré en aperçu local, pas en partie réseau. L’[ancien enregistrement du 17 octobre](Documentation/village-motion.gif) reste une archive ; aucun de ces fichiers ne mesure les performances sur téléphone.
+96 images réelles 430 × 932 sur 9,677 s, sans interpolation. Le [panneau privé des loups](Documentation/qa-2026-10-20/layered-wolves-private-final.png) et l’[aide « ? »](Documentation/qa-2026-10-20/layered-help-question.png) ont été relus. Les scènes montrent un entraînement Practice avec habitants simulés, pas une partie réseau ou humaine ; aucun de ces fichiers ne mesure les performances sur téléphone. Les rendus cutouts et le GIF du 17 octobre restent des archives.
 
 ## Assets
 

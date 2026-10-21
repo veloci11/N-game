@@ -1,0 +1,49 @@
+{
+  "success": true,
+  "command": "command test_status",
+  "data": {
+    "command": "test_status",
+    "parameters": {},
+    "result": {
+      "status": "completed",
+      "duration": 0.91,
+      "summary": {
+        "total": 3,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "inconclusive": 0
+      },
+      "results": [
+        {
+          "FullName": "NGame.Presentation.Tests.NightFireflyActivityTests.ActorAndObserverHaveTheSamePublicScheduleEvenAfterConfirmationAndLocalTaps",
+          "Status": "Passed",
+          "Duration": 0.3233264,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.NightFireflyActivityTests.ReducedMotionKeepsStaticTouchableTargetsAndUsesLightFeedbackWithoutFlights",
+          "Status": "Passed",
+          "Duration": 0.3002957,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "NGame.Presentation.Tests.NightFireflyActivityTests.TraditionalProtocolMenusFocusAndPhaseChangesSuspendWithoutReplayingFlights",
+          "Status": "Passed",
+          "Duration": 0.199358,
+          "Message": null,
+          "StackTrace": null
+        }
+      ]
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "/Users/mathis/Code/N-game"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

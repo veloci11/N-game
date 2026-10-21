@@ -89,7 +89,8 @@ internal static class ApiSupport
     public static void Settings(RoomSettings? settings)
     {
         if (settings is null) return;
-        if (settings.mode is null || settings.mode.Length > 24 || settings.ruleset is null || settings.ruleset.Length > 48)
+        if (settings.mode is null || settings.mode.Length > 24 || settings.ruleset is null || settings.ruleset.Length > 48
+            || settings.nightProtocol?.Length > 24)
             throw new ApiFailure(400, "invalid_settings", "Le mode ou les règles de la salle sont invalides.");
         if (settings.discussionSeconds is < 1 or > 3600 || settings.nightSeconds is < 1 or > 3600 || settings.voteSeconds is < 30 or > 300)
             throw new ApiFailure(400, "invalid_settings", "Les durées doivent être comprises entre 1 et 3600 secondes.");

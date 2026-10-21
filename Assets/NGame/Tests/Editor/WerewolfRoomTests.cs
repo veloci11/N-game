@@ -1038,5 +1038,123 @@ namespace NGame.Core.Tests
             var votes = game.View.events.Where(e => e.kind == "vote").ToArray();
             Assert.That(votes.Length, Is.EqualTo(6)); Assert.That(votes.All(e => e.text.EndsWith(" s’abstient.", StringComparison.Ordinal)), Is.True);
         }
+
+        [Test]
+        public void LegacyNightProtocolDefaultsAndNullSavedSettingsRestoreAsTraditional()
+        {
+            Assert.That(new RoomSettings().nightProtocol, Is.EqualTo("traditional"));
+            var room = new WerewolfRoom("LEGACY", new RoomSettings { nightProtocol = null }, 12);
+            Ok(room.AddPlayer("host", "Hôte", 0));
+            var snapshot = room.CaptureSnapshot(); snapshot.settings.nightProtocol = null;
+            var restored = WerewolfRoom.RestoreSnapshot(snapshot);
+            Assert.That(restored.StateFor("host", 100000).settings.nightProtocol, Is.EqualTo("traditional"));
+        }
+
+        [TestCase("visual")]
+        [TestCase("")]
+        public void UnknownNightProtocolCannotBeCreated(string protocol)
+        {
+            Assert.Throws<ArgumentException>(() => new WerewolfRoom("INVALID", new RoomSettings { nightProtocol = protocol }, 12));
+        }
+
+        [Test]
+        public void ScreenNightRejectsPhysicalLittleGirlWithoutChangingReadyLobby()
+        {
+            var game = new Game("werewolf", "little-girl", "villager", "villager", "villager", "villager");
+            var ready = game.Command(game.Host, "ready"); ready.ready = true;
+            Ok(game.Room.Apply(game.Host, ready, game.Now));
+            var proposed = game.View.settings; proposed.nightProtocol = "screen";
+            var command = game.Command(game.Host, "configure"); command.settings = proposed;
+            var rejected = game.Room.Apply(game.Host, command, game.Now);
+            Assert.That(rejected.ok, Is.False); Assert.That(rejected.code, Is.EqualTo("PHYSICAL_ROLE"));
+            Assert.That(game.View.settings.nightProtocol, Is.EqualTo("traditional"));
+            Assert.That(game.Player(game.Host).ready, Is.True, "Rejected settings cannot invalidate an unchanged lobby.");
+            Assert.Throws<ArgumentException>(() => new WerewolfRoom("SCREENPF", proposed, 1));
+        }
+
+        [Test]
+        public void SelectingScreenNightIsPublicDetachedAndRequiresEveryoneToReadyAgain()
+        {
+            var game = new Game("werewolf", "seer", "villager", "villager", "villager", "villager");
+            foreach (var id in game.Ids)
+            { var ready = game.Command(id, "ready"); ready.ready = true; Ok(game.Room.Apply(id, ready, game.Now)); }
+            var proposed = game.View.settings; proposed.nightProtocol = "screen";
+            var command = game.Command(game.Host, "configure"); command.settings = proposed;
+            Ok(game.Room.Apply(game.Host, command, game.Now));
+            proposed.nightProtocol = "traditional";
+            foreach (var id in game.Ids)
+            {
+                Assert.That(game.For(id).settings.nightProtocol, Is.EqualTo("screen"));
+                Assert.That(game.For(id).players.All(p => !p.ready), Is.True);
+            }
+            var exported = game.View.settings; exported.nightProtocol = "traditional";
+            Assert.That(game.View.settings.nightProtocol, Is.EqualTo("screen"), "A client projection cannot mutate the live room.");
+            Assert.That(game.View.canStart, Is.False);
+        }
+
+        [TestCase("in-person")]
+        [TestCase("remote")]
+        public void ScreenNightKeepsEveryCallOpenUntilItsDeadlineAfterAllChoicesAndHostAdvance(string mode)
+        {
+            var game = new Game("werewolf", "seer", "witch", "guard", "cupid", "hunter", "villager", "villager");
+            var proposed = game.View.settings; proposed.nightProtocol = "screen"; proposed.mode = mode;
+            var configure = game.Command(game.Host, "configure"); configure.settings = proposed;
+            Ok(game.Room.Apply(game.Host, configure, game.Now)); game.Start();
+            var calls = 0;
+            while (game.View.phase == "night" && calls++ < 10)
+            {
+                var before = game.View; var turn = before.turn; var deadline = before.deadlineUnixMs;
+                foreach (var id in game.Ids)
+                {
+                    var action = game.For(id).action;
+                    if (action != null && action.kind != "observe" && !action.submitted) Ok(game.Send(id, "act", "pass"));
+                }
+                game.Now = deadline - 1; game.Room.Tick(game.Now);
+                Assert.That(game.View.turn, Is.EqualTo(turn), before.nightStep);
+                Assert.That(game.View.canAdvance, Is.False, "Fast actors must not shorten " + before.nightStep);
+                Assert.That(game.Send(game.Host, "advance").code, Is.EqualTo("STEP_PENDING"));
+                Assert.That(game.View.turn, Is.EqualTo(turn));
+                game.Now = deadline; game.Room.Tick(game.Now);
+                Assert.That(game.View.turn, Is.GreaterThan(turn), "The server deadline must advance even without another actor request.");
+            }
+            Assert.That(calls, Is.GreaterThanOrEqualTo(5));
+            Assert.That(game.View.phase, Is.EqualTo("dawn"));
+        }
+
+        [Test]
+        public void ScreenNightRestoresSameCallDeadlineAndSubmittedChoicesWithoutPrematureAdvance()
+        {
+            var game = new Game("werewolf", "seer", "villager", "villager", "villager", "villager");
+            var proposed = game.View.settings; proposed.nightProtocol = "screen";
+            var configure = game.Command(game.Host, "configure"); configure.settings = proposed;
+            Ok(game.Room.Apply(game.Host, configure, game.Now)); game.Start();
+            var actor = game.Ids.First(id => game.For(id).action != null);
+            Ok(game.Send(actor, "act", "pass"));
+            var before = game.For(actor); var snapshot = game.Room.CaptureSnapshot();
+            var restored = WerewolfRoom.RestoreSnapshot(snapshot);
+            snapshot.settings.nightProtocol = "traditional";
+            var current = restored.StateFor(actor, before.deadlineUnixMs - 1);
+            Assert.That(current.settings.nightProtocol, Is.EqualTo("screen"));
+            Assert.That(current.turn, Is.EqualTo(before.turn));
+            Assert.That(current.nightStep, Is.EqualTo(before.nightStep));
+            Assert.That(current.deadlineUnixMs, Is.EqualTo(before.deadlineUnixMs));
+            Assert.That(current.action.submitted, Is.True);
+            restored.Tick(before.deadlineUnixMs);
+            Assert.That(restored.StateFor(actor, before.deadlineUnixMs).turn, Is.GreaterThan(before.turn));
+        }
+
+        [Test]
+        public void ConfigureReceiptDetectsProtocolChangeAndTraditionalReceiptSurvivesLegacyNullSave()
+        {
+            var game = new Game("werewolf", "seer", "villager", "villager", "villager", "villager");
+            var command = game.Command(game.Host, "configure"); command.settings = game.View.settings;
+            Ok(game.Room.Apply(game.Host, command, game.Now));
+            var snapshot = game.Room.CaptureSnapshot(); snapshot.settings.nightProtocol = null;
+            var restored = WerewolfRoom.RestoreSnapshot(snapshot);
+            command.settings.nightProtocol = null;
+            Ok(restored.Apply(game.Host, command, game.Now));
+            command.settings.nightProtocol = "screen";
+            Assert.That(restored.Apply(game.Host, command, game.Now).code, Is.EqualTo("COMMAND_CONFLICT"));
+        }
     }
 }

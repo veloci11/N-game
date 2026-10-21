@@ -1,4 +1,5 @@
 using System;
+using NGame.Core;
 using NGame.Core.Multiplayer;
 using UnityEngine;
 
@@ -6,6 +7,13 @@ namespace NGame.Presentation.Game
 {
     public sealed partial class RoomFlowView
     {
+        private static string NightProtocolExplanation(RoomSettings settings)
+        {
+            return settings?.nightProtocol == "screen"
+                ? "Nuit avec lucioles : chacun peut regarder son écran et jouer à l’activité facultative. Les appels gardent leur durée complète. La Petite Fille n’est pas disponible avec ce protocole."
+                : "Nuit traditionnelle : fermez les yeux entre les appels de la narration. La Petite Fille peut observer physiquement la table, uniquement en présence. Aucun écran ne lui révèle les loups.";
+        }
+
         private RectTransform PublicPanel(string name, string heading)
         {
             ForceMaskSecrets(); CloseChatPanel(); CloseMenu();
@@ -18,6 +26,24 @@ namespace NGame.Presentation.Game
             SecretCard.SetBlocked(true);
             PrimaryAction.interactable = SecondaryAction.interactable = false;
             return content;
+        }
+
+        public void OpenImplementedRoleGuide()
+        {
+            if (Client?.View == null) return;
+            var content = PublicPanel("Implemented role guide", "Les rôles");
+            GameUI.Text(content, "Public role guide explanation", "Ces fiches expliquent les huit rôles du jeu. Elles ne montrent aucune carte attribuée aux participants.", 15, 84, false, UITheme.Brass);
+            foreach (var role in RoleCatalog.All)
+            {
+                if (!role.RulesImplemented) continue;
+                GameUI.Text(content, "Role guide name " + role.Id, role.DisplayName, 25, 42);
+                var image = UITheme.Surface("Public role guide illustration " + role.Id, content, Color.white, UITheme.RoleCard(role.RoleArtIndex));
+                image.preserveAspect = true;
+                var height = image.gameObject.AddComponent<UnityEngine.UI.LayoutElement>(); height.preferredHeight = height.minHeight = 112;
+                GameUI.Text(content, "Role guide rules " + role.Id, role.Summary, 15, 68, false);
+                if (role.Id == "little-girl") GameUI.Text(content, "Public little girl protocol limit", "Uniquement en présence, avec le protocole traditionnel. Indisponible à distance et pendant une nuit avec lucioles.", 13, 77, false, UITheme.Brass);
+            }
+            MenuDock("Revenir aux règles", OpenRoomHelp);
         }
 
         public void OpenPublicChronicle()

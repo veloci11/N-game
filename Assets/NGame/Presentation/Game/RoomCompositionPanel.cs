@@ -18,7 +18,7 @@ namespace NGame.Presentation.Game
         private Action close;
         private TMPro.TextMeshProUGUI mode;
         private TMPro.TextMeshProUGUI total;
-        private TMPro.TextMeshProUGUI durations;
+        private TMPro.TextMeshProUGUI durations, protocol;
         private int playerCount;
         private UnityEngine.UI.Button confirm;
 
@@ -44,6 +44,10 @@ namespace NGame.Presentation.Game
             var modes = GameUI.Row(content, "Mode choices", 45);
             GameUI.Button(modes, "Physical gathering mode", "En présence", () => SetMode("in-person"), false, 43);
             GameUI.Button(modes, "Remote room mode", "À distance", () => SetMode("remote"), false, 43);
+            var protocols = GameUI.Row(content, "Host night protocol choices", 44);
+            GameUI.Button(protocols, "Host traditional night protocol", "Yeux fermés", () => SetProtocol("traditional"), false, 44);
+            GameUI.Button(protocols, "Host screen night protocol", "Lucioles", () => SetProtocol("screen"), false, 44);
+            protocol = GameUI.Text(content, "Configured night protocol", "", 13, 100, false, UITheme.Brass);
             total = GameUI.Text(content, "Composition count", "", 15, 48, false, UITheme.Brass);
             GameUI.Button(content, "Suggest a complete composition", "Proposer une composition", () => { Suggest(); Render(); }, false);
             foreach (var id in RoleIds)
@@ -60,7 +64,7 @@ namespace NGame.Presentation.Game
                 additions[id] = plus;
             }
             GameUI.Text(content, "Physical observation protocol",
-                "La Petite Fille demande un protocole physique : yeux fermés, narration et observation à la table. Elle est indisponible à distance.",
+                "La Petite Fille demande une nuit traditionnelle à la même table : yeux fermés, narration et observation physique. Elle est indisponible à distance et avec les lucioles.",
                 11, 74, false, UITheme.Quiet);
             durations = GameUI.Text(content, "Configured durations", "", 15, 45, false);
             var night = GameUI.Row(content, "Night duration adjustment", 42);
@@ -82,16 +86,14 @@ namespace NGame.Presentation.Game
         private void SetMode(string value)
         {
             working.mode = value;
-            if (value == "remote")
-            {
-                counts["villager"] += counts["little-girl"];
-                counts["little-girl"] = 0;
-            }
+            // Keep the selected cards visible: changing a mode must never silently replace a role.
             Render();
         }
+        private void SetProtocol(string value) { working.nightProtocol = value; Render(); }
+        private bool LittleGirlAvailable => working.mode != "remote" && working.nightProtocol == "traditional";
         private void Change(string id, int delta)
         {
-            if (id == "little-girl" && working.mode == "remote") return;
+            if (id == "little-girl" && !LittleGirlAvailable && delta > 0) return;
             var limit = id == "werewolf" || id == "villager" ? 24 : 1;
             counts[id] = Mathf.Clamp(counts[id] + delta, 0, limit);
             Render();
@@ -113,16 +115,21 @@ namespace NGame.Presentation.Game
             if (mode == null) return;
             mode.text = working.mode == "remote" ? "Une soirée à distance" : "Autour de la même table";
             var number = CountCards();
+            protocol.text = working.nightProtocol == "screen"
+                ? "Lucioles : écrans ouverts et activité facultative pour tous. Les appels nocturnes gardent leur durée complète. La Petite Fille est indisponible."
+                : "Yeux fermés entre les appels. La Petite Fille est possible uniquement à la même table, avec observation physique.";
+            if (!LittleGirlAvailable && counts["little-girl"] > 0)
+                protocol.text += "\nRetire explicitement la Petite Fille ou choisis le protocole traditionnel en présence.";
             total.text = number + " cartes · " + playerCount + " personnes au salon\nUne carte par personne sera requise pour démarrer.";
             foreach (var id in RoleIds)
             {
-                var available = id != "little-girl" || working.mode != "remote";
-                labels[id].text = (RoleCatalog.Find(id)?.DisplayName ?? id) + " · " + counts[id] + (!available ? "\nPrésence uniquement" : "");
-                removals[id].interactable = available && counts[id] > 0;
+                var available = id != "little-girl" || LittleGirlAvailable;
+                labels[id].text = (RoleCatalog.Find(id)?.DisplayName ?? id) + " · " + counts[id] + (!available ? "\nTraditionnel en présence" : "");
+                removals[id].interactable = counts[id] > 0;
                 additions[id].interactable = available && counts[id] < (id == "werewolf" || id == "villager" ? 24 : 1);
             }
             durations.text = "Étape nocturne : " + working.nightSeconds + " s\nDiscussion : " + working.discussionSeconds + " s";
-            if (confirm != null) confirm.interactable = number >= 6 && number <= 24 && counts["werewolf"] > 0 && counts["werewolf"] < number;
+            if (confirm != null) confirm.interactable = number >= 6 && number <= 24 && counts["werewolf"] > 0 && counts["werewolf"] < number && (LittleGirlAvailable || counts["little-girl"] == 0);
         }
         private void Apply()
         {

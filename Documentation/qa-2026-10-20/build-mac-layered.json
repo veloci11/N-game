@@ -1,0 +1,13 @@
+{
+  "status": "completed",
+  "buildId": "build_6de2384b8f40",
+  "result": "Succeeded",
+  "platform": "StandaloneOSX",
+  "outputPath": "/Users/mathis/Code/N-game/Builds/Mac/NGame.app",
+  "totalSizeBytes": 295727649,
+  "buildTimeMs": 17995,
+  "buildStartedAt": "2026-10-21T01:24:20.0997460Z",
+  "buildEndedAt": "2026-10-21T01:24:38.0955000Z",
+  "totalWarnings": 346,
+  "totalErrors": 0
+}

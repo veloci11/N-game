@@ -1,0 +1,12 @@
+{
+  "source": "Actual Unity GameView, controlled Practice werewolf night; no interpolation",
+  "frameCount": 96,
+  "size": [
+    430,
+    932
+  ],
+  "actualSpanSeconds": 9.677,
+  "gifDurationMs": 9710,
+  "palette": "one shared 256-color palette",
+  "interaction": "Unity simulated pointer at first firefly; LocalCatchCount=1. Private target selected and submitted later through UI; authoritative submitted=true, confirmationVersion=1."
+}
