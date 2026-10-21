@@ -33,6 +33,7 @@ namespace NGame.Presentation
         private readonly List<SpriteRenderer> stars = new List<SpriteRenderer>();
         private readonly List<Sprite> ownedSprites = new List<Sprite>();
         private readonly List<Mesh> ownedMeshes = new List<Mesh>();
+        private readonly Dictionary<Part, Material> windowMaterials = new Dictionary<Part, Material>();
         private readonly Dictionary<string, Sprite> art = new Dictionary<string, Sprite>();
         private readonly List<Part> clouds = new List<Part>();
         private readonly Dictionary<string, Part> publicSymbols = new Dictionary<string, Part>();
@@ -260,6 +261,15 @@ namespace NGame.Presentation
         {
             if (building == null) return;
             var order = building.Renderer.sortingOrder;
+            if (!windowMaterials.ContainsKey(building))
+            {
+                var shader = Resources.Load<Shader>("Werewolf/Shader/HearthWindows");
+                if (shader != null)
+                {
+                    var material = new Material(shader) { name = building.Id + " warm interior glass" };
+                    windowMaterials[building] = material; building.Renderer.sharedMaterial = material;
+                }
+            }
             var maskNode = new GameObject(building.Id + " independent window opening " + lamps.Count, typeof(SpriteMask));
             maskNode.transform.SetParent(transform, false);
             var mask = maskNode.GetComponent<SpriteMask>(); mask.sprite = UITheme.Panel;
@@ -277,7 +287,8 @@ namespace NGame.Presentation
             {
                 var renderer = lamp.Building.Renderer;
                 if (renderer.sprite == null) { lamp.Halo.enabled = lamp.Flame.enabled = false; continue; }
-                lamp.Halo.enabled = lamp.Flame.enabled = true;
+                // The fire lives behind the illustrated glass. No flame sprite is pasted over the facade.
+                lamp.Halo.enabled = lamp.Flame.enabled = false;
                 var bounds = renderer.sprite.bounds;
                 var x = bounds.min.x + bounds.size.x * lamp.Uv.x;
                 if (renderer.flipX) x = -x;
@@ -341,7 +352,8 @@ namespace NGame.Presentation
                 var reflection = SpriteObject("Independent warm water stroke " + i, UITheme.Mist, -19);
                 var t = i / 33f; var y = Mathf.Lerp(-4.6f, -.65f, t); var center = Mathf.Sin(((y + 4.8f) / 5.35f) * 5) * .35f - .3f;
                 reflection.transform.localPosition = new Vector3(center + Mathf.Sin(i * 2.37f) * .23f * (1 - t), y, 0);
-                reflection.transform.localScale = new Vector3(Mathf.Lerp(.8f, .12f, t) * (.5f + Mathf.Repeat(i * .618f, .5f)), .022f + i % 3 * .009f, 1);
+                var bounds = reflection.sprite.bounds.size;
+                reflection.transform.localScale = new Vector3(Mathf.Lerp(.32f, .045f, t) * (.5f + Mathf.Repeat(i * .618f, .5f)) / bounds.x, (.009f + i % 3 * .003f) / bounds.y, 1);
                 reflections.Add(reflection);
             }
         }
@@ -418,17 +430,33 @@ namespace NGame.Presentation
                 cloud.Renderer.color = Color.Lerp(new Color(.7f,.78f,.85f,.85f), new Color(1,1,.95f,.8f), daylight);
             }
             PositionLamps();
+            foreach (var pair in windowMaterials)
+            {
+                var slot = 0;
+                foreach (var lamp in lamps)
+                {
+                    if (lamp.Building != pair.Key || slot >= 6) continue;
+                    var half = lamp.Opening * .5f;
+                    pair.Value.SetVector("_Window" + slot, new Vector4(lamp.Uv.x-half.x, lamp.Uv.y-half.y, lamp.Uv.x+half.x, lamp.Uv.y+half.y));
+                    slot++;
+                }
+                pair.Value.SetFloat("_WindowCount", slot);
+                pair.Value.SetFloat("_Night", 1-daylight);
+                pair.Value.SetFloat("_Clock", motion);
+                pair.Value.SetFloat("_Reduced", reduced ? 1 : 0);
+                pair.Value.SetFloat("_Phase", parts.IndexOf(pair.Key) * 1.731f);
+            }
             for (var i = 0; i < lamps.Count; i++)
             {
                 var lamp = lamps[i];
                 if (hearthFrames != null) lamp.Flame.sprite = hearthFrames[GetHearthFrameIndex(i)];
                 var rate = 1 + i * .037f;
-                var flicker = reduced ? .84f : .72f + Mathf.Sin(motion * 1.31f * rate + lamp.Phase) * .13f
-                    + Mathf.Sin(motion * 4.73f * rate + lamp.Phase * 1.7f) * .09f
-                    + Mathf.Sin(motion * 11.37f + lamp.Phase * .43f) * .045f;
+                var flicker = reduced ? .84f : .84f + Mathf.Sin(motion * 1.31f * rate + lamp.Phase) * .045f
+                    + Mathf.Sin(motion * 4.73f * rate + lamp.Phase * 1.7f) * .025f
+                    + Mathf.Sin(motion * 8.37f + lamp.Phase * .43f) * .012f;
                 var strength = (1 - daylight) * Mathf.Clamp01(flicker);
                 var warmth = reduced ? .45f : .5f + Mathf.Sin(motion * 1.87f * rate + lamp.Phase) * .35f;
-                var color = Color.Lerp(new Color(1,.42f,.08f), new Color(1,.76f,.28f), warmth);
+                var color = Color.Lerp(new Color(1,.69f,.32f), new Color(1,.79f,.43f), warmth);
                 lamp.Color = color; lamp.Intensity = strength;
                 lamp.Halo.color = new Color(color.r,color.g,color.b,strength * .23f);
                 lamp.Flame.color = new Color(color.r,color.g,color.b,strength * .88f);
@@ -436,7 +464,7 @@ namespace NGame.Presentation
                 if (i == 0) FirstLampIntensity = strength;
             }
 
-            for (var i = 0; i < reflections.Count; i++) reflections[i].color = Color.Lerp(new Color(1,.63f,.23f,(reduced ? .3f : .25f + Mathf.Sin(motion * 1.2f + i) * .09f)), new Color(.82f,.9f,.86f,.13f), daylight);
+            for (var i = 0; i < reflections.Count; i++) reflections[i].color = Color.Lerp(new Color(.64f,.72f,.78f,(reduced ? .12f : .10f + Mathf.Sin(motion * 1.2f + i) * .035f)), new Color(.82f,.9f,.86f,.13f), daylight);
             for (var i = 0; i < stars.Count; i++) stars[i].color = new Color(1,.87f,.61f,(1 - daylight) * (reduced ? .5f : .42f + Mathf.Sin(motion * .7f + i) * .19f));
             RenderWolf(); RenderPublicVignettes();
         }
@@ -525,6 +553,7 @@ namespace NGame.Presentation
         {
             foreach (var sprite in ownedSprites) if (sprite != null) Destroy(sprite);
             foreach (var mesh in ownedMeshes) if (mesh != null) Destroy(mesh);
+            foreach (var material in windowMaterials.Values) if (material != null) Destroy(material);
             if (geometryMaterial != null) Destroy(geometryMaterial);
         }
     }

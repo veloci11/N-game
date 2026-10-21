@@ -1,0 +1,17 @@
+{
+  "source": "Actual Unity GameView end-of-frame captures; controlled Practice with bots; no interpolation",
+  "frameCount": 96,
+  "size": [
+    430,
+    932
+  ],
+  "actualSpanSeconds": 9.471,
+  "gifDurationMs": 9690,
+  "interaction": "Raycast checked EventSystem firefly click on frame12",
+  "after": {
+    "frame": 12586,
+    "catches": 1,
+    "submitted": false,
+    "confirmation": 0
+  }
+}

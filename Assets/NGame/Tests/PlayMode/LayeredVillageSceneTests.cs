@@ -50,16 +50,26 @@ namespace NGame.Presentation.Tests
         }
 
         [UnityTest]
-        public IEnumerator WindowsHaveSeparateClippedFlamesWithDifferentFlickerWhileHousesRemainFixed()
+        public IEnumerator WindowsUseExactIllustratedGlassAndGentleIndependentFlickerWhileHousesRemainFixed()
         {
             Assert.That(scene.LampCount, Is.GreaterThanOrEqualTo(10));
             var masks = scene.GetComponentsInChildren<SpriteMask>(); Assert.That(masks.Length, Is.EqualTo(scene.LampCount));
             foreach (var mask in masks) { Assert.That(mask.sprite, Is.Not.Null); Assert.That(mask.isCustomRangeActive, Is.True); }
             var clipped = 0;
             foreach (var renderer in scene.GetComponentsInChildren<SpriteRenderer>())
-                if (renderer.name.Contains("clipped hearth flame")) { Assert.That(renderer.maskInteraction, Is.EqualTo(SpriteMaskInteraction.VisibleInsideMask)); clipped++; }
+                if (renderer.name.Contains("clipped hearth flame"))
+                {
+                    Assert.That(renderer.enabled, Is.False, "A pasted flame must never cover the glass or mullions."); clipped++;
+                }
+                else if (renderer.name.Contains("anchored window halo"))
+                    Assert.That(renderer.enabled, Is.False, "No floating orange halo over stone.");
             Assert.That(clipped, Is.EqualTo(scene.LampCount));
-            var house = scene.GetPartRenderer("Village inn"); var position = house.transform.position; var scale = house.transform.localScale; var tint = house.color;
+            var shader = Resources.Load<Shader>("Werewolf/Shader/HearthWindows");
+            Assert.That(shader, Is.Not.Null); Assert.That(shader.isSupported, Is.True);
+            var house = scene.GetPartRenderer("Village inn");
+            Assert.That(house.sharedMaterial.shader, Is.EqualTo(shader));
+            Assert.That(house.sharedMaterial.GetFloat("_WindowCount"), Is.EqualTo(2));
+            var position = house.transform.position; var scale = house.transform.localScale; var tint = house.color;
             var first = scene.GetLampIntensity(0); var second = scene.GetLampIntensity(1); var color = scene.GetLampColor(1);
             Assert.That(Mathf.Abs(first - second), Is.GreaterThan(.001f));
             yield return new WaitForSecondsRealtime(.31f);

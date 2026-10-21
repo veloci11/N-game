@@ -2,6 +2,8 @@
 
 État au 20 octobre 2026. Le dépôt actif est `veloci11/N-game`.
 
+**Usage courant des fenêtres :** shader `HearthWindows` sur les vitres illustrées, sans sprites de flammes/halos plaqués. Les inventaires ci-dessous conservent les sources générées et les étapes historiques ; l’atlas `hearth-flame.png` n’est plus utilisé pour afficher les fenêtres. La [dernière correction](qa-2026-10-20/delivery-role-polish.md) décrit les preuves actuelles.
+
 ## Art et mouvement
 
 Les illustrations du village, les seize cartes et les planches de menus ont été générées pour ce projet. Les sources approuvées restent dans `ArtSource`. Les images de menus sont des références de conception, pas des écrans embarqués à la place de contrôles interactifs.
@@ -94,3 +96,10 @@ Quatorze PNG générés avec ImageGen intégré à Codex, sans clé API locale. 
 Les maxima alpha 254 de `bridge`, `path` et `pine` sont les valeurs réelles, proches de l’opacité ; ils ne sont pas annoncés comme 255. Tous les fichiers contiennent une transparence réelle. La présence d’un alpha ne valide pas à elle seule les raccords, le placement ou la qualité perçue.
 
 Le loup de marche comporte huit poses. Les 14 fenêtres utilisent leurs propres flammes de foyer sur atlas quatre poses, ouverture masquée, halo extérieur et variations de couleur/intensité déphasées ; les bâtiments eux-mêmes ne pulsent pas. Les symboles Garde/Voyante/Sorcière/Cupidon/amoureux sont des appels publics génériques, sans information de cible. Les illustrations privées de pouvoirs utilisent les cinq assets `Actions`. Les anciens rapports 70/70 et le build `build-mac-cutouts.json` précèdent cette reconstruction et ne la valident pas. Les nouvelles preuves Unity et le build courant seront consignés dans [le bilan de cette passe](qa-2026-10-20/delivery-layered-current.md).
+
+
+## Correction courante de l’éclairage et de l’activité
+
+Le code `HearthWindows.shader` éclaire désormais les vitres originales dans les textures des bâtiments, limité par leurs zones UV et la couleur du verre ; il conserve murs, papier et croisillons. Il n’y a aucun déplacement d’UV, déformation de façade ou gros rectangle coloré superposé. Les sprites de flamme et leurs halos sont désactivés ; **`Layered/hearth-flame.png` reste un asset historique inutilisé pour le rendu courant des fenêtres**. Ses dimensions et SHA précédents décrivent toujours le fichier, pas une animation active. Les reflets de rivière ont été atténués et normalisés.
+
+La reprise ne génère pas de nouveaux PNG : elle réutilise les illustrations séparées, ajoute un shader local au projet et améliore les objets/retours d’interface. Les lucioles, ailes et traces sont des éléments UI autonomes, projetés depuis les positions du village via la caméra, sans panneau de mini-jeu ; leur lanterne et son support restent ancrés. Seules quatre cibles de 44 points reçoivent les contacts. Les contrôles actuels sont suivis dans [delivery-role-polish.md](qa-2026-10-20/delivery-role-polish.md) ; les anciennes captures de flammes plaquées restent historiques.

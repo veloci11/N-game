@@ -393,7 +393,9 @@ namespace NGame.Core.Multiplayer
                 return new ActionView
                 {
                     kind = "observe", title = "Votre lien secret",
-                    description = "Découvrez discrètement votre partenaire, puis refermez les yeux. Sa carte reste secrète.",
+                    description = settings.nightProtocol == "screen"
+                        ? "Découvrez discrètement votre partenaire, puis masquez votre vue privée. Sa carte reste secrète."
+                        : "Découvrez discrètement votre partenaire, puis refermez les yeux. Sa carte reste secrète.",
                     privateInfo = "Ton destin est lié à " + NameOf(partner) + ".", submitted = true
                 };
             }

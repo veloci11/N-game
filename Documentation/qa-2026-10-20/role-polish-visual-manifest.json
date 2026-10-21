@@ -1,0 +1,69 @@
+{
+  "source": "Actual Unity GameView; controlled UI fixtures, not network or human gameplay",
+  "roles": [
+    {
+      "role": "werewolf",
+      "privateOpen": true,
+      "kind": "werewolf",
+      "clock": 0.468577683,
+      "frame": 3356,
+      "path": "Assets/NGameQA/role-polish-werewolf.png"
+    },
+    {
+      "role": "seer",
+      "privateOpen": true,
+      "kind": "seer",
+      "clock": 0.6240578,
+      "frame": 3380,
+      "path": "Assets/NGameQA/role-polish-seer.png"
+    },
+    {
+      "role": "witch",
+      "privateOpen": true,
+      "kind": "witch",
+      "clock": 0.77091825,
+      "frame": 3411,
+      "path": "Assets/NGameQA/role-polish-witch.png"
+    },
+    {
+      "role": "guard",
+      "privateOpen": true,
+      "kind": "guard",
+      "clock": 0.6294296,
+      "frame": 3436,
+      "path": "Assets/NGameQA/role-polish-guard.png"
+    },
+    {
+      "role": "cupid",
+      "privateOpen": true,
+      "kind": "cupid",
+      "clock": 0.7583829,
+      "frame": 3467,
+      "path": "Assets/NGameQA/role-polish-cupid.png"
+    },
+    {
+      "role": "hunter",
+      "privateOpen": true,
+      "kind": "hunter",
+      "clock": 0.721892953,
+      "frame": 3491,
+      "path": "Assets/NGameQA/role-polish-hunter.png"
+    },
+    {
+      "role": "villager",
+      "privateOpen": true,
+      "kind": "villager",
+      "clock": 0.200371474,
+      "frame": 3510,
+      "path": "Assets/NGameQA/role-polish-villager.png"
+    },
+    {
+      "role": "little-girl",
+      "privateOpen": true,
+      "kind": "little-girl",
+      "clock": 0.5260627,
+      "frame": 3532,
+      "path": "Assets/NGameQA/role-polish-little-girl.png"
+    }
+  ]
+}

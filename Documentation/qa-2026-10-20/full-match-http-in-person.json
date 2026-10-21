@@ -1,0 +1,95 @@
+{
+  "mode": "in-person",
+  "simulatedHttpClients": 10,
+  "humanPlayers": 0,
+  "nightProtocol": "screen",
+  "nightSeconds": 6,
+  "activePowerKindsExercised": [
+    "cupid",
+    "guard",
+    "hunter",
+    "seer",
+    "witch",
+    "wolves"
+  ],
+  "completedNights": 2,
+  "completedDayVotes": 2,
+  "acceptedRoleActionCommands": 11,
+  "acceptedBallots": 17,
+  "observedTransitions": [
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "cupid"
+    },
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "lovers"
+    },
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "guard"
+    },
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "seer"
+    },
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "werewolf"
+    },
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "witch"
+    },
+    {
+      "day": 1,
+      "phase": "dawn"
+    },
+    {
+      "day": 1,
+      "phase": "vote"
+    },
+    {
+      "day": 2,
+      "phase": "night",
+      "step": "guard"
+    },
+    {
+      "day": 2,
+      "phase": "night",
+      "step": "seer"
+    },
+    {
+      "day": 2,
+      "phase": "night",
+      "step": "werewolf"
+    },
+    {
+      "day": 2,
+      "phase": "night",
+      "step": "witch"
+    },
+    {
+      "day": 2,
+      "phase": "dawn"
+    },
+    {
+      "day": 2,
+      "phase": "vote"
+    }
+  ],
+  "stateReads": 2259,
+  "httpRequests": 2422,
+  "transportChecksIncludingStatusCacheAndPolls": 5583,
+  "serverRestartExercised": true,
+  "finishedWinner": "village",
+  "secondMatchStarted": true,
+  "scope": "Real HTTP sessions with scripted cooperative choices, not ten humans, Unity UI, phone gestures or audio-device validation.",
+  "elapsedSeconds": 77.84
+}

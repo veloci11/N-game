@@ -69,6 +69,48 @@ namespace NGame.Presentation.Tests
         }
 
         [UnityTest]
+        public IEnumerator AContactMovesOneVisibleInsectInsteadOfDuplicatingItAndLeavesOnlyNonInteractiveTraces()
+        {
+            Assert.That(first.RegisterTap(0), Is.True);
+            var images = first.GetComponentsInChildren<Image>(true);
+            var waiting = images.Single(i => i.name == "Waiting firefly light 0");
+            var flying = images.Single(i => i.name == "Locally guided firefly 0");
+            Assert.That(waiting.gameObject.activeSelf, Is.False, "The captured insect must leave its original perch.");
+            Assert.That(flying.gameObject.activeInHierarchy, Is.True);
+            Assert.That(flying.GetComponentsInChildren<Image>().Count(i => i.name.StartsWith("Separate paper firefly wing")), Is.EqualTo(2));
+            yield return new WaitForSecondsRealtime(.19f);
+            var traces = first.GetComponentsInChildren<Image>(true).Where(i => i.name.StartsWith("Local firefly flight trace")).ToArray();
+            Assert.That(traces.Any(i => i.enabled), Is.True);
+            Assert.That(traces.All(i => !i.raycastTarget), Is.True);
+            Assert.That(first.GetComponentsInChildren<Image>(true).Count(i => i.raycastTarget), Is.EqualTo(4));
+            yield return new WaitForSecondsRealtime(.6f);
+            Assert.That(waiting.gameObject.activeSelf, Is.True);
+            Assert.That(flying.gameObject.activeSelf, Is.False);
+            Assert.That(traces.All(i => !i.enabled), Is.True);
+        }
+
+        [UnityTest]
+        public IEnumerator ActivityFollowsVillageWorldPositionsAcrossCameraMovementWithoutRoomMutation()
+        {
+            var canvas = owner.AddComponent<Canvas>(); canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            yield return null;
+            var world = new GameObject("Village anchor test world"); world.transform.SetParent(owner.transform, false); world.transform.position = Vector3.zero;
+            var cameraObject = new GameObject("Village anchor test camera", typeof(Camera)); cameraObject.transform.SetParent(owner.transform, false);
+            var camera = cameraObject.GetComponent<Camera>(); camera.enabled = false; camera.orthographic = true; camera.orthographicSize = 4.66f; camera.aspect = 430f / 932;
+            camera.transform.position = new Vector3(0,0,-10);
+            first.BindVillage(camera, world.transform);
+            Assert.That(first.IsSceneAnchored, Is.True);
+            var lantern = first.LanternPosition; var fly = first.TargetPosition(0); var roomBefore = JsonUtility.ToJson(actor);
+            camera.transform.position += new Vector3(.25f,0,0);
+            yield return null;
+            Assert.That(first.LanternPosition.x, Is.LessThan(lantern.x));
+            Assert.That(first.TargetPosition(0).x, Is.LessThan(fly.x));
+            Assert.That(first.LanternPosition.y, Is.EqualTo(lantern.y).Within(.01f));
+            Assert.That(JsonUtility.ToJson(actor), Is.EqualTo(roomBefore));
+            Assert.That(first.GetComponentsInChildren<Button>().All(b => ((RectTransform)b.transform).rect.size == new Vector2(44,44)), Is.True);
+        }
+
+        [UnityTest]
         public IEnumerator TraditionalProtocolMenusFocusAndPhaseChangesSuspendWithoutReplayingFlights()
         {
             actor.settings.nightProtocol = "traditional"; yield return null;

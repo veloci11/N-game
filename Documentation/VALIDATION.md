@@ -1,6 +1,23 @@
 # Validation et limites de N’GAME
 
-## Reconstruction complète du village — état courant
+## Correctif courant : lumières, rôles et activité dans le décor
+
+`HearthWindows` éclaire les vitres originales sans plaquer de flamme sur les murs ou croisillons. Les anciens sprites de flamme/halo sont désactivés et les reflets de rivière atténués. Pouvoirs privés distincts, sélection/confirmation et lucioles ancrées au village passent les campagnes ci-dessous. Le passage complet final couvre aussi le cartouche privé agrandi, le chronomètre préservé, la lanterne posée, les halos de lucioles adoucis et la Petite Fille sans faux reçu. Les rendus finaux ont été relus séparément.
+
+| Contrôle courant | État | Limite |
+| --- | --- | --- |
+| Recompilation | Sans erreur, signalée par la racine | Pas une preuve de rendu réussi |
+| Unity PlayMode complet | **98/98**, zéro échec/ignoré/inconclusif, **160,93 s** — [rapport](qa-2026-10-20/playmode-role-polish.json) | Campagne complète unique finale, toutes finitions incluses ; pas une réception humaine |
+| Unity EditMode actuel | **125/125**, zéro échec/ignoré/inconclusif, **1,36 s** — [rapport](qa-2026-10-20/editmode-role-polish.json) | Dernier passage complet final ; pas une réception humaine |
+| [HTTP multi-session](qa-2026-10-20/full-match-http-validation.md) | Deux passages indépendants présence/distance réussis : 10 sessions chacun, 2 nuits, 11 pouvoirs, 2 votes/17 bulletins, victoire Village et revanche ; reprise/redémarrage/droits vérifiés | 2 422 requêtes en présence et 3 974 à distance, polls compris ; aucun humain. Deux fragments PCM synthétiques distants, sans essai de microphone/haut-parleur |
+| Rendus de rôles | [Huit PNG relus et manifest](qa-2026-10-20/delivery-role-polish.md), copies PF/Garde/Chasseur rafraîchies | Fixtures UI contrôlées ; aucun P1 ergonomique confirmé sur ces vues, pas une réception humaine |
+| GIF actuels | [Nuit](qa-2026-10-20/role-polish-night.gif) : 96 images/9,471 s, clic luciole, capture 1 ; [Sorcière](qa-2026-10-20/role-polish-witch-action.gif) : 64 images/6,089 s, poison confirmé, reçu moteur 1 ; frames intermédiaires relues | Véritable Practice avec bots et clics contrôlés ; pas de partie réseau/humaine ou profilage mobile. Manifests dans le bilan courant |
+| [Build Mac final](qa-2026-10-20/build-mac-role-polish.json) | Succeeded, 0 erreur, 346 avertissements AI, 295 742 929 octets, 15 998 ms ; plist et signature ad hoc deep/strict vérifiés, processus natif exact 25993 lancé | Rendu relu dans Unity, pas une recette UI native complète ou une notarisation |
+| Push | Encore à vérifier | Aucun déploiement public |
+
+Le [bilan courant](qa-2026-10-20/delivery-role-polish.md) suit les preuves. Aucun déploiement public ni validation sur vrais téléphones, groupe humain ou acoustique.
+
+## Archive : reconstruction complète du village
 
 Le rendu actif utilise des objets séparés et des géométries, sans PNG complet de village ni `PaperRiver`. Foyers masqués et animés indépendamment, marche du loup en huit poses, vignettes publiques nocturnes, décors privés des pouvoirs, activité Lucioles avec protocole explicite et aide « ? » sont développés. Unity EditMode réussit 125/125 ; le passage PlayMode complet obtient 90/91, puis 19/19 ciblés après correction d’une ancienne assertion de masque : 91 cas uniques couverts par union, pas une campagne unique 91/91. Les finitions visuelles suivantes sont postérieures aux rapports globaux : retrait du voile opaque en nuit écran, taille/trajectoire du loup au pont et lanterne/support à droite. Trois contrôles ciblés actuels réussis (5/5 village, 20/20 vue joueur, 3/3 lucioles) ; captures actuelles relues et build Mac local réussi ; les anciens 70/70 et le build cutouts ci-dessous ne prouvent pas cette passe.
 

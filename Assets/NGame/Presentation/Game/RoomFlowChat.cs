@@ -253,7 +253,8 @@ namespace NGame.Presentation.Game
             var show = room != null && room.mode == "remote" && room.phase == "vote" && Client.IsConnected
                 && !externalBlock && !IsMenuOpen && string.IsNullOrEmpty(Client.StatusError);
             microphoneButton.gameObject.SetActive(show);
-            if (clock != null) UITheme.Position(clock.rectTransform, UITheme.Top, show ? -78 : 0, -213, show ? 220 : 370, 26);
+            if (clock != null) UITheme.Position(clock.rectTransform, UITheme.Top, show && !privateOpened ? -78 : 0,
+                privateOpened ? -223 : -213, show && !privateOpened ? 220 : 370, privateOpened ? 20 : 26);
             var voice = communications?.Voice;
             microphoneButton.GetComponentInChildren<TMP_Text>().text = voice?.microphoneActive == true ? "Couper micro"
                 : voice?.available != true ? "Micro indispo." : !voice.canTransmit ? "Écoute seule" : "Activer micro";

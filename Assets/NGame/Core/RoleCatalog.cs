@@ -53,7 +53,7 @@ namespace NGame.Core
             Define("witch", "Sorcière", "Dispose d’une potion de soin et d’une potion de poison.", 3, implemented: true),
             Define("hunter", "Chasseur", "Désigne une dernière cible lorsqu’il est éliminé.", 4, implemented: true),
             Define("cupid", "Cupidon", "Lie deux amoureux dont les destins deviennent inséparables.", 5, implemented: true),
-            Define("guard", "Garde", "Protège un joueur contre les loups, sous les restrictions du Salvateur.", 6, implemented: true),
+            Define("guard", "Garde", "Protège une personne contre les loups, sans choisir la même deux nuits de suite.", 6, implemented: true),
             Define("little-girl", "Petite Fille", "Observe discrètement les loups éveillés, au risque d’être surprise.", 7,
                 RoleModeSupport.TableProtocolRequired, RoleModeSupport.AdaptationRequired, implemented: true),
             Define("white-wolf", "Loup Blanc", "Se cache dans la meute et cherche à survivre seul.", 8),

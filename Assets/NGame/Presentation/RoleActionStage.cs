@@ -9,7 +9,7 @@ namespace NGame.Presentation
     /// <summary>Decorative private action feedback. Never reads targets, private facts or another player's state.</summary>
     public sealed class RoleActionStage : MonoBehaviour
     {
-        private enum Movement { Still, Float, Tilt, Orbit, Bubble, Glint, Aim, Lid, Flame, Bolt }
+        private enum Movement { Still, Float, Tilt, Orbit, Bubble, Glint, Aim, Lid, Flame, Bolt, Seal, GuardArc, Bowstring, HeartThread, Spark }
         private sealed class Piece
         {
             public RectTransform Rect; public Image Image; public Vector2 Rest;
@@ -17,7 +17,7 @@ namespace NGame.Presentation
         }
         private sealed class PotionBottle
         {
-            public Image[] Images; public Color[] Colors; public bool Available = true;
+            public Image[] Images; public Color[] Colors; public RectTransform Root; public Vector2 Rest; public bool Available = true;
         }
         private readonly List<PotionBottle> bottles = new List<PotionBottle>();
         private static readonly Color HealingColor = new Color(.35f, .74f, .49f, 1);
@@ -27,7 +27,10 @@ namespace NGame.Presentation
         private readonly List<Image> confirmation = new List<Image>();
         private AppPreferences preferences;
         private RectTransform art;
-        private bool initialized, hasBound, confirmed;
+        private bool initialized, hasBound, confirmed, suppressed, focused = true, paused;
+        private CanvasGroup visibility;
+        private string selectedChoice;
+        private int selectedTargets, requiredTargets;
         private string actionIdentity, acceptedChoice;
         private float clock, burst;
         public string VisualKind { get; private set; }
@@ -43,15 +46,16 @@ namespace NGame.Presentation
             initialized = true;
             var input = GetComponent<CanvasGroup>();
             if (input == null) input = gameObject.AddComponent<CanvasGroup>();
-            input.interactable = false; input.blocksRaycasts = false;
+            input.interactable = false; input.blocksRaycasts = false; input.alpha = 0; visibility = input;
         }
 
         /// <summary>Pass the authoritative submitted flag and a stable match/turn identity, never optimistic button state.</summary>
         public void Bind(ActionView action, string roleId, bool isConfirmed, string identity = null)
         {
             if (!initialized) Initialize(null);
+            suppressed = !focused || paused; visibility.alpha = suppressed ? 0 : 1;
             if (actionIdentity != identity)
-            { actionIdentity = identity; hasBound = false; confirmed = false; clock = burst = 0; }
+            { actionIdentity = identity; hasBound = false; confirmed = false; clock = burst = 0; selectedChoice = null; selectedTargets = requiredTargets = 0; }
             var kind = Kind(action?.kind, roleId);
             var changed = VisualKind != kind;
             if (changed) { VisualKind = kind; clock = burst = 0; Rebuild(); }
@@ -61,12 +65,22 @@ namespace NGame.Presentation
             if (hasBound && !changed && !confirmed && isConfirmed) NotifyConfirmed();
             confirmed = isConfirmed; hasBound = true; Render();
         }
+        /// <summary>Local intent only: no identity or result enters the decorative preview.</summary>
+        public void SetSelection(string choice, int targetCount, int requiredCount)
+        {
+            selectedChoice = choice;
+            selectedTargets = Mathf.Clamp(targetCount, 0, 2); requiredTargets = Mathf.Clamp(requiredCount, 0, 2);
+            Render();
+        }
+        private float SelectionProgress => requiredTargets > 0 ? Mathf.Clamp01(selectedTargets / (float)requiredTargets)
+            : !string.IsNullOrEmpty(selectedChoice) && selectedChoice != "pass" ? 1 : 0;
+        private bool HasEffectReceipt => burst > 0 && confirmed && !string.IsNullOrEmpty(acceptedChoice) && acceptedChoice != "pass";
         /// <summary>For an explicit authoritative acknowledgement; Bind handles the normal first submitted transition.</summary>
         public void NotifyConfirmed()
         {
             ConfirmationVersion++;
             var potionUsed = acceptedChoice == "save" || acceptedChoice == "heal" || acceptedChoice == "poison" || acceptedChoice == "both";
-            burst = Quiet || VisualKind == "witch" && !potionUsed ? 0 : 1; Render();
+            burst = Quiet || suppressed || string.IsNullOrEmpty(acceptedChoice) || acceptedChoice == "pass" || VisualKind == "witch" && !potionUsed ? 0 : 1; Render();
         }
 
         private static string Kind(string action, string role)
@@ -89,7 +103,7 @@ namespace NGame.Presentation
             {
                 case "seer": BuildSeer(); break;
                 case "witch": BuildWitch(); break;
-                case "werewolf": BuildWolf(); break;
+                case "werewolf": BuildWolf(); BuildWolfSeal(); break;
                 case "guard": BuildGuard(); break;
                 case "cupid": BuildCupid(); break;
                 case "hunter": BuildHunter(); break;
@@ -111,6 +125,7 @@ namespace NGame.Presentation
             }
             for (var i = 0; i < 6; i++) Add("Separate orbit star " + i, Vector2.zero, Vector2.one * 2.5f, UITheme.Brass, UITheme.Disc, Movement.Orbit, i * Mathf.PI / 3, 30);
             Add("Orb reflected light", new Vector2(-8, 9), new Vector2(7, 7), UITheme.Opacity(Color.white, .65f), UITheme.Disc, Movement.Float, 1, 1.4f);
+            for (var i = 0; i < 4; i++) Add("Seer selected lens seal " + i, Vector2.zero, new Vector2(5, 1.5f), UITheme.Brass, UITheme.Panel, Movement.Seal, i * Mathf.PI / 2, 24);
         }
         private void BuildWitch()
         {
@@ -138,7 +153,7 @@ namespace NGame.Presentation
             }
             var images = holder.GetComponentsInChildren<Image>(true);
             var colors = new Color[images.Length]; for (var i = 0; i < images.Length; i++) colors[i] = images[i].color;
-            bottles.Add(new PotionBottle { Images = images, Colors = colors });
+            bottles.Add(new PotionBottle { Images = images, Colors = colors, Root = holder, Rest = holder.anchoredPosition });
         }
         private void BuildWolf()
         {
@@ -150,6 +165,10 @@ namespace NGame.Presentation
                 piece.Rect.pivot = new Vector2(.6f, .16f);
             }
         }
+        private void BuildWolfSeal()
+        {
+            for (var i = 0; i < 6; i++) Add("Wolf chosen target seal " + i, Vector2.zero, new Vector2(4, 1.5f), UITheme.Brass, UITheme.Panel, Movement.Seal, i * Mathf.PI / 3, 30);
+        }
         private void BuildGuard()
         {
             if (Art("guard-shield", Vector2.zero, 59) == null)
@@ -160,6 +179,7 @@ namespace NGame.Presentation
                 Add("Shield center fold", new Vector2(0, 0), new Vector2(2, 38), UITheme.Parchment);
             }
             Add("Separate shield reflection", new Vector2(-18, 0), new Vector2(2, 38), UITheme.Opacity(Color.white, .65f), UITheme.Panel, Movement.Glint, 0, 18);
+            for (var i = 0; i < 10; i++) Add("Chosen protection arc " + i, Vector2.zero, new Vector2(3, 1.5f), UITheme.Brass, UITheme.Panel, Movement.GuardArc, i * Mathf.PI / 5, 31);
         }
         private void BuildCupid()
         {
@@ -173,13 +193,15 @@ namespace NGame.Presentation
                 }
                 Add("Bow string", new Vector2(-35, 0), new Vector2(1, 39), UITheme.Quiet);
             }
+            Add("Separate flexible bow string", new Vector2(-35, 0), new Vector2(1, 30), UITheme.Brass, UITheme.Panel, Movement.Bowstring, 0, 6);
             Heart("First linked heart", new Vector2(8, 1), 0);
             Heart("Second linked heart", new Vector2(43, 1), Mathf.PI);
-            Add("Lovers connecting thread", new Vector2(25, 0), new Vector2(16, 1), UITheme.Brass);
+            Add("Lovers connecting thread", new Vector2(25, 0), new Vector2(16, 1), UITheme.Brass, UITheme.Panel, Movement.HeartThread);
         }
         private void Heart(string name, Vector2 position, float phase)
         {
             var root = UITheme.Box(name, art); UITheme.Position(root, UITheme.Center, position.x, position.y, 24, 24);
+            root.gameObject.AddComponent<CanvasGroup>().blocksRaycasts = false;
             Track(root, null, Movement.Float, phase, 2);
             var diamond = Image("Heart folded tip", root, new Vector2(0, -3), new Vector2(15, 15), UITheme.Terracotta, UITheme.Panel);
             diamond.rectTransform.localRotation = Quaternion.Euler(0, 0, 45);
@@ -188,7 +210,8 @@ namespace NGame.Presentation
         }
         private void BuildHunter()
         {
-            Art("hunter-crossbow", new Vector2(-46, -2), 46);
+            var bow = Art("hunter-crossbow", new Vector2(-46, -2), 46);
+            if (bow != null) Track(bow.rectTransform, bow, Movement.Tilt, 0, 0);
             var aim = UITheme.Box("Independent aiming reticle", art); UITheme.Position(aim, UITheme.Center, 8, 0, 54, 54);
             Track(aim, null, Movement.Aim, 0, 2);
             foreach (var sign in new[] { -1, 1 })
@@ -200,21 +223,27 @@ namespace NGame.Presentation
         }
         private void BuildEye()
         {
-            Art("little-girl-eye", Vector2.zero, 62);
             Add("Observing eye", Vector2.zero, new Vector2(49, 22), UITheme.Parchment, UITheme.Disc);
-            Add("Eye pupil without player information", Vector2.zero, new Vector2(14, 14), UITheme.Midnight, UITheme.Disc, Movement.Aim, 1, 2);
+            Add("Physical observation symbol pupil", Vector2.zero, new Vector2(14, 14), UITheme.Midnight, UITheme.Disc);
             Add("Upper paper eyelid", new Vector2(0, 19), new Vector2(52, 16), UITheme.Midnight, UITheme.Panel, Movement.Lid, 1, -12);
             Add("Lower paper eyelid", new Vector2(0, -19), new Vector2(52, 16), UITheme.Midnight, UITheme.Panel, Movement.Lid, 1, 12);
         }
         private void BuildLantern()
         {
-            if (Art("villager-lantern", Vector2.zero, 62) == null)
+            var illustration = Art("villager-lantern", Vector2.zero, 62);
+            if (illustration == null)
+            {
+                var existing = Resource("Werewolf/lantern");
+                if (existing != null) illustration = Image("Existing illustrated villager lantern", art, Vector2.zero, new Vector2(42, 62), Color.white, existing);
+            }
+            if (illustration == null)
             {
                 Add("Anchored lantern frame", Vector2.zero, new Vector2(28, 37), UITheme.Brass);
                 Add("Lantern glass", Vector2.zero, new Vector2(21, 28), UITheme.Midnight);
                 Add("Lantern handle", new Vector2(0, 25), new Vector2(15, 8), UITheme.Brass, UITheme.Panel);
             }
             Add("Anchored lantern flame", new Vector2(0, -3), new Vector2(8, 15), new Color(1, .69f, .27f, .9f), UITheme.Disc, Movement.Flame, .5f, .12f);
+            for (var i = 0; i < 3; i++) Add("Independent lantern ember " + i, new Vector2(0, 2), Vector2.one * 1.5f, UITheme.Brass, UITheme.Disc, Movement.Spark, i * 1.8f, 14);
         }
 
         private Piece Add(string name, Vector2 position, Vector2 size, Color color, Sprite sprite = null,
@@ -249,7 +278,7 @@ namespace NGame.Presentation
         }
         private void LateUpdate()
         {
-            if (!hasBound) return;
+            if (!hasBound || suppressed) return;
             if (!Quiet) { clock += Time.unscaledDeltaTime; burst = Mathf.Max(0, burst - Time.unscaledDeltaTime / .65f); }
             else burst = 0;
             Render();
@@ -266,6 +295,7 @@ namespace NGame.Presentation
             {
                 if (piece.Rect == null) continue;
                 var position = piece.Rest; var angle = piece.Angle; var color = piece.Color;
+                if (Quiet && piece.Movement == Movement.Spark) color.a = 0;
                 if (Quiet && piece.Movement == Movement.Orbit)
                     position += new Vector2(Mathf.Cos(piece.Phase), Mathf.Sin(piece.Phase)) * piece.Amplitude;
                 if (!Quiet)
@@ -274,15 +304,49 @@ namespace NGame.Presentation
                     switch (piece.Movement)
                     {
                         case Movement.Float: position.y += wave * piece.Amplitude; break;
-                        case Movement.Tilt: angle += Mathf.Sin(t * .5f + piece.Phase) * piece.Amplitude; break;
-                        case Movement.Orbit: position += new Vector2(Mathf.Cos(t * .5f + piece.Phase), Mathf.Sin(t * .5f + piece.Phase)) * piece.Amplitude; break;
+                        case Movement.Tilt:
+                            angle += Mathf.Sin(t * .5f + piece.Phase) * piece.Amplitude;
+                            if (VisualKind == "werewolf") angle += SelectionProgress * 1.1f;
+                            if (VisualKind == "hunter" && HasEffectReceipt) angle -= Mathf.Sin((1 - burst) * Mathf.PI) * 3;
+                            break;
+                        case Movement.Orbit:
+                            var orbitAngle = t * .5f + piece.Phase;
+                            position += new Vector2(Mathf.Cos(orbitAngle), Mathf.Sin(orbitAngle)) * (piece.Amplitude - SelectionProgress * 4);
+                            color.a *= .55f + .45f * SelectionProgress;
+                            break;
                         case Movement.Bubble: position.y += Mathf.Repeat(t * 6 + piece.Phase * 4, piece.Amplitude); break;
                         case Movement.Glint: position.x += (wave + 1) * piece.Amplitude; color.a *= .35f + .45f * (wave + 1) / 2; break;
-                        case Movement.Aim: position += new Vector2(wave, Mathf.Cos(t * .53f + piece.Phase)) * piece.Amplitude; break;
+                        case Movement.Aim:
+                            var scan = VisualKind == "hunter" ? 1 - SelectionProgress : 1;
+                            position += new Vector2(wave, Mathf.Cos(t * .53f + piece.Phase)) * piece.Amplitude * scan;
+                            break;
                         case Movement.Lid: position.y += Mathf.Pow(Mathf.Max(0, Mathf.Sin(t * .45f + piece.Phase)), 20) * piece.Amplitude; break;
                         case Movement.Flame: color.a *= .87f + wave * piece.Amplitude; break;
-                        case Movement.Bolt: position.x += burst > 0 ? (1 - burst) * piece.Amplitude : 0; break;
+                        case Movement.Bolt:
+                            position.x += HasEffectReceipt ? (1 - burst) * piece.Amplitude : 0;
+                            color.a *= HasEffectReceipt ? burst : .28f + SelectionProgress * .55f; break;
+                        case Movement.Spark:
+                            var ember = Mathf.Repeat(t * .35f + piece.Phase, 1);
+                            position += new Vector2(Mathf.Sin(piece.Phase + t) * 3, ember * piece.Amplitude);
+                            color.a *= (1 - ember) * .65f; break;
                     }
+                }
+                if (piece.Movement == Movement.Seal || piece.Movement == Movement.GuardArc)
+                {
+                    var radius = piece.Amplitude - (HasEffectReceipt && !Quiet ? (1 - burst) * 4 : 0);
+                    position += new Vector2(Mathf.Cos(piece.Phase), Mathf.Sin(piece.Phase)) * radius;
+                    angle = piece.Phase * Mathf.Rad2Deg + 90;
+                    color.a *= SelectionProgress > 0 ? .7f : .16f;
+                    if (HasEffectReceipt && !Quiet) color.a = burst;
+                }
+                if (piece.Movement == Movement.Bowstring) position.x -= SelectionProgress * piece.Amplitude;
+                if (piece.Movement == Movement.HeartThread) color.a *= selectedTargets >= 2 && selectedChoice != "pass" ? .9f : .18f;
+                if (piece.Rect.name == "First linked heart" || piece.Rect.name == "Second linked heart")
+                {
+                    var slot = piece.Rect.name == "First linked heart" ? 0 : 1;
+                    if (HasEffectReceipt && !Quiet) position.x += (slot == 0 ? 1 : -1) * Mathf.Sin((1 - burst) * Mathf.PI) * 3;
+                    var group = piece.Rect.GetComponent<CanvasGroup>();
+                    if (group != null) group.alpha = selectedTargets > slot && selectedChoice != "pass" ? 1 : .3f;
                 }
                 piece.Rect.anchoredPosition = position; piece.Rect.localRotation = Quaternion.Euler(0, 0, angle);
                 if (piece.Image != null) piece.Image.color = color;
@@ -294,6 +358,14 @@ namespace NGame.Presentation
                     image.color = bottle.Available ? bottle.Colors[i] : new Color(.45f, .45f, .45f, bottle.Colors[i].a * .35f);
                     if (image.name.StartsWith("Potion bubble ")) image.enabled = bottle.Available;
                 }
+            for (var index = 0; index < bottles.Count; index++)
+            {
+                var bottle = bottles[index];
+                var chosen = selectedChoice == "both" || (index == 0 ? selectedChoice == "save" || selectedChoice == "heal" : selectedChoice == "poison");
+                bottle.Root.anchoredPosition = bottle.Rest + new Vector2(0, chosen && bottle.Available ? 3 : 0);
+                if (HasEffectReceipt && !Quiet && (acceptedChoice == "both" || (index == 0 ? acceptedChoice == "save" || acceptedChoice == "heal" : acceptedChoice == "poison")))
+                    bottle.Root.localRotation = Quaternion.Euler(0, 0, Mathf.Sin((1 - burst) * Mathf.PI) * (index == 0 ? -5 : 5));
+            }
             for (var i = 0; i < confirmation.Count; i++)
             {
                 var dot = confirmation[i]; var angle = i * Mathf.PI / 4;
@@ -303,7 +375,15 @@ namespace NGame.Presentation
                 dot.color = UITheme.Opacity(receiptColor, Quiet ? 0 : burst * .8f);
             }
         }
-        private void OnDisable() { burst = 0; Render(); }
+        private void Mask()
+        {
+            suppressed = true; burst = 0; selectedChoice = null; selectedTargets = requiredTargets = 0;
+            if (visibility != null) visibility.alpha = 0; Render();
+        }
+        private void OnEnable() { focused = true; paused = false; Mask(); }
+        private void OnApplicationFocus(bool value) { focused = value; if (!value) Mask(); }
+        private void OnApplicationPause(bool value) { paused = value; if (value) Mask(); }
+        private void OnDisable() { Mask(); }
         private void OnDestroy() { foreach (var sprite in ownedSprites) if (sprite != null) Destroy(sprite); }
     }
 }

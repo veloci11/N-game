@@ -1,0 +1,39 @@
+{
+  "source": "Two measured RGB pixels in96actualGameViewframes, fixed camera; limited visual check, not a full image regression",
+  "samples": {
+    "lower_left_cottage_glass": {
+      "point": [
+        96,
+        609
+      ],
+      "channelMin": [
+        222,
+        177,
+        62
+      ],
+      "channelMax": [
+        234,
+        187,
+        66
+      ],
+      "distinctColors": 23
+    },
+    "lower_left_cottage_roof": {
+      "point": [
+        96,
+        590
+      ],
+      "channelMin": [
+        21,
+        14,
+        13
+      ],
+      "channelMax": [
+        21,
+        14,
+        13
+      ],
+      "distinctColors": 1
+    }
+  }
+}

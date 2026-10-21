@@ -1,0 +1,108 @@
+PASS setup: ten sessions, readiness, private discovery, real disconnection and resume.
+PASS night 1: cupid, fixed deadline and recipient rights.
+PASS night 1: lovers, fixed deadline and recipient rights.
+PASS night 1: guard, fixed deadline and recipient rights.
+PASS night 1: seer, fixed deadline and recipient rights.
+PASS night 1: werewolf, fixed deadline and recipient rights.
+PASS night 1: witch, fixed deadline and recipient rights.
+PASS night 2: guard, fixed deadline and recipient rights.
+PASS night 2: seer, fixed deadline and recipient rights.
+PASS night 2: werewolf, fixed deadline and recipient rights.
+PASS night 2: witch, fixed deadline and recipient rights.
+PASS complete match: two nights, all compatible powers, two day votes, private chat, victory and fresh rematch.
+{
+  "mode": "remote",
+  "simulatedHttpClients": 10,
+  "humanPlayers": 0,
+  "nightProtocol": "screen",
+  "nightSeconds": 6,
+  "activePowerKindsExercised": [
+    "cupid",
+    "guard",
+    "hunter",
+    "seer",
+    "witch",
+    "wolves"
+  ],
+  "completedNights": 2,
+  "completedDayVotes": 2,
+  "acceptedRoleActionCommands": 11,
+  "acceptedBallots": 17,
+  "observedTransitions": [
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "cupid"
+    },
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "lovers"
+    },
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "guard"
+    },
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "seer"
+    },
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "werewolf"
+    },
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "witch"
+    },
+    {
+      "day": 1,
+      "phase": "dawn"
+    },
+    {
+      "day": 1,
+      "phase": "vote"
+    },
+    {
+      "day": 2,
+      "phase": "night",
+      "step": "guard"
+    },
+    {
+      "day": 2,
+      "phase": "night",
+      "step": "seer"
+    },
+    {
+      "day": 2,
+      "phase": "night",
+      "step": "werewolf"
+    },
+    {
+      "day": 2,
+      "phase": "night",
+      "step": "witch"
+    },
+    {
+      "day": 2,
+      "phase": "dawn"
+    },
+    {
+      "day": 2,
+      "phase": "vote"
+    }
+  ],
+  "stateReads": 3795,
+  "httpRequests": 3974,
+  "transportChecksIncludingStatusCacheAndPolls": 8690,
+  "serverRestartExercised": true,
+  "scriptedPcmPacketsSent": 2,
+  "finishedWinner": "village",
+  "secondMatchStarted": true,
+  "scope": "Real HTTP sessions with scripted cooperative choices, not ten humans, Unity UI, phone gestures or audio-device validation.",
+  "elapsedSeconds": 137.73
+}

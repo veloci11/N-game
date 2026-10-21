@@ -1,0 +1,188 @@
+/Users/mathis/Code/N-game/Assets/NGame/Core/VillageSession.cs(52,40): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/RoomCommunications.cs(34,30): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/RoleCatalog.cs(74,50): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/RoleCatalog.cs(77,20): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/RoleCatalog.cs(41,34): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(115,29): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(121,36): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(124,30): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(124,54): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(134,38): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/RoomCommunications.cs(89,28): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(275,26): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(301,47): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(330,54): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(336,62): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(336,49): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(336,31): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(387,92): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(392,76): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(405,38): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(406,82): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(434,48): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(438,33): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(448,35): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(516,44): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(516,31): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(537,39): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(538,39): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(564,30): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(565,61): warning CS8604: Existence possible d'un argument de référence null pour le paramètre 'id' dans 'string WerewolfRoom.RoleOf(string id)'. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(594,32): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(806,33): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(839,33): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(882,49): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(883,45): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(896,64): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(900,78): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+
+La génération a réussi.
+
+/Users/mathis/Code/N-game/Assets/NGame/Core/VillageSession.cs(52,40): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/RoomCommunications.cs(34,30): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/RoleCatalog.cs(74,50): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/RoleCatalog.cs(77,20): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/RoleCatalog.cs(41,34): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(115,29): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(121,36): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(124,30): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(124,54): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(134,38): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/RoomCommunications.cs(89,28): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(275,26): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(301,47): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(330,54): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(336,62): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(336,49): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(336,31): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(387,92): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(392,76): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(405,38): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(406,82): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(434,48): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(438,33): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(448,35): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(516,44): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(516,31): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(537,39): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(538,39): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(564,30): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(565,61): warning CS8604: Existence possible d'un argument de référence null pour le paramètre 'id' dans 'string WerewolfRoom.RoleOf(string id)'. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(594,32): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(806,33): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(839,33): warning CS8601: Existence possible d'une assignation de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(882,49): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(883,45): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(896,64): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+/Users/mathis/Code/N-game/Assets/NGame/Core/Multiplayer/WerewolfRoom.cs(900,78): warning CS8603: Existence possible d'un retour de référence null. [/Users/mathis/Code/N-game/Server/NGame.Server/NGame.Server.csproj]
+    37 Avertissement(s)
+    0 Erreur(s)
+
+Temps écoulé 00:00:02.66
+PASS setup: ten sessions, readiness, private discovery, real disconnection and resume.
+PASS night 1: cupid, fixed deadline and recipient rights.
+PASS night 1: lovers, fixed deadline and recipient rights.
+PASS night 1: guard, fixed deadline and recipient rights.
+PASS night 1: seer, fixed deadline and recipient rights.
+PASS night 1: werewolf, fixed deadline and recipient rights.
+PASS night 1: witch, fixed deadline and recipient rights.
+PASS night 2: guard, fixed deadline and recipient rights.
+PASS night 2: seer, fixed deadline and recipient rights.
+PASS night 2: werewolf, fixed deadline and recipient rights.
+PASS night 2: witch, fixed deadline and recipient rights.
+PASS complete match: two nights, all compatible powers, two day votes, private chat, victory and fresh rematch.
+{
+  "mode": "in-person",
+  "simulatedHttpClients": 10,
+  "humanPlayers": 0,
+  "nightProtocol": "screen",
+  "nightSeconds": 6,
+  "activePowerKindsExercised": [
+    "cupid",
+    "guard",
+    "hunter",
+    "seer",
+    "witch",
+    "wolves"
+  ],
+  "completedNights": 2,
+  "completedDayVotes": 2,
+  "acceptedRoleActionCommands": 11,
+  "acceptedBallots": 17,
+  "observedTransitions": [
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "cupid"
+    },
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "lovers"
+    },
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "guard"
+    },
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "seer"
+    },
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "werewolf"
+    },
+    {
+      "day": 1,
+      "phase": "night",
+      "step": "witch"
+    },
+    {
+      "day": 1,
+      "phase": "dawn"
+    },
+    {
+      "day": 1,
+      "phase": "vote"
+    },
+    {
+      "day": 2,
+      "phase": "night",
+      "step": "guard"
+    },
+    {
+      "day": 2,
+      "phase": "night",
+      "step": "seer"
+    },
+    {
+      "day": 2,
+      "phase": "night",
+      "step": "werewolf"
+    },
+    {
+      "day": 2,
+      "phase": "night",
+      "step": "witch"
+    },
+    {
+      "day": 2,
+      "phase": "dawn"
+    },
+    {
+      "day": 2,
+      "phase": "vote"
+    }
+  ],
+  "stateReads": 2259,
+  "httpRequests": 2422,
+  "transportChecksIncludingStatusCacheAndPolls": 5583,
+  "serverRestartExercised": true,
+  "finishedWinner": "village",
+  "secondMatchStarted": true,
+  "scope": "Real HTTP sessions with scripted cooperative choices, not ten humans, Unity UI, phone gestures or audio-device validation.",
+  "elapsedSeconds": 77.84
+}

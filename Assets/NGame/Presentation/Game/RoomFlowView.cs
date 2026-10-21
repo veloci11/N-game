@@ -164,18 +164,20 @@ namespace NGame.Presentation.Game
                 () => !routeActive || externalBlock || IsMenuOpen || composer != null || privateOpened || SecretsVisible || Client?.IsConnected != true);
             nightActivityFrame.gameObject.SetActive(false);
             privateScenery = UITheme.Box("Private role action scenery area", game.transform);
-            UITheme.Position(privateScenery, UITheme.Top, 0, -180, 382, 70);
+            UITheme.Position(privateScenery, UITheme.Top, 0, -171, 382, 84);
+            var privateBacking = UITheme.Surface("Private role scenery reading paper", privateScenery, new Color(.025f, .045f, .075f, .98f), UITheme.Panel, true);
+            UITheme.Edge(privateBacking, UITheme.Opacity(UITheme.Brass, .14f));
             privatePortrait = UITheme.Surface("Small private role portrait", privateScenery, Color.white);
             privatePortrait.preserveAspect = true;
-            UITheme.Position(privatePortrait.rectTransform, UITheme.Center, -119, 0, 51, 70);
+            UITheme.Position(privatePortrait.rectTransform, UITheme.Center, -137, 0, 64, 80);
             var actionStage = UITheme.Box("Private role kinetic stage", privateScenery);
-            UITheme.Position(actionStage, UITheme.Center, 27, 0, 180, 60);
+            UITheme.Position(actionStage, UITheme.Center, 0, 0, 166, 80);
             PrivateActionStage = actionStage.gameObject.AddComponent<RoleActionStage>(); PrivateActionStage.Initialize(preferences);
             for (var i = 0; i < privateTargetAvatars.Length; i++)
             {
                 var targetAvatar = UITheme.Surface("Private selected target avatar " + i, privateScenery, Color.white);
                 targetAvatar.preserveAspect = true;
-                UITheme.Position(targetAvatar.rectTransform, UITheme.Center, 95 + i * 40, 0, 34, 40);
+                UITheme.Position(targetAvatar.rectTransform, UITheme.Center, 95 + i * 40, 0, 40, 50);
                 privateTargetAvatars[i] = targetAvatar; targetAvatar.gameObject.SetActive(false);
             }
             privateScenery.gameObject.SetActive(false);
@@ -324,7 +326,7 @@ namespace NGame.Presentation.Game
             SecretCard.SetImmersivePresentation(immersive);
             var shell = (RectTransform)body.parent.parent;
             // While typing, give the conversation the available area and restore the same vote draft afterwards.
-            shell.gameObject.SetActive(!(publicVote && ChatKeyboardInset > 0));
+            shell.gameObject.SetActive(!screenNight && !(publicVote && ChatKeyboardInset > 0));
             shell.offsetMin = new Vector2(21, publicVote ? (IsChatOpen ? ChatDockTop + 10 : 280) : screenNight ? 520 : nightWaiting ? 570 : 225);
             shell.offsetMax = new Vector2(-21, expanded ? -236 : immersive ? (nightWaiting ? -236 : -618) : -445);
             var bodyLayout = body.GetComponent<UnityEngine.UI.VerticalLayoutGroup>();
@@ -356,6 +358,11 @@ namespace NGame.Presentation.Game
             var showing = privateOpened && routeActive && !externalBlock && !IsMenuOpen && composer == null && !SecretsVisible && Client?.IsConnected == true;
             if (privateScenery != null) privateScenery.gameObject.SetActive(showing);
             if (subtitle != null) subtitle.gameObject.SetActive(!privateOpened);
+            UITheme.Position(title.rectTransform, UITheme.Top, 0, privateOpened ? -110 : -116, 382, privateOpened ? 36 : 64);
+            title.enableAutoSizing = privateOpened;
+            title.fontSizeMin = 22; title.fontSizeMax = 30;
+            title.fontSize = privateOpened ? 30 : 34;
+            title.textWrappingMode = privateOpened ? TextWrappingModes.NoWrap : TextWrappingModes.Normal;
             UITheme.Position(clock.rectTransform, UITheme.Top, 0, privateOpened ? -223 : -213, 370, privateOpened ? 20 : 26);
             if (showing)
             {
@@ -374,6 +381,7 @@ namespace NGame.Presentation.Game
                 }
                 PrivateActionStage.Bind(view?.action, view?.selfRoleId, view?.action?.submitted == true,
                     (view?.matchId ?? "") + "/" + (view?.turn ?? 0));
+                PrivateActionStage.SetSelection(choice, targets.Count, view?.action != null ? NeededTargets(view.action, choice) : 0);
             }
             if (nightActivityFrame != null) nightActivityFrame.gameObject.SetActive(IsScreenNight(view) && !privateOpened && !SecretsVisible
                 && routeActive && !externalBlock && !IsMenuOpen && composer == null && Client?.IsConnected == true);
@@ -514,8 +522,7 @@ namespace NGame.Presentation.Game
             {
                 if (IsScreenNight(view))
                 {
-                    GameUI.Text(publicContent, "Common screen night activity", "Veille des lucioles", 21, 32);
-                    GameUI.Text(publicContent, "Common screen night instruction", "L’activité est facultative. « Ma vue » ouvre tes informations privées.", 13, 36, false, UITheme.Quiet);
+                    // The public call is already in the fixed heading. Guidance belongs beside the scene's lantern.
                     return;
                 }
                 var eliminated = Self(view)?.alive == false && view.action == null;
@@ -650,6 +657,7 @@ namespace NGame.Presentation.Game
             if (!isPrivate) GameUI.Text(parent, "Available action title", action.title ?? "À toi de choisir", 21, 34);
             if (action.kind != "wolves" && !string.IsNullOrEmpty(action.privateInfo))
                 GameUI.Text(parent, "Private current action information", action.privateInfo, 13, 32, false, UITheme.Brass);
+            if (action.kind == "observe") return; // An observation has no submitted choice or power receipt.
             if (action.kind == "witch") GameUI.Text(parent, "Available potion reserves", "Soin : " + (action.healingAvailable ? "disponible" : "utilisé") + " · Poison : " + (action.poisonAvailable ? "disponible" : "utilisé"), 13, 28, false, UITheme.Brass);
             var mutableWolf = action.kind == "wolves";
             if (action.submitted && !mutableWolf)
@@ -886,7 +894,7 @@ namespace NGame.Presentation.Game
             {
                 case "lobby": return "Le village se rassemble."; case "distribution": return "Découverte des rôles"; case "night": return "Le village s’endort.";
                 case "dawn": return "Le jour se lève."; case "discussion": return "Les soupçons se croisent."; case "vote": return "Le village choisit.";
-                case "verdict": return "Les voix se révèlent."; case "reaction": return "Un dernier souffle…"; default: return "Créer ou rejoindre";
+                case "verdict": return "Les voix se révèlent."; case "reaction": return "Dernier tir du Chasseur"; default: return "Créer ou rejoindre";
             }
         }
     }

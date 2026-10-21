@@ -89,6 +89,7 @@ namespace NGame.Presentation
             var playRoot = UITheme.Box("Connected or practice game", viewport, true);
             Game = playRoot.gameObject.AddComponent<RoomFlowView>();
             Game.Initialize(Preferences, NetworkClient, stage.TransitionToDaylight, () => stage.DaylightAmount);
+            Game.NightActivity.BindVillage(Camera.main, stage.Scene.transform);
             gameObject.AddComponent<PublicNarrator>().Initialize(Preferences, () => Game.Client, () => Route == AppRoute.Play);
             Game.RequestedHome += OpenHome;
             var nightTouchRoot = UITheme.Box("Shared night touch ambience", viewport, true);

@@ -103,6 +103,67 @@ namespace NGame.Presentation.Tests
         }
 
         [UnityTest]
+        public IEnumerator SelectionSettlesTheHunterAimButAPassNeverLaunchesTheBolt()
+        {
+            var action = new ActionView { kind = "hunter", submittedChoice = "pass" };
+            stage.Bind(action, "hunter", false, "hunter-turn"); stage.SetSelection("shoot", 1, 1); yield return null;
+            var aim = owner.GetComponentsInChildren<RectTransform>().Single(t => t.name == "Independent aiming reticle");
+            var bolt = owner.GetComponentsInChildren<RectTransform>().Single(t => t.name == "Separate hunter bolt");
+            var aimPosition = aim.anchoredPosition; var boltPosition = bolt.anchoredPosition;
+            yield return new WaitForSecondsRealtime(.15f);
+            Assert.That(aim.anchoredPosition, Is.EqualTo(aimPosition), "Selecting a target settles the reticle instead of keeping it drifting.");
+            stage.SetSelection("pass", 0, 0); stage.Bind(action, "hunter", true, "hunter-turn");
+            yield return new WaitForSecondsRealtime(.15f);
+            Assert.That(bolt.anchoredPosition, Is.EqualTo(boltPosition), "An accepted Pass is not a shot.");
+            Assert.That(owner.GetComponentsInChildren<Image>().Where(i => i.name.StartsWith("Action receipt light")).All(i => i.color.a == 0), Is.True);
+        }
+
+        [UnityTest]
+        public IEnumerator CupidPreviewUsesOnlyTheNumberOfChosenTargetsAndStaysNonInteractive()
+        {
+            stage.Bind(new ActionView { kind = "cupid" }, "cupid", false); stage.SetSelection("link", 1, 2);
+            var first = owner.GetComponentsInChildren<RectTransform>().Single(t => t.name == "First linked heart");
+            var second = owner.GetComponentsInChildren<RectTransform>().Single(t => t.name == "Second linked heart");
+            var thread = owner.GetComponentsInChildren<Image>().Single(i => i.name == "Lovers connecting thread");
+            Assert.That(first.GetComponent<CanvasGroup>().alpha, Is.EqualTo(1));
+            Assert.That(second.GetComponent<CanvasGroup>().alpha, Is.LessThan(.5f)); var pendingAlpha = thread.color.a;
+            stage.SetSelection("link", 2, 2);
+            Assert.That(second.GetComponent<CanvasGroup>().alpha, Is.EqualTo(1)); Assert.That(thread.color.a, Is.GreaterThan(pendingAlpha));
+            Assert.That(owner.GetComponentsInChildren<Button>(), Is.Empty);
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator FocusAndPauseHideTheEntirePrivateSceneryUntilAnExplicitRebind()
+        {
+            var action = new ActionView { kind = "seer", submittedChoice = "inspect" };
+            stage.Bind(action, "seer", false); stage.SetSelection("inspect", 1, 1); stage.Bind(action, "seer", true);
+            var group = owner.GetComponent<CanvasGroup>(); Assert.That(group.alpha, Is.EqualTo(1));
+            owner.SendMessage("OnApplicationFocus", false); Assert.That(group.alpha, Is.Zero);
+            var clock = stage.AnimationClock;
+            owner.SendMessage("OnApplicationFocus", true); yield return null;
+            Assert.That(group.alpha, Is.Zero, "Focus return is not permission to reveal the private pane.");
+            Assert.That(stage.AnimationClock, Is.EqualTo(clock));
+            stage.Bind(action, "seer", true); Assert.That(group.alpha, Is.EqualTo(1));
+            Assert.That(stage.ConfirmationVersion, Is.EqualTo(1), "Rebinding a received action must not replay its receipt.");
+            owner.SendMessage("OnApplicationPause", true); owner.SendMessage("OnApplicationPause", false); yield return null;
+            Assert.That(group.alpha, Is.Zero);
+        }
+
+        [UnityTest]
+        public IEnumerator VillagerUsesTheExistingLanternAndTheLittleGirlHasNoDigitalPowerControls()
+        {
+            stage.Bind(null, "villager", false); yield return null;
+            var lantern = owner.GetComponentsInChildren<Image>().Single(i => i.name == "Existing illustrated villager lantern" || i.name == "Separate illustrated villager-lantern");
+            Assert.That(lantern.sprite, Is.Not.Null); Assert.That(lantern.preserveAspect, Is.True);
+            stage.Bind(new ActionView { kind = "observe", submitted = true, privateInfo = "HIDDEN WOLF IDENTITY" }, "little-girl", true);
+            stage.SetSelection(null, 0, 0); yield return null;
+            Assert.That(owner.GetComponentsInChildren<Button>(), Is.Empty);
+            Assert.That(owner.GetComponentsInChildren<TMPro.TMP_Text>(), Is.Empty);
+            Assert.That(owner.GetComponentsInChildren<Image>().Where(i => i.name.StartsWith("Action receipt light")).All(i => i.color.a == 0), Is.True);
+        }
+
+        [UnityTest]
         public IEnumerator ReducedMotionStopsRoleMovementAndTheConfirmationBurst()
         {
             stage.Bind(new ActionView { kind = "seer" }, "seer", false);

@@ -147,7 +147,7 @@ namespace NGame.Presentation.Tests
                 Assert.That(owner.GetComponentsInChildren<TMP_Text>().Single(t => t.name == "Real room heading").text, Is.EqualTo("Tour de la Voyante"), "The public call follows nightStep, never the private action or role.");
                 Assert.That(flow.NightActivity.IsAvailable, Is.True);
                 Assert.That(flow.PrivateActionStage.gameObject.activeInHierarchy, Is.False);
-                Assert.That(owner.GetComponentsInChildren<TMP_Text>().Single(t => t.name == "Common screen night activity").text, Is.EqualTo("Veille des lucioles"));
+                Assert.That(owner.GetComponentsInChildren<TMP_Text>().Any(t => t.name == "Common screen night activity" || t.name == "Common screen night instruction"), Is.False, "The activity stays in the village with one guide beside its lantern.");
                 Assert.That(owner.GetComponentsInChildren<TMP_Text>().Any(t => t.name == "Night personal availability"), Is.False);
                 yield return TapProduction("Player primary action");
                 Assert.That(flow.IsPrivateActionVisible, Is.True);
@@ -198,6 +198,7 @@ namespace NGame.Presentation.Tests
             var body = (RectTransform)typeof(RoomFlowView).GetField("body", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(flow);
             var shell = (RectTransform)body.parent.parent;
             Assert.That(shell.rect.height, Is.EqualTo(94).Within(1));
+            Assert.That(shell.gameObject.activeSelf, Is.False, "No empty scroll card covers the common night scenery.");
             var activity = (RectTransform)flow.NightActivity.transform;
             Assert.That(activity.anchoredPosition.y + activity.rect.height * .5f, Is.LessThan(shell.offsetMin.y));
             Assert.That(activity.anchoredPosition.y - activity.rect.height * .5f, Is.GreaterThan(225));
@@ -205,10 +206,40 @@ namespace NGame.Presentation.Tests
             yield return TapProduction("Firefly touch target 0"); Assert.That(flow.NightActivity.LocalCatchCount, Is.EqualTo(1));
             yield return TapProduction("Player primary action"); yield return null;
             Assert.That(shell.rect.height, Is.EqualTo(389).Within(1));
+            var header = (RectTransform)flow.PrivateActionStage.transform.parent;
+            var heading = owner.GetComponentsInChildren<TMP_Text>().Single(t => t.name == "Real room heading").rectTransform;
+            var deadline = owner.GetComponentsInChildren<TMP_Text>().Single(t => t.name == "Server deadline").rectTransform;
+            Assert.That(header.rect.height, Is.EqualTo(84));
+            Assert.That(((RectTransform)flow.PrivateActionStage.transform).rect.height, Is.EqualTo(80), "The prop stage must use its full scale instead of shrinking to .7.");
+            Assert.That(-heading.anchoredPosition.y + heading.rect.height / 2, Is.LessThan(-header.anchoredPosition.y - header.rect.height / 2), "Private heading ends before the prop card begins.");
+            Assert.That(-header.anchoredPosition.y + header.rect.height / 2, Is.LessThanOrEqualTo(-deadline.anchoredPosition.y - deadline.rect.height / 2), "Prop card must not cover the clock.");
+            Assert.That(-deadline.anchoredPosition.y + deadline.rect.height / 2, Is.LessThan(-shell.offsetMax.y), "The clock ends before the unchanged action form.");
+            var portrait = owner.GetComponentsInChildren<Image>().Single(i => i.name == "Small private role portrait");
+            Assert.That(portrait.rectTransform.rect.size, Is.EqualTo(new Vector2(64, 80)));
+            var paper = owner.GetComponentsInChildren<Image>().Single(i => i.name == "Private role scenery reading paper");
+            Assert.That(paper.color.a, Is.GreaterThanOrEqualTo(.98f)); Assert.That(paper.color.b, Is.GreaterThan(paper.color.r));
             Assert.That(CanHit(Button("Action target two"), out _), Is.True);
             flow.ClosePrivateInformation(); client.View.settings.nightProtocol = "traditional"; client.View.revision++; client.Refresh(); yield return null;
             Assert.That(flow.NightActivity.gameObject.activeInHierarchy, Is.False);
             Assert.That(owner.GetComponentsInChildren<TMP_Text>().Any(t => t.name == "Night personal availability"), Is.True);
+        }
+
+        [UnityTest]
+        public IEnumerator APhysicalObservationNeverPretendsThatAChoiceWasSubmitted()
+        {
+            client.View.phase = "night"; client.View.nightStep = "werewolf";
+            client.View.settings = new RoomSettings { mode = "in-person", nightProtocol = "traditional" };
+            client.View.selfRoleId = "little-girl"; client.View.selfRoleName = "Petite Fille";
+            client.View.action = new ActionView { kind = "observe", submitted = true,
+                description = "Observe discrètement la table, sans information numérique sur les loups." };
+            client.View.turn++; client.View.revision++; client.Refresh(); yield return null;
+            flow.OpenPrivateInformation(); yield return null;
+            Assert.That(flow.IsPrivateActionVisible, Is.True);
+            Assert.That(owner.GetComponentsInChildren<TMP_Text>().Any(t => t.name == "Submitted action state"), Is.False);
+            Assert.That(owner.GetComponentsInChildren<TMP_Text>().Single(t => t.name == "Available action instructions").text,
+                Does.Contain("Observe discrètement"));
+            Assert.That(owner.GetComponentsInChildren<Button>().Any(b => b.name.StartsWith("Action target ")), Is.False);
+            Assert.That(flow.PrimaryAction.GetComponentInChildren<TMP_Text>().text, Is.EqualTo("Masquer ma vue"));
         }
 
         [UnityTest]
